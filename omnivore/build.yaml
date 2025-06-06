@@ -1,0 +1,10 @@
+build_from:
+  aarch64: "ghcr.io/home-assistant/aarch64-base:3.18"
+  amd64: "ghcr.io/home-assistant/amd64-base:3.18"
+labels:
+  org.opencontainers.image.title: "Home Assistant Add-on: Omnivore"
+  org.opencontainers.image.description: "Omnivore is a complete, open source read-it-later solution for people who like reading"
+  org.opencontainers.image.source: "https://github.com/conallob/hassio-addons"
+  org.opencontainers.image.licenses: "MIT"
+args:
+  BUILD_VERSION: "1.0.0"
