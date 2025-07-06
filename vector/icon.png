@@ -1,0 +1,575 @@
+<!doctype html><html lang=en x-data="{ dark: $store.global.dark }" x-on:toggle-dark="dark = !dark" :class="{ 'dark': dark, 'light': !dark }" class=h-screen><head><noscript><style>body{visibility:visible}</style></noscript><script>function showBody(){document.body.style.visibility="visible"}</script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta http-equiv=x-ua-compatible content="id=edge"><script type=text/javascript src="https://consent.trustarc.com/v2/autoblockasset/core.min.js?cmId=ufocto"></script><script type=text/javascript src="https://consent.trustarc.com/v2/autoblock?cmId=ufocto"></script><meta name=generator content="Hugo 0.139.4"><link rel="shortcut icon" href=https://vector.dev/favicon.ico><link rel=canonical href=https://vector.dev/404.html><meta name=twitter:card content="summary"><meta name=twitter:image content="https://vector.dev/img/vector-open-graph.png"><meta name=twitter:image:alt content="Logo for Vector"><meta name=twitter:site content="@vectordotdev"><meta name=twitter:creator content="@vectordotdev"><meta property="og:title" content="404 Page not found"><meta property="og:image" content="https://vector.dev/img/vector-open-graph.png"><meta property="og:url" content="https://vector.dev/404.html"><meta name=algolia:title content="404 Page not found"><link rel=manifest href=/manifest.json><title>Vector | A lightweight, ultra-fast tool for building observability pipelines
+</title><link rel=stylesheet href="/css/style.d9bd359a5d53908e0df208a1f24ea26085755b1f1dade9efae8378210e099a4d.css" integrity="sha256-2b01ml1TkI4N8gih8k6iYIV1Wx8drenvroN4IQ4Jmk0="><link rel=stylesheet href=/css/unpurged.fbbcf4d65d33f40136f4ae5b3beca2b23f2eb70fa3f136e9e2463d5b995111b6.css integrity="sha256-+7z01l0z9AE29K5bO+yisj8utw+j8Tbp4kY9W5lREbY="><script defer type=text/javascript src=/js/app.132fdc287d08e8caa96e20fd798d1958e379e1aacd3adb625d36ec0a85d9db22.js integrity="sha256-Ey/cKH0I6MqpbiD9eY0ZWON54arNOttiXTbsCoXZ2yI="></script><script defer type=text/javascript src=/js/dd-browser-logs-rum.ce0adc5ff4cc3a1d28cd521da528a341f8020fcb329c5da4138e576e833f503a.js integrity="sha256-zgrcX/TMOh0ozVIdpSijQfgCD8synF2kE45XboM/UDo="></script><script defer type=text/javascript src=/js/tracking-marketing.1286c4ec7247f8a85a878551ebf0c818aa18c1b7fcc679e485f71db5697dd239.js integrity="sha256-EobE7HJH+Khah4VR6/DIGKoYwbf8xnnkhfcdtWl90jk="></script><script type=module src=https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js></script><script nomodule src=https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js></script></head><body class="dark:bg-dark font-sans antialiased flex flex-col min-h-full" onload=showBody() style=visibility:hidden><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M7MFKZ9" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript><div class="flex-1 z-1"><nav x-cloak x-data="{
+    open: false,
+  }" class="z-50 dark:bg-dark dark:border-gray-700 border-b" tabindex=0><div class="mx-auto px-4 sm:px-6 lg:px-10 py-1 md:py-1.5 lg:py-2"><div class="relative flex items-center justify-between h-16"><div class="flex items-center"><div class=flex-shrink-0><a href=https://vector.dev/><div x-show=$store.global.isLight()><div class="svg h-auto w-32"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 322 119.2">
+  <path d="M141.7 29.9h9.3l-10.1 29.7h-9.3l-10.2-29.7h9.4l5.6 18.2h.1l5.2-18.2zM181 59.6h-21.7V29.9h21.6v7.5h-13v3.9h11.5V48h-11.5v4.1H181v7.5zm22.9-30.2c6.2 0 10.8 3.2 12.2 8.3l-8.1 3.5c-.4-2.3-1.6-4.1-4.2-4.1-2.9 0-5.1 2.4-5.1 7.7 0 5.3 2.1 7.8 5.1 7.8 2.5 0 3.8-1.9 4.2-4.2l8.1 3.5c-1.4 5.1-6 8.3-12.2 8.3-8.9 0-14.4-5.9-14.4-15.4s5.5-15.4 14.4-15.4zm27.7 30.2V37.4h-8.9v-7.5h26.7v7.5h-8.9v22.2h-8.9zm53.8-14.8c0 9.5-5.5 15.4-14.4 15.4-8.8 0-14.4-5.9-14.4-15.4s5.6-15.4 14.4-15.4c8.9 0 14.4 5.9 14.4 15.4zm-19.5 0c0 4.8 1.8 7.8 5.2 7.8s5.2-2.9 5.2-7.8c0-4.8-1.8-7.8-5.2-7.8s-5.2 2.9-5.2 7.8zm46.5 14.8c-.8-1-1.1-1.9-1.4-3.5l-.6-3.3c-.4-2.1-1.4-2.7-3.2-2.7h-3.5v9.5h-8.8V29.9H309c6.7 0 11.4 2.6 11.4 9.1 0 4.3-2.9 6.8-6.1 7.4v.1c2.6.4 4.1 2 4.7 4.7l1.1 4.7c.4 1.6.9 2.6 1.9 3.7h-9.6zm-4.5-22.4h-4.3v5.9h4.3c2.1 0 3.2-.9 3.2-3 0-1.9-1-2.9-3.2-2.9zM130.8 81.9c1.8.2 3.1 1.3 3.1 3.3 0 2.4-1.5 4-4.8 4H124V74.8h4.9c2.8 0 4.5 1.3 4.5 3.8 0 1.8-1.1 3-2.6 3.3zm-5-.6h3c1.8 0 2.8-.8 2.8-2.5s-1-2.5-2.8-2.5h-3v5zm0 6.4h3.2c2 0 3-.9 3-2.5s-1.1-2.5-3-2.5h-3.2v5zm15.4-5.9l3.9-7h1.9l-4.9 8.7v5.6h-1.8v-5.6l-5-8.7h2l3.9 7zm14.7-7h4.2c4 0 7 2.2 7 7.1 0 4.9-3 7.2-7 7.2h-4.2V74.8zm1.8 12.8h2.4c2.6 0 5.1-1.4 5.1-5.7 0-4.3-2.5-5.6-5.1-5.6h-2.4v11.3zm19.9-2.4h-6l-1.4 4h-1.8l5.2-14.4h2l5.2 14.4H179l-1.4-4zm-5.5-1.6h4.9l-2.4-6.9-2.5 6.9zm13.3 5.6V76.4h-4.8v-1.6h11.5v1.6h-4.8v12.8h-1.9zm15.6-4h-6l-1.4 4h-1.8l5.2-14.4h2l5.2 14.4h-1.8l-1.4-4zm-5.4-1.6h4.9l-2.4-6.9-2.5 6.9zm11.4-8.8h4.2c4 0 7 2.2 7 7.1 0 4.9-3 7.2-7 7.2H207V74.8zm1.8 12.8h2.4c2.6 0 5.1-1.4 5.1-5.7 0-4.3-2.5-5.6-5.1-5.6h-2.4v11.3zm24.3-5.6c0 4.6-2.5 7.4-6.2 7.4s-6.2-2.8-6.2-7.4c0-4.6 2.5-7.4 6.2-7.4s6.2 2.8 6.2 7.4zm-10.5 0c0 3.5 1.5 5.9 4.3 5.9s4.3-2.4 4.3-5.9c0-3.5-1.5-5.9-4.3-5.9s-4.3 2.4-4.3 5.9zm24.8-.1v7.2H246l-.3-2.1c-.5 1.5-2.1 2.4-4 2.4-3.6 0-6.1-2.7-6.1-7.4 0-4.8 2.7-7.5 6.3-7.5 2.6 0 4.4 1.1 5.2 3.3l-1.6.9c-.5-1.7-1.9-2.7-3.7-2.7-2.8 0-4.4 2.2-4.4 5.9 0 3.5 1.4 5.9 4.4 5.9 1.9 0 3.7-1 3.7-3.6v-.9H242v-1.5h5.4z"/>
+  <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="-.212" y1="282.879" x2="101.724" y2="341.732" gradientTransform="matrix(1 0 0 -1 0 371.896)">
+    <stop offset="0" stop-color="#10e7ff"/>
+    <stop offset=".103" stop-color="#33d5ff"/>
+    <stop offset=".255" stop-color="#60bdff"/>
+    <stop offset=".408" stop-color="#86aaff"/>
+    <stop offset=".56" stop-color="#a39aff"/>
+    <stop offset=".71" stop-color="#b790ff"/>
+    <stop offset=".858" stop-color="#c489ff"/>
+    <stop offset="1" stop-color="#c887ff"/>
+  </linearGradient>
+  <path d="M50.8 119.2L0 89.4V29.8L50.8 0l50.8 29.8v59.6l-50.8 29.8zm-43.7-34l43.6 25.6 43.6-25.6V34L50.8 8.4 7.1 34v51.2z" fill="url(#a)"/>
+  <linearGradient id="b" gradientUnits="userSpaceOnUse" x1="31.374" y1="303.384" x2="81.932" y2="332.574" gradientTransform="matrix(1 0 0 -1 0 371.896)">
+    <stop offset="0" stop-color="#10e7ff"/>
+    <stop offset=".103" stop-color="#33d5ff"/>
+    <stop offset=".255" stop-color="#60bdff"/>
+    <stop offset=".408" stop-color="#86aaff"/>
+    <stop offset=".56" stop-color="#a39aff"/>
+    <stop offset=".71" stop-color="#b790ff"/>
+    <stop offset=".858" stop-color="#c489ff"/>
+    <stop offset="1" stop-color="#c887ff"/>
+  </linearGradient>
+  <path d="M72.7 43.4L54.9 74.7l5.8 10.2 23.6-41.5H72.7zm-19.9 0L35 74.7l5.8 10.2 23.6-41.5H52.8zm-35.5 0l23.6 41.5 5.8-10.2-17.8-31.3H17.3zm0 0l23.6 41.5 5.8-10.2-17.8-31.3H17.3zm35.5 0L35 74.7l5.8 10.2 23.6-41.5H52.8z" fill="url(#b)"/>
+</svg></div></div><div x-show=$store.global.isDark()><div class="svg h-auto w-32"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 322 119.2" xml:space="preserve">
+  <style>
+    .st0{fill:#fff}
+  </style>
+  <path class="st0" d="M141.7 29.9h9.3l-10.1 29.7h-9.3l-10.2-29.7h9.4l5.6 18.2h.1l5.2-18.2zM181 59.6h-21.7V29.9h21.6v7.5h-13v3.9h11.5V48h-11.5v4.1H181v7.5zm22.9-30.2c6.2 0 10.8 3.2 12.2 8.3l-8.1 3.5c-.4-2.3-1.6-4.1-4.2-4.1-2.9 0-5.1 2.4-5.1 7.7 0 5.3 2.1 7.8 5.1 7.8 2.5 0 3.8-1.9 4.2-4.2l8.1 3.5c-1.4 5.1-6 8.3-12.2 8.3-8.9 0-14.4-5.9-14.4-15.4s5.5-15.4 14.4-15.4zm27.7 30.2V37.4h-8.9v-7.5h26.7v7.5h-8.9v22.2h-8.9zm53.8-14.8c0 9.5-5.5 15.4-14.4 15.4-8.8 0-14.4-5.9-14.4-15.4s5.6-15.4 14.4-15.4c8.9 0 14.4 5.9 14.4 15.4zm-19.5 0c0 4.8 1.8 7.8 5.2 7.8s5.2-2.9 5.2-7.8c0-4.8-1.8-7.8-5.2-7.8s-5.2 2.9-5.2 7.8zm46.5 14.8c-.8-1-1.1-1.9-1.4-3.5l-.6-3.3c-.4-2.1-1.4-2.7-3.2-2.7h-3.5v9.5h-8.8V29.9H309c6.7 0 11.4 2.6 11.4 9.1 0 4.3-2.9 6.8-6.1 7.4v.1c2.6.4 4.1 2 4.7 4.7l1.1 4.7c.4 1.6.9 2.6 1.9 3.7h-9.6zm-4.5-22.4h-4.3v5.9h4.3c2.1 0 3.2-.9 3.2-3 0-1.9-1-2.9-3.2-2.9zM130.8 81.9c1.8.2 3.1 1.3 3.1 3.3 0 2.4-1.5 4-4.8 4H124V74.8h4.9c2.8 0 4.5 1.3 4.5 3.8 0 1.8-1.1 3-2.6 3.3zm-5-.6h3c1.8 0 2.8-.8 2.8-2.5s-1-2.5-2.8-2.5h-3v5zm0 6.4h3.2c2 0 3-.9 3-2.5s-1.1-2.5-3-2.5h-3.2v5zm15.4-5.9l3.9-7h1.9l-4.9 8.7v5.6h-1.8v-5.6l-5-8.7h2l3.9 7zm14.7-7h4.2c4 0 7 2.2 7 7.1 0 4.9-3 7.2-7 7.2h-4.2V74.8zm1.8 12.8h2.4c2.6 0 5.1-1.4 5.1-5.7 0-4.3-2.5-5.6-5.1-5.6h-2.4v11.3zm19.9-2.4h-6l-1.4 4h-1.8l5.2-14.4h2l5.2 14.4H179l-1.4-4zm-5.5-1.6h4.9l-2.4-6.9-2.5 6.9zm13.3 5.6V76.4h-4.8v-1.6h11.5v1.6h-4.8v12.8h-1.9zm15.6-4h-6l-1.4 4h-1.8l5.2-14.4h2l5.2 14.4h-1.8l-1.4-4zm-5.4-1.6h4.9l-2.4-6.9-2.5 6.9zm11.4-8.8h4.2c4 0 7 2.2 7 7.1 0 4.9-3 7.2-7 7.2H207V74.8zm1.8 12.8h2.4c2.6 0 5.1-1.4 5.1-5.7 0-4.3-2.5-5.6-5.1-5.6h-2.4v11.3zm24.3-5.6c0 4.6-2.5 7.4-6.2 7.4s-6.2-2.8-6.2-7.4c0-4.6 2.5-7.4 6.2-7.4s6.2 2.8 6.2 7.4zm-10.5 0c0 3.5 1.5 5.9 4.3 5.9s4.3-2.4 4.3-5.9c0-3.5-1.5-5.9-4.3-5.9s-4.3 2.4-4.3 5.9zm24.8-.1v7.2H246l-.3-2.1c-.5 1.5-2.1 2.4-4 2.4-3.6 0-6.1-2.7-6.1-7.4 0-4.8 2.7-7.5 6.3-7.5 2.6 0 4.4 1.1 5.2 3.3l-1.6.9c-.5-1.7-1.9-2.7-3.7-2.7-2.8 0-4.4 2.2-4.4 5.9 0 3.5 1.4 5.9 4.4 5.9 1.9 0 3.7-1 3.7-3.6v-.9H242v-1.5h5.4z"/>
+  <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-.212" y1="282.879" x2="101.724" y2="341.732" gradientTransform="matrix(1 0 0 -1 0 371.896)">
+    <stop offset="0" stop-color="#10e7ff"/>
+    <stop offset=".103" stop-color="#33d5ff"/>
+    <stop offset=".255" stop-color="#60bdff"/>
+    <stop offset=".408" stop-color="#86aaff"/>
+    <stop offset=".56" stop-color="#a39aff"/>
+    <stop offset=".71" stop-color="#b790ff"/>
+    <stop offset=".858" stop-color="#c489ff"/>
+    <stop offset="1" stop-color="#c887ff"/>
+  </linearGradient>
+  <path d="M50.8 119.2L0 89.4V29.8L50.8 0l50.8 29.8v59.6l-50.8 29.8zm-43.7-34l43.6 25.6 43.6-25.6V34L50.8 8.4 7.1 34v51.2z" fill="url(#SVGID_1_)"/>
+  <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="31.374" y1="303.384" x2="81.932" y2="332.574" gradientTransform="matrix(1 0 0 -1 0 371.896)">
+    <stop offset="0" stop-color="#10e7ff"/>
+    <stop offset=".103" stop-color="#33d5ff"/>
+    <stop offset=".255" stop-color="#60bdff"/>
+    <stop offset=".408" stop-color="#86aaff"/>
+    <stop offset=".56" stop-color="#a39aff"/>
+    <stop offset=".71" stop-color="#b790ff"/>
+    <stop offset=".858" stop-color="#c489ff"/>
+    <stop offset="1" stop-color="#c887ff"/>
+  </linearGradient>
+  <path d="M72.7 43.4L54.9 74.7l5.8 10.2 23.6-41.5H72.7zm-19.9 0L35 74.7l5.8 10.2 23.6-41.5H52.8zm-35.5 0l23.6 41.5 5.8-10.2-17.8-31.3H17.3zm0 0l23.6 41.5 5.8-10.2-17.8-31.3H17.3zm35.5 0L35 74.7l5.8 10.2 23.6-41.5H52.8z" fill="url(#SVGID_2_)"/>
+</svg></div></div></a></div><div class="hidden lg:block lg:ml-6"><div class="flex space-x-4 lg:space-x-2.5 xl:space-x-4"><a href=/docs class="flex items-center tracking-tight px-2.5 rounded-sm lg:text-sm xl:text-base font-normal"><span class="dark:text-gray-300 hover:text-primary-dark dark:hover:text-secondary">Docs
+</span></a><a href=/guides class="flex items-center tracking-tight px-2.5 rounded-sm lg:text-sm xl:text-base font-normal"><span class="dark:text-gray-300 hover:text-primary-dark dark:hover:text-secondary">Guides
+</span></a><a href=/components class="flex items-center tracking-tight px-2.5 rounded-sm lg:text-sm xl:text-base font-normal"><span class="dark:text-gray-300 hover:text-primary-dark dark:hover:text-secondary">Components
+</span></a><a href=/download class="flex items-center tracking-tight px-2.5 rounded-sm lg:text-sm xl:text-base font-normal"><span class="dark:text-gray-300 hover:text-primary-dark dark:hover:text-secondary">Download
+</span></a><a href=/blog class="flex items-center tracking-tight px-2.5 rounded-sm lg:text-sm xl:text-base font-normal"><span class="dark:text-gray-300 hover:text-primary-dark dark:hover:text-secondary">Blog
+</span></a><a href=/community class="flex items-center tracking-tight px-2.5 rounded-sm lg:text-sm xl:text-base font-normal"><span class="dark:text-gray-300 hover:text-primary-dark dark:hover:text-secondary">Support
+</span></a><a href=https://www.datadoghq.com/product/observability-pipelines class="flex items-center tracking-tight px-2.5 rounded-sm lg:text-sm xl:text-base font-normal"><span class="dark:text-gray-300 hover:text-primary-dark dark:hover:text-secondary">Observability Pipelines</span></a></div></div></div><div class="flex justify-end flex-grow items-center lg:ml-6 h-full"><button x-cloak @click="$store.global.toggleDarkMode(); $dispatch('toggle-dark');" class="flex items-center">
+<span class=sr-only>Toggle dark mode</span><svg x-show="$store.global.isDark()" class="text-yellow-500 hover:text-yellow-600 h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg><svg x-show="$store.global.isLight()" class="text-primary h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+  </svg></button><div class="max-w-xxs xl:flex-grow ml-4"><label for=search class=sr-only>Search</label><div id=site-search></div></div><div class="hidden lg:flex lg:order-2 text-lg ml-3 lg:ml-4 h-full items-center"><div class=pt-1.5><a href=https://twitter.com/vectordotdev rel=noopener target=_blank><span class=sr-only>Twitter icon and link
+</span><span class="text-twitter-blue hover:text-gray-500"><ion-icon name=logo-twitter></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=https://github.com/vectordotdev/vector rel=noopener target=_blank><span class=sr-only>GitHub icon and link
+</span><span class="dark:text-white dark:hover:text-gray-500 text-black hover:text-gray-500"><ion-icon name=logo-github></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=https://chat.vector.dev rel=noopener target=_blank><span class=sr-only>Chat icon and link
+</span><span class="text-discord-purple hover:text-gray-500"><ion-icon name=logo-discord></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=/blog/index.xml rel=noopener target=_blank><span class=sr-only>RSS icon and link
+</span><span class="text-rss-orange hover:text-gray-500"><ion-icon name=logo-rss></ion-icon></span></a></div><div class=ml-4><a href=./><button onclick='toggleModal("12461")' class="py-3 md:py-4 md:px-5 text-dark bg-gray-200 inline-flex justify-center items-center w-full border border-dark hover:text-dark hover:border-dark hover:bg-primary rounded md:w-max md:m-auto select-none h-11">
+<span class="inline-block text-xs md:text-sm font-semibold uppercase">Updates</span></button></a></div></div><div class="flex lg:hidden ml-4"><button @click="open = !open" type=button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls=mobile-menu aria-expanded=false>
+<span class=sr-only>Open navbar dropdown menu</span><svg x-show="!open" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg><svg x-show="open" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg></button></div></div></div></div><div x-show=open @click.away="open = false" class="z-10 dark:shadow-none dark:bg-gray-900 bg-white lg:hidden absolute w-full shadow" id=mobile-menu><div class="px-2 pt-2 pb-3 space-y-1"><a href=/docs class="block px-3 rounded-md text-base font-medium dark:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-700 text-gray-500 hover:text-white">Docs
+</a><a href=/guides class="block px-3 rounded-md text-base font-medium dark:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-700 text-gray-500 hover:text-white">Guides
+</a><a href=/components class="block px-3 rounded-md text-base font-medium dark:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-700 text-gray-500 hover:text-white">Components
+</a><a href=/download class="block px-3 rounded-md text-base font-medium dark:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-700 text-gray-500 hover:text-white">Download
+</a><a href=/blog class="block px-3 rounded-md text-base font-medium dark:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-700 text-gray-500 hover:text-white">Blog
+</a><a href=/community class="block px-3 rounded-md text-base font-medium dark:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-700 text-gray-500 hover:text-white">Support
+</a><a href=https://www.datadoghq.com/product/observability-pipelines class="block px-3 rounded-md text-base font-medium dark:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-700 text-gray-500 hover:text-white">Observability Pipelines</a></div><div class="flex text-lg px-5 mb-2 mt-3.5"><div class=pt-1.5><a href=https://twitter.com/vectordotdev rel=noopener target=_blank><span class=sr-only>Twitter icon and link
+</span><span class="text-twitter-blue hover:text-gray-500"><ion-icon name=logo-twitter></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=https://github.com/vectordotdev/vector rel=noopener target=_blank><span class=sr-only>GitHub icon and link
+</span><span class="dark:text-white dark:hover:text-gray-500 text-black hover:text-gray-500"><ion-icon name=logo-github></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=https://chat.vector.dev rel=noopener target=_blank><span class=sr-only>Chat icon and link
+</span><span class="text-discord-purple hover:text-gray-500"><ion-icon name=logo-discord></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=/blog/index.xml rel=noopener target=_blank><span class=sr-only>RSS icon and link
+</span><span class="text-rss-orange hover:text-gray-500"><ion-icon name=logo-rss></ion-icon></span></a></div></div><div class="mx-5 mb-4 mt-3.5"><a href=./><button onclick='toggleModal("12461")' class="py-3 md:py-4 md:px-5 text-dark bg-gray-200 inline-flex justify-center items-center w-full border border-dark hover:text-dark hover:border-dark hover:bg-primary rounded md:w-max md:m-auto select-none h-11">
+<span class="inline-block text-xs md:text-sm font-semibold uppercase">Updates</span></button></a></div></div></nav><div class="relative py-12 md:py-16 lg:py-20 px-4 sm:px-6 mx-auto max-w-7xl"><div class=text-center><h2 class="dark:text-gray-50 font-secondary font-extrabold text-5xl lg:text-6xl leading-tight tracking-tight inline-flex space-x-5"><span class="text-secondary dark:text-primary">404</span>
+<span>Page not found</span></h2><p class="mt-6 text-2xl text-dark dark:text-gray-300 font-semibold">Uh-oh! That link doesn't seem to exist.</p></div><div class=mt-16><p class="text-xl text-dark dark:text-gray-200">Below is a full listing of the site's pages in alphabetical order by title. We hope you find what you're looking for!</p><div class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4"><a href=/guides/developer/debugging/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">A guide for debugging Vector pipelines
+</a><a href=/docs/setup/going-to-prod/arch/aggregator/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Aggregator Architecture
+</a><a href=/docs/setup/going-to-prod/architecting/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Architecting your Deployment
+</a><a href=/docs/introduction/concepts/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Concepts
+</a><a href=/guides/advanced/custom-aggregations-with-lua/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Custom Aggregations with Lua
+</a><a href=/docs/architecture/data-model/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Data model
+</a><a href=/docs/setup/deployment/roles/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Deployment roles
+</a><a href=/guides/level-up/managing-schemas/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Encoding, Decoding, and Managing Schemas
+</a><a href=/guides/getting-started/getting-started/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Getting Started with Vector
+</a><a href=/docs/setup/installation/manual/from-archives/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector from archives
+</a><a href=/docs/setup/installation/operating-systems/amazon-linux/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on Amazon Linux
+</a><a href=/docs/setup/installation/platforms/docker/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on Docker
+</a><a href=/docs/setup/installation/package-managers/apt/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using APT
+</a><a href=/docs/setup/installation/package-managers/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Installation
+</a><a href=/docs/introduction/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Introduction
+</a><a href=/docs/architecture/data-model/log/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Log events
+</a><a href=/docs/administration/management/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Management
+</a><a href=/docs/reference/configuration/transforms/remap/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Remap with VRL
+</a><a href=/docs/reference/configuration/sources/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Sources reference
+</a><a href=/docs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The Vector documentation
+</a><a href=/guides/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector guides
+</a><a href=/docs/setup/quickstart/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector quickstart
+</a><a href=/docs/reference/vrl/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector Remap Language (VRL)
+</a><a href=/releases/0.4.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.4.0 release notes
+</a><a href=/docs/reference/vrl/functions/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">VRL function reference
+</a><a href=/docs/setup/going-to-prod/arch/agent/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Agent Architecture
+</a><a href=/guides/developer/config-autocompletion/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Config Autocompletion Guide
+</a><a href=/docs/reference/configuration/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Configuring Vector
+</a><a href=/docs/setup/deployment/topologies/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Deployment topologies
+</a><a href=/guides/getting-started/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Getting Started Guides
+</a><a href=/docs/setup/going-to-prod/hardening/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Hardening Vector
+</a><a href=/guides/advanced/cloudwatch-logs-firehose/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Ingesting AWS CloudWatch Logs via AWS Kinesis Firehose
+</a><a href=/docs/setup/installation/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector
+</a><a href=/docs/setup/installation/manual/from-source/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector from source
+</a><a href=/docs/setup/installation/operating-systems/archlinux/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on Arch Linux
+</a><a href=/docs/setup/installation/platforms/kubernetes/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on Kubernetes
+</a><a href=/docs/setup/installation/package-managers/dpkg/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using dpkg
+</a><a href=/docs/architecture/data-model/metric/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Metric events
+</a><a href=/docs/administration/monitoring/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Monitoring and observing Vector
+</a><a href=/docs/architecture/pipeline-model/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Pipeline model
+</a><a href=/docs/setup/installation/platforms/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Platforms
+</a><a href=/docs/setup/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Setting up Vector
+</a><a href=/guides/getting-started/transformation/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Structuring, Shaping, and Transforming Data
+</a><a href=/guides/level-up/log_namespace/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The Log Namespace feature
+</a><a href=/docs/reference/configuration/transforms/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Transforms reference
+</a><a href=/releases/0.5.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.5.0 release notes
+</a><a href=/docs/reference/vrl/errors/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">VRL error reference
+</a><a href=/docs/architecture/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Architecture
+</a><a href=/guides/level-up/managing-complex-configs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Building and Managing Complex Configs
+</a><a href=/docs/setup/deployment/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Deployment
+</a><a href=/docs/setup/going-to-prod/high-availability/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">High Availability
+</a><a href=/docs/setup/installation/operating-systems/centos/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on CentOS
+</a><a href=/docs/setup/installation/operating-systems/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on your operating system
+</a><a href=/docs/setup/installation/package-managers/helm/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using Helm
+</a><a href=/guides/level-up/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Level up
+</a><a href=/guides/advanced/merge-multiline-logs-with-lua/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Merge multi-line logs with Lua
+</a><a href=/docs/administration/optimization/pgo/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Profile-Guided Optimization
+</a><a href=/docs/architecture/runtime-model/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Runtime Model
+</a><a href=/docs/reference/configuration/sinks/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Sinks reference
+</a><a href=/docs/setup/going-to-prod/arch/unified/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Unified Architecture
+</a><a href=/releases/0.6.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.6.0 release notes
+</a><a href=/docs/reference/vrl/examples/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">VRL example reference
+</a><a href=/docs/administration/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Administering Vector
+</a><a href=/guides/advanced/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Advanced
+</a><a href=/docs/architecture/buffering-model/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Buffering model
+</a><a href=/docs/reference/configuration/global-options/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Global options reference
+</a><a href=/docs/setup/going-to-prod/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Going to Production
+</a><a href=/docs/setup/installation/manual/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector manually
+</a><a href=/docs/setup/installation/operating-systems/debian/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on Debian
+</a><a href=/docs/setup/installation/package-managers/homebrew/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using Homebrew
+</a><a href=/guides/advanced/parsing-csv-logs-with-lua/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Parsing CSV logs with Lua
+</a><a href=/docs/reference/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Reference
+</a><a href=/docs/setup/going-to-prod/arch/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Reference Architectures
+</a><a href=/docs/reference/cli/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The Vector command line interface
+</a><a href=/guides/level-up/troubleshooting/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Troubleshooting
+</a><a href=/releases/0.7.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.7.0 release notes
+</a><a href=/docs/reference/vrl/expressions/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">VRL expression reference
+</a><a href=/docs/architecture/concurrency-model/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Concurrency model
+</a><a href=/guides/developer/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Development
+</a><a href=/guides/level-up/csv-enrichment-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Enrich your observability data
+</a><a href=/docs/reference/environment_variables/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Environment Variables
+</a><a href=/docs/setup/installation/package-managers/msi/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using MSI
+</a><a href=/docs/setup/installation/operating-systems/macos/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">macOS
+</a><a href=/docs/setup/going-to-prod/rollout/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Rollout
+</a><a href=/docs/reference/configuration/tls/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">TLS configuration
+</a><a href=/docs/administration/validating/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Validating
+</a><a href=/releases/0.7.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.7.1 release notes
+</a><a href=/docs/architecture/arc/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Adaptive request concurrency (ARC)
+</a><a href=/docs/architecture/guarantees/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Guarantees
+</a><a href=/docs/setup/installation/operating-systems/nixos/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on NixOS
+</a><a href=/docs/setup/installation/package-managers/nix/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Nix
+</a><a href=/docs/administration/optimization/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Optimization
+</a><a href=/docs/setup/going-to-prod/sizing/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Sizing and Capacity Planning
+</a><a href=/docs/reference/api/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The Vector API
+</a><a href=/docs/reference/configuration/unit-tests/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Unit testing Vector configurations
+</a><a href=/guides/level-up/vector-tap-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Using Vector `tap`
+</a><a href=/releases/0.7.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.7.2 release notes
+</a><a href=/docs/architecture/end-to-end-acknowledgements/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">End-to-end Acknowledgements
+</a><a href=/docs/reference/glossary/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Glossary
+</a><a href=/docs/setup/installation/operating-systems/raspbian/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on Raspbian
+</a><a href=/docs/setup/installation/package-managers/pacman/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using pacman
+</a><a href=/docs/reference/configuration/template-syntax/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Template syntax
+</a><a href=/releases/0.8.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.8.0 release notes
+</a><a href=/docs/setup/installation/operating-systems/rhel/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on RHEL
+</a><a href=/docs/setup/installation/package-managers/rpm/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using RPM
+</a><a href=/releases/0.8.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.8.1 release notes
+</a><a href=/docs/setup/installation/operating-systems/ubuntu/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on Ubuntu
+</a><a href=/docs/setup/installation/package-managers/yum/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using YUM
+</a><a href=/releases/0.8.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.8.2 release notes
+</a><a href=/docs/setup/installation/operating-systems/windows/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector on Windows
+</a><a href=/releases/0.9.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.9.0 release notes
+</a><a href=/releases/0.9.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.9.1 release notes
+</a><a href=/releases/0.9.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.9.2 release notes
+</a><a href=/releases/0.10.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.10.0 release notes
+</a><a href=/releases/0.11.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.11.0 release notes
+</a><a href=/releases/0.11.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.11.1 release notes
+</a><a href=/releases/0.12.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.12.0 release notes
+</a><a href=/releases/0.12.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.12.1 release notes
+</a><a href=/releases/0.12.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.12.2 release notes
+</a><a href=/releases/0.13.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.13.0 release notes
+</a><a href=/releases/0.13.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.13.1 release notes
+</a><a href=/releases/0.14.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.14.0 release notes
+</a><a href=/releases/0.15.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.15.0 release notes
+</a><a href=/releases/0.15.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.15.1 release notes
+</a><a href=/releases/0.15.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.15.2 release notes
+</a><a href=/releases/0.16.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.16.0 release notes
+</a><a href=/releases/0.16.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.16.1 release notes
+</a><a href=/releases/0.17.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.17.0 release notes
+</a><a href=/releases/0.17.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.17.1 release notes
+</a><a href=/releases/0.17.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.17.2 release notes
+</a><a href=/releases/0.17.3/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.17.3 release notes
+</a><a href=/releases/0.18.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.18.0 release notes
+</a><a href=/releases/0.18.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.18.1 release notes
+</a><a href=/releases/0.19.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.19.0 release notes
+</a><a href=/releases/0.19.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.19.1 release notes
+</a><a href=/releases/0.19.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.19.2 release notes
+</a><a href=/releases/0.19.3/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.19.3 release notes
+</a><a href=/releases/0.20.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.20.0 release notes
+</a><a href=/releases/0.20.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.20.1 release notes
+</a><a href=/releases/0.21.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.21.0 release notes
+</a><a href=/releases/0.21.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.21.1 release notes
+</a><a href=/releases/0.21.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.21.2 release notes
+</a><a href=/releases/0.22.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.22.0 release notes
+</a><a href=/releases/0.22.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.22.1 release notes
+</a><a href=/releases/0.22.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.22.2 release notes
+</a><a href=/releases/0.22.3/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.22.3 release notes
+</a><a href=/releases/0.23.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.23.0 release notes
+</a><a href=/releases/0.23.3/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.23.3 release notes
+</a><a href=/releases/0.24.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.24.0 release notes
+</a><a href=/releases/0.24.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.24.1 release notes
+</a><a href=/releases/0.24.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.24.2 release notes
+</a><a href=/releases/0.25.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.25.0 release notes
+</a><a href=/releases/0.25.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.25.1 release notes
+</a><a href=/releases/0.25.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.25.2 release notes
+</a><a href=/releases/0.26.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.26.0 release notes
+</a><a href=/releases/0.27.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.27.0 release notes
+</a><a href=/releases/0.27.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.27.1 release notes
+</a><a href=/releases/0.28.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.28.0 release notes
+</a><a href=/releases/0.28.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.28.1 release notes
+</a><a href=/releases/0.28.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.28.2 release notes
+</a><a href=/releases/0.29.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.29.0 release notes
+</a><a href=/releases/0.29.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.29.1 release notes
+</a><a href=/releases/0.30.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.30.0 release notes
+</a><a href=/releases/0.31.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.31.0 release notes
+</a><a href=/releases/0.32.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.32.0 release notes
+</a><a href=/releases/0.32.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.32.1 release notes
+</a><a href=/releases/0.32.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.32.2 release notes
+</a><a href=/releases/0.33.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.33.0 release notes
+</a><a href=/releases/0.33.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.33.1 release notes
+</a><a href=/releases/0.34.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.34.0 release notes
+</a><a href=/releases/0.34.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.34.1 release notes
+</a><a href=/releases/0.34.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.34.2 release notes
+</a><a href=/releases/0.35.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.35.0 release notes
+</a><a href=/releases/0.35.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.35.1 release notes
+</a><a href=/releases/0.36.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.36.0 release notes
+</a><a href=/releases/0.36.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.36.1 release notes
+</a><a href=/releases/0.37.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.37.0 release notes
+</a><a href=/releases/0.37.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.37.1 release notes
+</a><a href=/releases/0.38.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.38.0 release notes
+</a><a href=/releases/0.39.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.39.0 release notes
+</a><a href=/releases/0.40.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.40.0 release notes
+</a><a href=/releases/0.40.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.40.1 release notes
+</a><a href=/releases/0.40.2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.40.2 release notes
+</a><a href=/releases/0.41.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.41.0 release notes
+</a><a href=/releases/0.41.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.41.1 release notes
+</a><a href=/releases/0.42.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.42.0 release notes
+</a><a href=/releases/0.43.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.43.0 release notes
+</a><a href=/releases/0.43.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.43.1 release notes
+</a><a href=/releases/0.44.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.44.0 release notes
+</a><a href=/releases/0.45.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.45.0 release notes
+</a><a href=/releases/0.46.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.46.0 release notes
+</a><a href=/releases/0.46.1/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.46.1 release notes
+</a><a href=/releases/0.47.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.47.0 release notes
+</a><a href=/releases/0.48.0/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector v0.48.0 release notes
+</a><a href=/highlights/2025-02-24-0-45-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.45 Upgrade Guide
+</a><a href=/highlights/2025-02-24-memory_enrichment_table/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Memory Enrichment Table
+</a><a href=/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector
+</a><a href=/highlights/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector highlights
+</a><a href=/blog/highlights-february-2025/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Highlights - February 2025
+</a><a href=/blog/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The Vector blog
+</a><a href=/highlights/2025-01-13-0-44-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.44 Upgrade Guide
+</a><a href=/highlights/2024-11-07-exclusive_route/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Exclusive Route Transform
+</a><a href=/highlights/2024-07-29-0-40-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.40 Upgrade Guide
+</a><a href=/highlights/2024-06-17-0-39-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.39 Upgrade Guide
+</a><a href=/highlights/2024-05-07-0-38-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.38 Upgrade Guide
+</a><a href=/highlights/2024-02-13-0-36-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.36 Upgrade Guide
+</a><a href=/highlights/2023-12-19-0-35-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.35 Upgrade Guide
+</a><a href=/highlights/2023-11-07-0-34-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.34 Upgrade Guide
+</a><a href=/highlights/2023-11-07-new-linux-repos/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">A New Home for Linux Packages
+</a><a href=/highlights/2023-10-30-secrets-in-disk-buffers/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Secrets in Disk Buffers
+</a><a href=/highlights/2023-09-27-0-33-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.33 Upgrade Guide
+</a><a href=/highlights/2023-08-30-yaml-default-format/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">YAML default configuration format
+</a><a href=/highlights/2023-08-15-0-32-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.32 Upgrade Guide
+</a><a href=/highlights/2023-07-05-0-31-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.31 Upgrade Guide
+</a><a href=/blog/log-namespacing/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Log Namespacing
+</a><a href=/highlights/2023-05-22-0-30-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.30 Upgrade Guide
+</a><a href=/highlights/2023-04-11-0-29-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.29 Upgrade Guide
+</a><a href=/highlights/2023-03-26-0-37-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.37 Upgrade Guide
+</a><a href=/highlights/2023-02-28-0-28-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.28 Upgrade Guide
+</a><a href=/highlights/2023-01-17-0-27-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.27 Upgrade Guide
+</a><a href=/highlights/2022-12-22-enhanced-metric-tags/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Enhanced Metric Tags
+</a><a href=/blog/tracking-allocations/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Monitoring Vector's per-component memory usage
+</a><a href=/highlights/2022-11-07-0-26-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.26 Upgrade Guide
+</a><a href=/highlights/2022-10-04-0-25-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.25 Upgrade Guide
+</a><a href=/highlights/2022-08-16-0-24-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.24 Upgrade Guide
+</a><a href=/highlights/2022-07-07-0-23-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.23 Upgrade Guide
+</a><a href=/highlights/2022-07-07-secrets-management/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Load secrets into Vector
+</a><a href=/highlights/2022-06-07-vrl-metadata-and-secrets/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Updates to event metadata and secrets
+</a><a href=/highlights/2022-05-24-vrl-encryption/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New encryption functions for VRL
+</a><a href=/highlights/2022-05-18-vrl-iteration-support/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">VRL iteration support has arrived!
+</a><a href=/highlights/2022-05-03-0-22-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.22 Upgrade Guide
+</a><a href=/highlights/2022-03-31-native-event-codecs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New `native` and `native_json` codecs
+</a><a href=/highlights/2022-04-06-disk-buffer-v2-stable/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Switching the default implementation of disk buffers to `disk_v2`
+</a><a href=/highlights/2022-03-28-kube-for-kubernetes_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">`kube` for `kubernetes_logs`
+</a><a href=/highlights/2022-03-22-0-21-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.21 Upgrade Guide
+</a><a href=/highlights/2022-03-15-vrl-vm-beta/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Beta release of a Virtual Machine to run VRL programs
+</a><a href=/highlights/2022-02-08-0-20-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.20 Upgrade Guide
+</a><a href=/highlights/2022-02-08-disk-buffer-v2-beta/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Beta release of Vector's new disk buffer implementation
+</a><a href=/highlights/2022-01-19-component-sent-metrics-output-tag/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New `output` tag in internal metrics
+</a><a href=/highlights/2022-01-12-vector-unit-test-improvements/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector Config Unit Testing Improvements
+</a><a href=/highlights/2021-12-28-0-19-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.19 Upgrade Guide
+</a><a href=/highlights/2021-12-15-splunk-hec-improvements/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Splunk HEC Improvements
+</a><a href=/highlights/2021-12-14-improved-concurrency-model/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Improved concurrency model
+</a><a href=/highlights/2021-11-18-0-18-0-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.18 Upgrade Guide
+</a><a href=/highlights/2021-11-18-implicit-namespacing/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Automatic namespacing for configuration files
+</a><a href=/highlights/2021-10-19-elasticsearch-config-deprecations/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Elasticsearch sink config changes and deprecations
+</a><a href=/highlights/2021-11-18-csv-enrichment/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Enrich your observability data from a CSV
+</a><a href=/highlights/2021-11-12-event-throttle-transform/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Event `throttle` transform released
+</a><a href=/highlights/2021-11-18-failed-event-routing/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Initial support for routing failed events released
+</a><a href=/highlights/2021-10-08-0-17-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.17 Upgrade Guide
+</a><a href=/highlights/2021-10-06-arc-default/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">HTTP-based sinks now use adaptive concurrency by default
+</a><a href=/highlights/2021-10-06-source-codecs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New `decoding` and `framing` options for sources
+</a><a href=/highlights/2021-08-25-0-16-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.16 Upgrade Guide
+</a><a href=/highlights/2021-08-24-helm-vector-dev/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Introducing helm.vector.dev
+</a><a href=/highlights/2021-08-24-vector-aggregator/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Moving the aggregator Helm chart to public beta
+</a><a href=/highlights/2021-08-23-removing-wasm/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">`wasm` transform to be removed from Vector
+</a><a href=/highlights/2021-08-20-rate-limits/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Improved defaults for sink rate limits
+</a><a href=/highlights/2021-08-24-vector-source-sink/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Version 2 of the Vector source/sink released
+</a><a href=/highlights/2021-07-16-remap-multiple/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Mapping one log event into multiple
+</a><a href=/highlights/2021-07-14-0-15-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.15 Upgrade Guide
+</a><a href=/highlights/2021-07-14-vector-graph/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Visualizing your Vector topology
+</a><a href=/highlights/2021-07-13-helm-customconfig/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Introduction of `customConfig` Helm option and deprecation notice for TOML based config keys
+</a><a href=/highlights/2022-07-07-sink-codecs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New `encoding` and `framing` options for sinks
+</a><a href=/highlights/2021-06-03-exec-source/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Generate events from an external program using the new `exec` source
+</a><a href=/highlights/2021-06-02-drop-jemalloc/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Switching to the system allocator
+</a><a href=/highlights/2021-06-02-fix-vector-metric-naming/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Telemetry units for duration metrics fixed
+</a><a href=/highlights/2021-06-01-removing-helm-rawconfig/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Deprecating Helm `rawConfig` option
+</a><a href=/highlights/2021-04-21-vrl-abort/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Adding the `abort` keyword to VRL
+</a><a href=/highlights/2021-04-21-vector-tap/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Introducing `vector tap`
+</a><a href=/highlights/2021-02-16-0-12-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.12 Upgrade Guide
+</a><a href=/highlights/2021-02-16-vector-remap-language/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Introducing Vector Remap Language
+</a><a href=/highlights/2021-02-16-filter-remap-support/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Remap support for the `filter` transform
+</a><a href=/highlights/2021-02-16-reduce-transform-remap-support/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Remap support for the `reduce` transform (multi-line logs)
+</a><a href=/highlights/2021-02-16-swimlanes-remap-support/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Remap support for the `swimlanes` transform (routing)
+</a><a href=/blog/vector-remap-language/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector Remap Language
+</a><a href=/blog/datadog-acquisition/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Accelerating Vector with Datadog
+</a><a href=/highlights/2021-01-31-file-source-checkpointing/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Improved `file` source checkpointing
+</a><a href=/highlights/2021-01-20-wildcard-identifiers/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Wildcards are now supported in component names
+</a><a href=/highlights/2021-01-10-kafka-sink-metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The `kafka` sink now supports metrics
+</a><a href=/highlights/2020-12-23-vector-top/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Introducing `vector top`
+</a><a href=/highlights/2020-12-23-internal-logs-source/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The `internal_logs` source
+</a><a href=/highlights/2020-12-23-graphql-api/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The GraphQL API for Vector
+</a><a href=/blog/graphql-api/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The new GraphQL API for Vector
+</a><a href=/highlights/2020-12-01-0-11-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.11 Upgrade Guide
+</a><a href=/blog/kubernetes-integration/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">First-class Kubernetes integration for Vector
+</a><a href=/highlights/2020-11-25-json-yaml-config-formats/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">JSON and YAML config formats are now supported
+</a><a href=/blog/adaptive-request-concurrency/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Adaptive request concurrency. Resilient observability at scale.
+</a><a href=/highlights/2020-11-19-prometheus-remote-integrations/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Support for the Prometheus remote write protocol
+</a><a href=/highlights/2020-10-27-kubernetes-integration/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">First-class Kubernetes integration
+</a><a href=/highlights/2020-10-28-new-aws-integrations/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New AWS integrations
+</a><a href=/highlights/2020-10-27-metrics-integrations/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New metrics integrations
+</a><a href=/highlights/2020-09-18-adaptive-concurrency/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Adaptive Request Concurrency (ARC)
+</a><a href=/highlights/2020-08-31-mpl-2-0-license/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Switching to the MPL 2.0 License
+</a><a href=/highlights/2020-06-18-remove-custom-dns-resolution/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Custom DNS resolution removal
+</a><a href=/highlights/2020-07-09-add-musl-and-glibc-support-to-install-sh/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Leveraging glibc when possible
+</a><a href=/highlights/2020-07-10-add-reduce-transform/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Reduce transform
+</a><a href=/highlights/2020-06-27-add-sasl-to-kafka/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Kafka components support SASL
+</a><a href=/highlights/2020-05-05-add-support-for-include-exclude-units/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Journald Unit Filtering Exclusions
+</a><a href=/highlights/2020-07-06-add-compression-option-for-aws-sinks/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New compression options for some sinks
+</a><a href=/highlights/2020-04-09-make-acl-optional/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">ACL is now optional for the Google Cloud Storage sink
+</a><a href=/highlights/2020-02-05-merge-partial-docker-events/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Automatically merge partial Docker events
+</a><a href=/highlights/2020-06-10-consolidate-and-beautify-validate/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Beautification of the validate command
+</a><a href=/blog/how-we-test-vector/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">How we test Vector
+</a><a href=/blog/introducing-vector/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Introducing Vector
+</a><a href=/highlights/2020-01-03-merge-existing-tcp-and-udp-sources-into-a-single-socket-source/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Merge existing `tcp` and `udp` sources into a single `socket` source
+</a><a href=/highlights/2020-03-19-apache-pulsar-sink/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Apache Pulsar Sink
+</a><a href=/highlights/2020-03-04-encoding-only-fields-except-fields/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Encoding Options
+</a><a href=/highlights/2020-03-14-honeycomb-sink/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Honeycomb Sink
+</a><a href=/highlights/2020-05-20-add-bearer-auth-strategy/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Now supporting the bearer auth strategy
+</a><a href=/highlights/2020-05-13-add-regexset-support-to-regex/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">RegexSet support to `regex` transform
+</a><a href=/highlights/2020-01-03-move-existing-tcp-sink-into-socket-sink/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Rename existing `tcp` sink to `socket` sink
+</a><a href=/highlights/2019-10-21-require-encoding-option-for-console-and-file-sinks/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Require `encoding` option for console and file sinks
+</a><a href=/highlights/2020-04-09-set-search_dirs-to-config-dirs-by-default/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Set the Lua transform `search_dirs` option to Vector's config dir by default
+</a><a href=/highlights/2020-01-12-request-options-refactored/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Sink options have been refactored
+</a><a href=/highlights/2020-05-27-add-support-for-loading-multiple-cas/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Support for loading multiple CAs
+</a><a href=/highlights/2019-12-04-rename-datadog-sink-to-datadog_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The `datadog` sink has been renamed to `datadog_metrics`
+</a><a href=/highlights/2020-04-05-default-compression-to-none/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The `elasticsearch` sink `compression` option now defaults to `none`
+</a><a href=/highlights/2020-03-23-rename-gcp_stackdriver_logging-sink-to-gcp_stackdriver_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The `gcp_stackdriver_logging` sink has been renamed to `gcp_stackdriver_logs`
+</a><a href=/highlights/2020-01-20-splunk-hec-specify-indexed-fields/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The `splunk_hec` sink does not index fields by default
+</a><a href=/highlights/2020-03-12-rename-host_field-to-host_key/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The `splunk_hec` source's `host_field` option has been renamed to `host_key`
+</a><a href=/highlights/2020-01-12-use-comma-delim-server-list-instead-of-an-array/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Use comma delim server list in `kafka` sink
+</a><a href=/highlights/2019-12-13-custom-dns/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Use Custom DNS Servers
+</a><a href=/highlights/2020-04-07-use-external-tagging-for-metrics-serialization/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Use external tagging for metrics serialization
+</a><a href=/highlights/2020-05-04-shutdown-vector-if-all-sources-finish/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector gracefully exits when specific sources finish
+</a><a href=/highlights/2021-04-21-0-13-upgrade-guide/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">0.13 Upgrade Guide
+</a><a href=/highlights/2020-04-20-improved-shutdown/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Improved Shutdown
+</a><a href=/highlights/2020-02-14-global-log-schema/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Introducing Vector's Global Log Schema
+</a><a href=/highlights/2020-04-17-new-sinks/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">4 New Sinks!
+</a><a href=/highlights/2020-02-28-custom-vector-builds/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">À la carte Custom Vector Builds
+</a><a href=/highlights/2020-03-10-dedupe-transform/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Dedupe Transform
+</a><a href=/highlights/2020-03-31-filter-transform/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Filter Transform
+</a><a href=/highlights/2020-03-11-tag-cardinality-limit-transform/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Tag Cardinality Limit Transform
+</a><a href=/highlights/2020-02-05-drop-aws-options/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS specific options have been dropped in the Elasticsearch sink
+</a><a href=/highlights/2020-02-21-file-source-multiline-support/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Improved Multiline Support In The File Source
+</a><a href=/highlights/2020-04-07-vector-to-vector-metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The Vector Source Now Accepts Metrics
+</a><a href=/highlights/2020-03-09-kafka-sink-compression/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Compression Now Available In The Kafka Sink
+</a><a href=/highlights/2020-02-11-improved-syslog-parsing/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Improved Syslog Parsing
+</a><a href=/highlights/2020-02-24-log-data-model-changes/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Log Data Model Changes and Disk Buffers
+</a><a href=/highlights/2020-02-20-new-sinks/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Lots of New Sinks!
+</a><a href=/highlights/2020-04-01-more-condition-predicates/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">More Condition Predicates
+</a><a href=/highlights/2020-03-23-datadog-logs-sink/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Datadog Logs Sink
+</a><a href=/highlights/2020-03-12-papertrail-sink/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Papertrail Sink
+</a><a href=/highlights/2020-02-24-rename-fields-transform/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Rename Fields Transform
+</a><a href=/highlights/2020-02-24-swimlanes-transform/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Swimlanes Transform
+</a><a href=/highlights/2020-02-27-nixos-support/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">NixOS Support
+</a><a href=/highlights/2020-01-14-rename-line-field-to-message/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Rename `line` field to `message` in `splunk_hec` source
+</a><a href=/highlights/2020-02-07-multi-config-files/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Support For Multiple Config Files
+</a><a href=/highlights/2020-02-17-add-fields-transform-templating/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The Add Fields Transform Supports Templating
+</a><a href=/highlights/2020-03-11-vector-sink-tls/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">The Vector Source and Sink Support TLS
+</a><a href=/highlights/2020-03-03-privacy-policy/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">We've Added a Privacy Policy
+</a><a href=/highlights/2020-03-04-encoding-whitelist-blacklist/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Whitelist and Blacklist Fields When Encoding
+</a><a href=/highlights/2020-03-31-guides-section/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">A New Guides Section
+</a><a href=/highlights/2019-11-19-arm-support-on-linux/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">ARMv7 and ARM64 Support on Linux
+</a><a href=/highlights/2020-04-07-lua-transform-version-2/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Lua Transform v2
+</a><a href=/highlights/2019-12-16-ec2-metadata/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New AWS EC2 Metadata Transform
+</a><a href=/highlights/2019-12-14-kubernetes-source-alpha/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Kubernetes Source (alpha)
+</a><a href=/highlights/2020-01-07-prometheus-source/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Prometheus Source
+</a><a href=/highlights/2019-11-25-unit-testing-vector-config-files/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Unit Testing Your Vector Config Files
+</a><a href=/highlights/2019-11-21-windows-support/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Windows Support Is Here!
+</a><a href=/docs/reference/configuration/transforms/aggregate/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Aggregate
+</a><a href=/docs/reference/configuration/sinks/amqp/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AMQP
+</a><a href=/docs/reference/configuration/sources/amqp/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AMQP
+</a><a href=/docs/reference/configuration/sources/apache_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Apache HTTP server (HTTPD) metrics
+</a><a href=/docs/reference/configuration/sinks/appsignal/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AppSignal
+</a><a href=/docs/reference/configuration/sinks/aws_cloudwatch_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS Cloudwatch logs
+</a><a href=/docs/reference/configuration/sinks/aws_cloudwatch_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS Cloudwatch metrics
+</a><a href=/docs/reference/configuration/transforms/aws_ec2_metadata/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS EC2 metadata
+</a><a href=/docs/reference/configuration/sources/aws_ecs_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS ECS metrics
+</a><a href=/docs/reference/configuration/sinks/aws_kinesis_firehose/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS Kinesis Data Firehose logs
+</a><a href=/docs/reference/configuration/sources/aws_kinesis_firehose/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS Kinesis Firehose
+</a><a href=/docs/reference/configuration/sinks/aws_kinesis_streams/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS Kinesis Streams logs
+</a><a href=/docs/reference/configuration/sinks/aws_s3/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS S3
+</a><a href=/docs/reference/configuration/sources/aws_s3/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS S3
+</a><a href=/docs/reference/configuration/sinks/aws_sns/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS SNS
+</a><a href=/docs/reference/configuration/sinks/aws_sqs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS SQS
+</a><a href=/docs/reference/configuration/sources/aws_sqs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">AWS SQS
+</a><a href=/docs/reference/configuration/sinks/axiom/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Axiom
+</a><a href=/docs/reference/configuration/sinks/azure_blob/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Azure Blob Storage
+</a><a href=/docs/reference/configuration/sinks/azure_monitor_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Azure Monitor Logs
+</a><a href=/docs/reference/configuration/sinks/blackhole/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Blackhole
+</a><a href=/docs/reference/configuration/sinks/clickhouse/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">ClickHouse
+</a><a href=/docs/reference/configuration/sinks/console/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Console
+</a><a href=/docs/reference/configuration/sinks/databend/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Databend
+</a><a href=/docs/reference/configuration/sources/datadog_agent/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Datadog agent
+</a><a href=/docs/reference/configuration/sinks/datadog_events/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Datadog events
+</a><a href=/docs/reference/configuration/sinks/datadog_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Datadog logs
+</a><a href=/docs/reference/configuration/sinks/datadog_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Datadog metrics
+</a><a href=/docs/reference/configuration/sinks/datadog_traces/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Datadog traces
+</a><a href=/docs/reference/configuration/transforms/dedupe/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Dedupe events
+</a><a href=/docs/reference/configuration/sources/demo_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Demo Logs
+</a><a href=/docs/reference/configuration/sources/dnstap/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">dnstap
+</a><a href=/docs/reference/configuration/sources/docker_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Docker logs
+</a><a href=/download/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Download Vector
+</a><a href=/docs/reference/configuration/sinks/elasticsearch/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Elasticsearch
+</a><a href=/docs/reference/configuration/sources/eventstoredb_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">EventStoreDB metrics
+</a><a href=/docs/reference/configuration/transforms/exclusive_route/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Exclusive Route
+</a><a href=/docs/reference/configuration/sources/exec/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Exec
+</a><a href=/docs/reference/configuration/sinks/file/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">File
+</a><a href=/docs/reference/configuration/sources/file/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">File
+</a><a href=/docs/reference/configuration/sources/file_descriptor/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">File Descriptor
+</a><a href=/docs/reference/configuration/transforms/filter/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Filter
+</a><a href=/docs/reference/configuration/sources/fluent/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Fluent
+</a><a href=/docs/reference/configuration/sinks/gcp_chronicle_unstructured/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">GCP Chronicle Unstructured
+</a><a href=/docs/reference/configuration/sinks/gcp_stackdriver_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">GCP Cloud Monitoring (formerly Stackdriver)
+</a><a href=/docs/reference/configuration/sinks/gcp_cloud_storage/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">GCP Cloud Storage (GCS)
+</a><a href=/docs/reference/configuration/sinks/gcp_stackdriver_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">GCP Operations (formerly Stackdriver) logs
+</a><a href=/docs/reference/configuration/sinks/gcp_pubsub/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">GCP PubSub
+</a><a href=/docs/reference/configuration/sources/gcp_pubsub/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">GCP PubSub
+</a><a href=/docs/reference/configuration/sinks/greptimedb_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">GreptimeDB Logs
+</a><a href=/docs/reference/configuration/sinks/greptimedb_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">GreptimeDB Metrics
+</a><a href=/docs/reference/configuration/sources/heroku_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Heroku Logplex
+</a><a href=/docs/reference/configuration/sinks/honeycomb/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Honeycomb
+</a><a href=/docs/reference/configuration/sources/host_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Host metrics
+</a><a href=/docs/reference/configuration/sinks/http/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">HTTP
+</a><a href=/docs/reference/configuration/sources/http_client/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">HTTP Client
+</a><a href=/docs/reference/configuration/sources/http_server/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">HTTP Server
+</a><a href=/docs/reference/configuration/sinks/humio_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Humio logs
+</a><a href=/docs/reference/configuration/sinks/humio_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Humio metrics
+</a><a href=/docs/reference/configuration/sinks/influxdb_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">InfluxDB logs
+</a><a href=/docs/reference/configuration/sinks/influxdb_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">InfluxDB metrics
+</a><a href=/docs/setup/installation/manual/vector-installer/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Install Vector using the Vector installer
+</a><a href=/docs/reference/configuration/sources/internal_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Internal logs
+</a><a href=/docs/reference/configuration/sources/internal_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Internal metrics
+</a><a href=/docs/reference/configuration/sources/journald/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">JournalD
+</a><a href=/docs/reference/configuration/sinks/kafka/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Kafka
+</a><a href=/docs/reference/configuration/sources/kafka/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Kafka
+</a><a href=/docs/reference/configuration/sinks/keep/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Keep
+</a><a href=/docs/reference/configuration/sources/kubernetes_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Kubernetes logs
+</a><a href=/docs/reference/configuration/transforms/log_to_metric/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Log to metric
+</a><a href=/docs/reference/configuration/sources/logstash/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Logstash
+</a><a href=/docs/reference/configuration/sinks/loki/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Loki
+</a><a href=/docs/reference/configuration/transforms/lua/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Lua
+</a><a href=/docs/reference/configuration/transforms/metric_to_log/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Metric to log
+</a><a href=/docs/reference/configuration/sinks/mezmo/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Mezmo (formerly LogDNA)
+</a><a href=/docs/reference/configuration/sources/mongodb_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">MongoDB metrics
+</a><a href=/docs/reference/configuration/sinks/mqtt/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">MQTT
+</a><a href=/docs/reference/configuration/sources/mqtt/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">MQTT
+</a><a href=/docs/reference/configuration/sinks/nats/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">NATS
+</a><a href=/docs/reference/configuration/sources/nats/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">NATS
+</a><a href=/docs/reference/configuration/sinks/new_relic/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">New Relic
+</a><a href=/docs/reference/configuration/sources/nginx_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">NGINX metrics
+</a><a href=/docs/reference/configuration/sinks/opentelemetry/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">OpenTelemetry
+</a><a href=/docs/reference/configuration/sources/opentelemetry/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">OpenTelemetry
+</a><a href=/docs/reference/configuration/sinks/papertrail/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Papertrail
+</a><a href=/docs/reference/configuration/sinks/postgres/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Postgres
+</a><a href=/docs/reference/configuration/sources/postgresql_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">PostgreSQL metrics
+</a><a href=/docs/reference/configuration/sinks/prometheus_exporter/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Prometheus Exporter
+</a><a href=/docs/reference/configuration/sources/prometheus_pushgateway/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Prometheus Pushgateway
+</a><a href=/docs/reference/configuration/sinks/prometheus_remote_write/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Prometheus remote write
+</a><a href=/docs/reference/configuration/sources/prometheus_remote_write/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Prometheus remote write
+</a><a href=/docs/reference/configuration/sources/prometheus_scrape/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Prometheus scrape
+</a><a href=/docs/reference/configuration/sinks/pulsar/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Pulsar
+</a><a href=/docs/reference/configuration/sources/pulsar/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Pulsar
+</a><a href=/docs/reference/configuration/sinks/redis/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Redis
+</a><a href=/docs/reference/configuration/sources/redis/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Redis
+</a><a href=/docs/reference/configuration/transforms/reduce/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Reduce
+</a><a href=/docs/reference/configuration/transforms/route/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Route
+</a><a href=/docs/reference/configuration/transforms/sample/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Sample
+</a><a href=/docs/reference/configuration/sinks/sematext_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Sematext logs
+</a><a href=/docs/reference/configuration/sinks/sematext_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Sematext metrics
+</a><a href=/docs/reference/configuration/sinks/socket/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Socket
+</a><a href=/docs/reference/configuration/sources/socket/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Socket
+</a><a href=/docs/reference/configuration/sinks/splunk_hec_logs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Splunk HEC logs
+</a><a href=/docs/reference/configuration/sinks/splunk_hec_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Splunk HEC metrics
+</a><a href=/docs/reference/configuration/sources/splunk_hec/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Splunk HTTP Event Collector (HEC)
+</a><a href=/docs/reference/configuration/sources/static_metrics/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Static metrics
+</a><a href=/docs/reference/configuration/sinks/statsd/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">StatsD
+</a><a href=/docs/reference/configuration/sources/statsd/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">StatsD
+</a><a href=/docs/reference/configuration/sources/stdin/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">stdin
+</a><a href=/docs/reference/configuration/sources/syslog/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Syslog
+</a><a href=/docs/reference/configuration/transforms/tag_cardinality_limit/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Tag cardinality limit
+</a><a href=/docs/reference/configuration/transforms/throttle/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Throttle
+</a><a href=/docs/reference/configuration/sinks/vector/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector
+</a><a href=/docs/reference/configuration/sources/vector/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector
+</a><a href=/community/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector Community
+</a><a href=/components/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector Components
+</a><a href=/releases/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Vector releases
+</a><a href=/docs/reference/configuration/sinks/webhdfs/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">WebHDFS
+</a><a href=/docs/reference/configuration/sinks/websocket/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Websocket
+</a><a href=/docs/reference/configuration/sinks/websocket_server/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Websocket Server
+</a><a href=/docs/reference/configuration/transforms/window/ class="text-sm text-dark dark:text-gray-200 hover:text-secondary dark:hover:text-primary">Window</a></div></div></div><script src=https://lp.datadoghq.com/js/forms2/js/forms2.min.js></script><div id=12461 class="hidden bg-black dark:bg-white bg-opacity-50 dark:bg-opacity-50 z-50 fixed top-0 left-0 w-full h-full overflow-auto"><div class="max-w-full md:max-w-2xl w-auto mx-auto my-6 px-2.5 py-2"><div id=modal-container--12461 class="bg-white dark:bg-gray-900 rounded flex flex-col"><div class="relative text-center p-4 flex items-start justify-between"><p class="w-4/5 m-auto text-dark dark:text-gray-100 text-lg font-semibold">Sign up to receive emails on the latest Vector content and new releases</p><button id=modal-close--12461 type=button data-dismiss=modal class="close absolute right-4 p-4 pt-3 -m-4 ml-auto font-semibold opacity-50 dark:text-gray-100">
+<span aria-hidden=true>&#215;</span></button></div><div class="relative flex flex-auto px-2 pb-4 justify-center"><form id=mktoForm_12461></form><p id=modal-thankyou--12461 class="hidden pt-10 pb-14">Thank you for joining our Updates Newsletter</p></div></div></div></div><script>const{MktoForms2}=window,loadMarketoForm=()=>{const e=["12461"];e.forEach(e=>{MktoForms2.loadForm("//lp.datadoghq.com","875-UVY-685",e,t=>{const n=document.getElementById(`mktoForm_${e}`);n.removeAttribute("style"),n.setAttribute("class","mktoForm flex flex-col");function s(){const t=document.getElementById(`modal-thankyou--${e}`),s=document.querySelector(`#modal-container--${e} > div > p`);n.classList.add("hidden"),s.classList.add("hidden"),t.classList.remove("hidden")}t.onSuccess(()=>(s(),!1))})})},toggleModal=e=>{event.preventDefault();const t=document.getElementById(e),s=document.getElementById(`modal-container--${e}`),o=document.getElementById(`modal-close--${e}`),n=()=>{(!s.contains(event.target)||o.contains(event.target))&&(t.classList.toggle("hidden"),t.removeEventListener("click",n))};t.classList.toggle("hidden"),t.addEventListener("click",n)};window.addEventListener("load",loadMarketoForm)</script></div><footer class="bg-white dark:bg-dark dark:border-gray-700 border-t-2 border-gray-150" aria-labelledby=footer-heading><h2 id=footer-heading class=sr-only>Vector site footer</h2><div class="max-w-7xl mx-auto py-10 px-6 lg:px-8 lg:py-16"><div class="pb-8 grid grid-cols-2 md:grid-cols-5 gap-10"><div><h3 class="dark:text-gray-400 text-gray-700 font-semibold tracking-wider uppercase">Abount</h3><ul class="mt-3 space-y-2 md:gap-y-3"><li><a href=/docs/introduction class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Vector</a></li><li><a href=/community class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Contact us</a></li><li><a href=https://opensource.datadoghq.com/about/#the-community-open-source-engineering-team class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">The Team</a></li><li><a href=https://www.datadoghq.com/legal/privacy/ class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Privacy</a></li><li><a href=https://www.datadoghq.com/legal/cookies/ class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Cookies</a></li></ul></div><div><h3 class="dark:text-gray-400 text-gray-700 font-semibold tracking-wider uppercase"><a href=/components class="hover:text-secondary dark:hover:text-primary">Components</a></h3><ul class="mt-3 space-y-2 md:gap-y-3"><li><a href=/docs/reference/configuration/sources class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Sources</a></li><li><a href=/docs/reference/configuration/transforms class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Transforms</a></li><li><a href=/docs/reference/configuration/sinks class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Sinks</a></li></ul></div><div><h3 class="dark:text-gray-400 text-gray-700 font-semibold tracking-wider uppercase"><a href=/docs/setup class="hover:text-secondary dark:hover:text-primary">Setup</a></h3><ul class="mt-3 space-y-2 md:gap-y-3"><li><a href=/docs/setup/installation class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Installation</a></li><li><a href=/docs/setup/deployment class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Deployment</a></li><li><a href=/docs/reference/configuration class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Configuration</a></li><li><a href=/docs/administration class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Administration</a></li><li><a href=/docs/setup/going-to-prod class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Going to Prod</a></li></ul></div><div><h3 class="dark:text-gray-400 text-gray-700 font-semibold tracking-wider uppercase"><a href=/community class="hover:text-secondary dark:hover:text-primary">Community</a></h3><ul class="mt-3 space-y-2 md:gap-y-3"><li><a href=https://github.com/vectordotdev/vector class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">GitHub</a></li><li><a href=https://twitter.com/vectordotdev class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Twitter</a></li><li><a href=https://chat.vector.dev class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Chat</a></li></ul></div><div><h3 class="dark:text-gray-400 text-gray-700 font-semibold tracking-wider uppercase"><a href=/download class="hover:text-secondary dark:hover:text-primary">Download</a></h3><ul class="mt-3 space-y-2 md:gap-y-3"><li><a href=/releases class="dark:text-gray-300 text-gray-500 hover:text-secondary dark:hover:text-primary">Releases</a></li></ul></div></div><div class="dark:border-gray-700 border-gray-300 mt-8 border-t pt-8 md:flex md:items-center md:justify-between"><div class="flex space-x-6 md:order-2 text-lg"><div class=pt-1.5><a href=https://twitter.com/vectordotdev rel=noopener target=_blank><span class=sr-only>Twitter icon and link
+</span><span class="text-gray-300 hover:text-twitter-blue"><ion-icon name=logo-twitter></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=https://github.com/vectordotdev/vector rel=noopener target=_blank><span class=sr-only>GitHub icon and link
+</span><span class="dark:text-white dark:hover:text-black text-gray-300 hover:text-black"><ion-icon name=logo-github></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=https://chat.vector.dev rel=noopener target=_blank><span class=sr-only>Chat icon and link
+</span><span class="text-gray-300 hover:text-discord-purple"><ion-icon name=logo-discord></ion-icon></span></a></div><div class="pt-1.5 ml-3.5"><a href=/blog/index.xml rel=noopener target=_blank><span class=sr-only>RSS icon and link
+</span><span class="text-gray-300 hover:text-rss-orange"><ion-icon name=logo-rss></ion-icon></span></a></div></div><p class="dark:text-gray-400 text-gray-400 mt-8 text-base md:mt-0 md:order-1">&copy; 2025 Datadog, Inc. All rights reserved.</p></div></div></footer><script type=text/javascript src=/js/below.8b8411d642a060532460bf68b8d78b080dd662804a26864719c0f76615e2058d.js integrity="sha256-i4QR1kKgYFMkYL9ouNeLCA3WYoBKJoZHGcD3ZhXiBY0="></script><script src=/js/search.1ebbe136c5172df466955a09a2a84d1601873ec64c840bfb92da8bca545a122b.js></script></body></html>

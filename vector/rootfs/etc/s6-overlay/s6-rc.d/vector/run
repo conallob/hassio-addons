@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv bashio
+
+# Get config
+CONFIG_PATH=/data/options.json
+LOG_LEVEL=$(bashio::config 'log_level')
+
+# Create default config if it doesn't exist
+if [ ! -f /config/vector/vector.yaml ]; then
+  mkdir -p /config/vector
+  cp /etc/vector/vector.yaml.template /config/vector/vector.yaml
+  bashio::log.info "Created default Vector configuration"
+fi
+
+# Start Vector
+bashio::log.info "Starting Vector..."
+exec vector --config /config/vector/vector.yaml --watch-config

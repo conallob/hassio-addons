@@ -1,0 +1,26 @@
+api:
+  enabled: true
+  address: 0.0.0.0:8686
+
+sources:
+  host_metrics:
+    type: host_metrics
+    filesystem:
+      devices:
+        excludes: ["binfmt_misc"]
+
+  home_assistant_logs:
+    type: file
+    include:
+      - /share/home-assistant/home-assistant.log
+    read_from: beginning
+
+sinks:
+  console:
+    inputs:
+      - host_metrics
+      - home_assistant_logs
+    target: stdout
+    type: console
+    encoding:
+      codec: json
