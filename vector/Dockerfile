@@ -1,8 +1,8 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# Use the distroless static variant of Vector
-FROM timberio/vector:0.48.0-distroless-static
+# Use the standard Vector image instead of distroless
+FROM timberio/vector:0.48.0-debian
 
 # Labels
 LABEL \
