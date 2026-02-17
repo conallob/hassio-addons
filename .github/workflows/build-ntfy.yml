@@ -1,0 +1,64 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'ntfy/**'
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Force rebuild of the image'
+        required: false
+        default: 'false'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Extract version from config.yaml
+        id: version
+        run: |
+          VERSION=$(grep -m 1 "version:" ntfy/config.yaml | awk '{print $2}' | tr -d '"')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push ntfy image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./ntfy
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/ntfy:${{ env.VERSION }}
+            ghcr.io/${{ github.repository_owner }}/ntfy:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            BUILD_VERSION=${{ env.VERSION }}
+            NTFY_VERSION=${{ env.VERSION }}
+            BUILD_FROM=ghcr.io/home-assistant/amd64-base-debian:bookworm
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Build summary
+        run: |
+          echo "ntfy image built and published as ghcr.io/${{ github.repository_owner }}/ntfy:${{ env.VERSION }}"

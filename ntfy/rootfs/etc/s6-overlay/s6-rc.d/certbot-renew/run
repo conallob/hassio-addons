@@ -1,0 +1,39 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Certbot renewal service
+# Runs every 12 hours to check if Let's Encrypt certificates need renewal
+# ==============================================================================
+
+declare letsencrypt
+letsencrypt=$(bashio::config 'letsencrypt')
+
+if ! bashio::var.true "${letsencrypt}"; then
+    bashio::log.info "Let's Encrypt is disabled, certbot renewal service sleeping"
+    exec sleep infinity
+fi
+
+declare domain
+domain=$(bashio::config 'domain')
+
+bashio::log.info "Certbot renewal service started for ${domain}"
+
+while true; do
+    # Sleep 12 hours between renewal checks
+    sleep 43200
+
+    bashio::log.info "Checking Let's Encrypt certificate renewal for ${domain}..."
+
+    certbot renew \
+        --non-interactive \
+        --standalone \
+        --preferred-challenges http \
+        --http-01-port 80 \
+        --quiet
+
+    if [ $? -eq 0 ]; then
+        bashio::log.info "Certificate renewal check completed"
+    else
+        bashio::log.warning "Certificate renewal encountered an issue"
+    fi
+done
