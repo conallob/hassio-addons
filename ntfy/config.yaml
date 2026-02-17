@@ -7,17 +7,17 @@ arch:
   - aarch64
   - amd64
 url: "https://github.com/conallob/hassio-addons/tree/master/ntfy"
-webui: "http://[HOST]:[PORT:80]"
 panel_icon: "mdi:bell-ring"
 startup: services
 ingress: true
 ingress_port: 2586
 ports:
-  443/tcp: 443
-  80/tcp: 80
+  443/tcp: null
+  80/tcp: null
 ports_description:
-  443/tcp: "ntfy HTTPS API"
-  80/tcp: "ntfy HTTP / Let's Encrypt ACME challenges"
+  443/tcp: "ntfy HTTPS API (set to 443 to enable external access)"
+  80/tcp: "Let's Encrypt ACME challenges (set to 80 to enable)"
+host_network: false
 map:
   - config:rw
   - ssl:rw
