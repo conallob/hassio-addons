@@ -48,6 +48,9 @@ if bashio::var.true "${letsencrypt}"; then
         bashio::exit.nok
     fi
 
+    bashio::log.warning "Let's Encrypt requires port 80 to be mapped externally for ACME HTTP-01 challenges."
+    bashio::log.warning "Ensure port 80 is configured in the add-on Network settings and forwarded from your router."
+
     LE_CERT_DIR="/etc/letsencrypt/live/${domain}"
 
     if [ ! -f "${LE_CERT_DIR}/fullchain.pem" ]; then
