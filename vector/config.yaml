@@ -43,6 +43,9 @@ options:
   sink_auth_username: ""
   sink_auth_password: ""
   sink_vrl: ""
+  gcp_project_id: ""
+  gcp_log_id: "home_assistant"
+  gcp_credentials_json: ""
 
   # --- Advanced override ---
   vector_config: ""
@@ -57,13 +60,16 @@ schema:
   syslog_udp_port: "int?"
   vector_source_port: "int?"
 
-  sink_type: "list(console|loki|elasticsearch|http|none)"
+  sink_type: "list(console|loki|elasticsearch|http|gcp|none)"
   loki_url: "url?"
   elasticsearch_url: "url?"
   http_url: "url?"
   sink_auth_username: "str?"
   sink_auth_password: "str?"
   sink_vrl: "str?"
+  gcp_project_id: "str?"
+  gcp_log_id: "str?"
+  gcp_credentials_json: "str?"
 
   vector_config: "str?"
 

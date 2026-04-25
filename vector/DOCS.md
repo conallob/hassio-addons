@@ -97,6 +97,7 @@ Where to send processed events. One of:
 | `loki` | Forward to a Loki instance (requires `loki_url`) |
 | `elasticsearch` | Forward to Elasticsearch (requires `elasticsearch_url`) |
 | `http` | POST as newline-delimited JSON to any HTTP endpoint (requires `http_url`) |
+| `gcp` | Forward to GCP Cloud Logging (requires `gcp_project_id` and `gcp_credentials_json`) |
 | `none` | Discard all events (useful for testing sources/transforms) |
 
 ### Option: `loki_url`
@@ -119,6 +120,26 @@ HTTP endpoint URI. Required when `sink_type` is `http`.
 
 HTTP Basic Auth credentials for Loki, Elasticsearch, or HTTP sinks.
 Leave blank for unauthenticated endpoints.
+
+### Option: `gcp_project_id`
+
+GCP project ID to send logs to. Required when `sink_type` is `gcp`.
+
+### Option: `gcp_log_id`
+
+The log stream name within Cloud Logging. Appears as the log name in the
+GCP console. Default: `home_assistant`.
+
+### Option: `gcp_credentials_json`
+
+The full contents of a GCP service account JSON key file. Required when
+`sink_type` is `gcp`. The add-on writes this to a temporary file at startup
+so Vector can authenticate without requiring manual file placement on the host.
+
+To generate a key:
+1. GCP Console → IAM & Admin → Service Accounts
+2. Create a service account with the **Logs Writer** role (`roles/logging.logWriter`)
+3. Create a JSON key and paste the entire file contents here
 
 ---
 

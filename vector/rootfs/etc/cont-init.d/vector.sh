@@ -35,6 +35,9 @@ declare http_url
 declare sink_auth_username
 declare sink_auth_password
 declare sink_vrl
+declare gcp_project_id
+declare gcp_log_id
+declare gcp_credentials_json
 declare vector_config
 
 VECTOR_CONFIG_DIR="/config/vector"
@@ -59,6 +62,9 @@ http_url=$(bashio::config 'http_url')
 sink_auth_username=$(bashio::config 'sink_auth_username')
 sink_auth_password=$(bashio::config 'sink_auth_password')
 sink_vrl=$(bashio::config 'sink_vrl')
+gcp_project_id=$(bashio::config 'gcp_project_id')
+gcp_log_id=$(bashio::config 'gcp_log_id')
+gcp_credentials_json=$(bashio::config 'gcp_credentials_json')
 vector_config=$(bashio::config 'vector_config')
 
 # ---------------------------------------------------------------------------
@@ -121,7 +127,29 @@ case "${sink_type}" in
             bashio::exit.nok
         fi
         ;;
+    gcp)
+        if ! bashio::var.has_value "${gcp_project_id}"; then
+            bashio::log.fatal "sink_type is 'gcp' but gcp_project_id is not set"
+            bashio::exit.nok
+        fi
+        if ! bashio::var.has_value "${gcp_credentials_json}"; then
+            bashio::log.fatal "sink_type is 'gcp' but gcp_credentials_json is not set"
+            bashio::exit.nok
+        fi
+        ;;
 esac
+
+# ---------------------------------------------------------------------------
+# Write GCP service account credentials to a temp file so Vector can read them.
+# The JSON content comes from the add-on option rather than requiring the user
+# to place a file on the host filesystem via SSH.
+# ---------------------------------------------------------------------------
+GCP_CREDENTIALS_PATH="/tmp/vector-gcp-credentials.json"
+if [ "${sink_type}" = "gcp" ] && bashio::var.has_value "${gcp_credentials_json}"; then
+    printf '%s' "${gcp_credentials_json}" > "${GCP_CREDENTIALS_PATH}"
+    chmod 600 "${GCP_CREDENTIALS_PATH}"
+    bashio::log.info "GCP credentials written to ${GCP_CREDENTIALS_PATH}"
+fi
 
 # ---------------------------------------------------------------------------
 # Build all_inputs — list of source component IDs feeding into the sink
@@ -327,6 +355,26 @@ HTTP_OPEN
 HTTP_AUTH
         fi
         echo ""
+
+    elif [ "${sink_type}" = "gcp" ]; then
+        cat <<GCP_BLOCK
+sinks:
+  gcp_cloud_logging:
+    type: gcp_stackdriver_logs
+    inputs:
+      - ${SINK_INPUT}
+    project_id: "${gcp_project_id}"
+    log_id: "${gcp_log_id}"
+    credentials_path: "${GCP_CREDENTIALS_PATH}"
+    resource:
+      type: generic_node
+      labels:
+        node_id: homeassistant
+        location: global
+        namespace: home_assistant
+    severity_key: level
+
+GCP_BLOCK
     fi
 
 } > "${VECTOR_CONFIG_PATH}"
@@ -339,6 +387,7 @@ bashio::var.true "${ha_logs}"                          && bashio::log.info "  ha
 [ "${syslog_udp_port:-0}" -gt 0 ] 2>/dev/null         && bashio::log.info "  syslog UDP :${syslog_udp_port}"
 [ "${vector_source_port:-0}" -gt 0 ] 2>/dev/null      && bashio::log.info "  vector-in  :${vector_source_port}"
 bashio::log.info "Sink: ${sink_type}"
+[ "${sink_type}" = "gcp" ] && bashio::log.info "  GCP project: ${gcp_project_id}, log_id: ${gcp_log_id}"
 bashio::log.info "Log level: ${log_level} (VECTOR_LOG=${VECTOR_LOG})"
 bashio::log.info "API enabled: ${api_enabled}"
 bashio::log.info "---"
