@@ -1,0 +1,144 @@
+name: Build Add-ons
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Force rebuild of all add-ons regardless of changed paths'
+        required: false
+        default: 'false'
+
+jobs:
+  # -------------------------------------------------------------------------
+  # Discover which add-ons have changed (or all of them on force_rebuild)
+  # -------------------------------------------------------------------------
+  discover:
+    name: Discover add-ons
+    runs-on: ubuntu-latest
+    outputs:
+      addons: ${{ steps.find.outputs.addons }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find add-ons to build
+        id: find
+        run: |
+          # Any subdirectory containing a config.yaml is an add-on.
+          ALL_ADDONS=$(find . -maxdepth 2 -name "config.yaml" \
+            | sed 's|^\./||' \
+            | xargs -I{} dirname {} \
+            | sort)
+
+          if [ "${{ github.event.inputs.force_rebuild }}" = "true" ] || \
+             [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Build everything
+            ADDONS_TO_BUILD="${ALL_ADDONS}"
+          else
+            # Only build add-ons whose files have changed since the last push
+            CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} 2>/dev/null \
+              || git diff --name-only HEAD~1 HEAD)
+            ADDONS_TO_BUILD=""
+            for addon in ${ALL_ADDONS}; do
+              if echo "${CHANGED}" | grep -q "^${addon}/"; then
+                ADDONS_TO_BUILD="${ADDONS_TO_BUILD} ${addon}"
+              fi
+            done
+          fi
+
+          # Convert to JSON array for the matrix
+          JSON=$(echo "${ADDONS_TO_BUILD}" | tr ' ' '\n' | grep -v '^$' | jq -Rsc 'split("\n") | map(select(length > 0))')
+          echo "addons=${JSON}" >> $GITHUB_OUTPUT
+          echo "Add-ons to build: ${JSON}"
+
+  # -------------------------------------------------------------------------
+  # Build each discovered add-on
+  # -------------------------------------------------------------------------
+  build:
+    name: Build ${{ matrix.addon }} (${{ matrix.arch }})
+    runs-on: ubuntu-latest
+    needs: discover
+    if: needs.discover.outputs.addons != '[]' && needs.discover.outputs.addons != ''
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        addon: ${{ fromJson(needs.discover.outputs.addons) }}
+        include_arch:
+          - arch: amd64
+            build_from_prefix: ghcr.io/home-assistant/amd64-base-debian
+            platform: linux/amd64
+          - arch: aarch64
+            build_from_prefix: ghcr.io/home-assistant/aarch64-base-debian
+            platform: linux/arm64
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Read add-on metadata
+        id: meta
+        run: |
+          ADDON=${{ matrix.addon }}
+          VERSION=$(grep -m 1 "^version:" "${ADDON}/config.yaml" | awk '{print $2}' | tr -d '"')
+          SLUG=$(grep -m 1 "^slug:" "${ADDON}/config.yaml" | awk '{print $2}' | tr -d '"')
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "slug=${SLUG}" >> $GITHUB_OUTPUT
+
+          # Determine the base image tag from build.yaml (default: bookworm)
+          BUILD_FROM_TAG="bookworm"
+          if [ -f "${ADDON}/build.yaml" ]; then
+            TAG=$(grep "${{ matrix.include_arch.arch }}:" "${ADDON}/build.yaml" | awk -F: '{print $NF}' | tr -d ' "')
+            if [ -n "${TAG}" ]; then
+              BUILD_FROM_TAG="${TAG##*:}"
+            fi
+          fi
+          BUILD_FROM="${{ matrix.include_arch.build_from_prefix }}:${BUILD_FROM_TAG}"
+          echo "build_from=${BUILD_FROM}" >> $GITHUB_OUTPUT
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push ${{ matrix.addon }} (${{ matrix.include_arch.arch }})
+        uses: docker/build-push-action@v6
+        with:
+          context: ./${{ matrix.addon }}
+          push: ${{ github.event_name != 'pull_request' }}
+          platforms: ${{ matrix.include_arch.platform }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ steps.meta.outputs.slug }}-${{ matrix.include_arch.arch }}:${{ steps.meta.outputs.version }}
+            ghcr.io/${{ github.repository_owner }}/${{ steps.meta.outputs.slug }}-${{ matrix.include_arch.arch }}:latest
+          cache-from: type=gha,scope=${{ matrix.addon }}-${{ matrix.include_arch.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.addon }}-${{ matrix.include_arch.arch }}
+          build-args: |
+            BUILD_FROM=${{ steps.meta.outputs.build_from }}
+            BUILD_VERSION=${{ steps.meta.outputs.version }}
+
+      - name: Build summary
+        run: |
+          echo "### ${{ matrix.addon }} (${{ matrix.include_arch.arch }}) v${{ steps.meta.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "Image: \`ghcr.io/${{ github.repository_owner }}/${{ steps.meta.outputs.slug }}-${{ matrix.include_arch.arch }}:${{ steps.meta.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
