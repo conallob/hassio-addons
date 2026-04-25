@@ -1,12 +1,11 @@
 # ntfy - Home Assistant Add-on
 
-Self-hosted push notification server ([ntfy.sh](https://ntfy.sh)) with Home Assistant ingress support and optional Let's Encrypt SSL certificate management.
+Self-hosted push notification server ([ntfy.sh](https://ntfy.sh)) with Home Assistant ingress support and optional HTTPS via the HA Let's Encrypt add-on.
 
 ## Features
 
 - **Home Assistant Ingress**: Access the ntfy web UI directly from the Home Assistant sidebar
-- **Let's Encrypt SSL**: Automated certificate acquisition and renewal via built-in certbot
-- **Manual SSL**: Use your own certificates (e.g. from the HA Let's Encrypt add-on)
+- **SSL support**: Use certificates issued by the [Home Assistant Let's Encrypt add-on](https://github.com/home-assistant/addons/tree/master/letsencrypt)
 - **Persistent storage**: Message cache, user database, and attachments survive restarts
 - **iOS push support**: Upstream relay to ntfy.sh for instant iOS notifications
 
@@ -23,19 +22,10 @@ Self-hosted push notification server ([ntfy.sh](https://ntfy.sh)) with Home Assi
 
 No configuration needed. Start the add-on and access ntfy through the Home Assistant sidebar.
 
-### With Let's Encrypt (recommended for external access)
+### With SSL (recommended for external access)
 
-```yaml
-domain: "ntfy.example.com"
-ssl: false
-letsencrypt: true
-letsencrypt_email: "you@example.com"
-auth_default_access: "deny-all"
-```
-
-Ensure port 80 is forwarded to your Home Assistant host for ACME HTTP-01 challenges, and port 443 for the ntfy HTTPS API.
-
-### With existing SSL certificates
+SSL certificates must be issued first by the [Home Assistant Let's Encrypt add-on](https://github.com/home-assistant/addons/tree/master/letsencrypt).
+Once the HA Let's Encrypt add-on has issued a certificate, configure ntfy:
 
 ```yaml
 domain: "ntfy.example.com"
@@ -45,7 +35,7 @@ keyfile: "privkey.pem"
 auth_default_access: "deny-all"
 ```
 
-Place your certificates in the Home Assistant `/ssl/` directory (e.g. managed by the HA Let's Encrypt add-on).
+Ensure port 443 is forwarded from your router to your Home Assistant host for external HTTPS access.
 
 ## Options
 
@@ -55,8 +45,6 @@ Place your certificates in the Home Assistant `/ssl/` directory (e.g. managed by
 | `ssl` | `false` | Enable HTTPS using certificates from `/ssl/` |
 | `certfile` | `fullchain.pem` | SSL certificate filename (relative to `/ssl/`) |
 | `keyfile` | `privkey.pem` | SSL private key filename (relative to `/ssl/`) |
-| `letsencrypt` | `false` | Enable automatic Let's Encrypt certificate management |
-| `letsencrypt_email` | `""` | Email for Let's Encrypt registration |
 | `auth_default_access` | `read-write` | Default access: `read-write`, `read-only`, `write-only`, `deny-all` |
 | `upstream_base_url` | `https://ntfy.sh` | Upstream server for iOS push notifications |
 | `log_level` | `info` | Log verbosity: `trace`, `debug`, `info`, `warn`, `error` |
@@ -65,8 +53,7 @@ Place your certificates in the Home Assistant `/ssl/` directory (e.g. managed by
 
 | Port | Purpose |
 |------|---------|
-| 443 | ntfy HTTPS API (external access, requires SSL) |
-| 80 | HTTP / Let's Encrypt ACME challenges |
+| 443 | ntfy HTTPS API (optional, requires `ssl: true`) |
 
 ## Usage
 
@@ -97,3 +84,4 @@ rest_command:
 
 - [ntfy documentation](https://docs.ntfy.sh/)
 - [ntfy GitHub](https://github.com/binwiederhier/ntfy)
+- [Home Assistant Let's Encrypt add-on](https://github.com/home-assistant/addons/tree/master/letsencrypt)

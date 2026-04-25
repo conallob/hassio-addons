@@ -2,15 +2,16 @@
 # shellcheck shell=bash
 # ==============================================================================
 # ntfy add-on initialization
-# Generates server.yml, handles Let's Encrypt certificate acquisition
+# Generates /etc/ntfy/server.yml from add-on options.
+#
+# SSL is handled externally by the Home Assistant Let's Encrypt add-on, which
+# writes certificates to /ssl/. This add-on simply reads them from there.
 # ==============================================================================
 
 declare domain
 declare ssl
 declare certfile
 declare keyfile
-declare letsencrypt
-declare letsencrypt_email
 declare auth_default_access
 declare upstream_base_url
 declare log_level
@@ -23,84 +24,41 @@ domain=$(bashio::config 'domain')
 ssl=$(bashio::config 'ssl')
 certfile=$(bashio::config 'certfile')
 keyfile=$(bashio::config 'keyfile')
-letsencrypt=$(bashio::config 'letsencrypt')
-letsencrypt_email=$(bashio::config 'letsencrypt_email')
 auth_default_access=$(bashio::config 'auth_default_access')
 upstream_base_url=$(bashio::config 'upstream_base_url')
 log_level=$(bashio::config 'log_level')
 
-# Retrieve the ingress URL so ntfy can generate correct asset/redirect URLs
+# Retrieve the ingress URL so ntfy generates correct asset/redirect URLs
 # when accessed through the Home Assistant ingress proxy.
 ingress_url=$(bashio::addon.ingress_url)
 
 # ---------------------------------------------------------------------------
 # Create persistent data directories
 # ---------------------------------------------------------------------------
-mkdir -p /data/ntfy
-mkdir -p /ssl/letsencrypt
+mkdir -p /data/ntfy/attachments
 
 # ---------------------------------------------------------------------------
-# Let's Encrypt certificate acquisition
+# Resolve SSL certificate paths (from /ssl/, managed by HA Let's Encrypt add-on)
 # ---------------------------------------------------------------------------
-if bashio::var.true "${letsencrypt}"; then
-    if bashio::var.is_empty "${domain}"; then
-        bashio::log.fatal "Let's Encrypt requires a domain to be configured"
-        bashio::exit.nok
-    fi
+CERT_FILE=""
+KEY_FILE=""
 
-    if bashio::var.is_empty "${letsencrypt_email}"; then
-        bashio::log.fatal "Let's Encrypt requires an email address"
-        bashio::exit.nok
-    fi
-
-    bashio::log.warning "Let's Encrypt requires port 80 to be mapped externally for ACME HTTP-01 challenges."
-    bashio::log.warning "Ensure port 80 is configured in the add-on Network settings and forwarded from your router."
-
-    LE_CERT_DIR="/etc/letsencrypt/live/${domain}"
-
-    if [ ! -f "${LE_CERT_DIR}/fullchain.pem" ]; then
-        bashio::log.info "Requesting Let's Encrypt certificate for ${domain}..."
-
-        certbot certonly \
-            --standalone \
-            --preferred-challenges http \
-            --http-01-port 80 \
-            --domain "${domain}" \
-            --email "${letsencrypt_email}" \
-            --agree-tos \
-            --non-interactive \
-            --keep-until-expiring
-
-        if [ $? -ne 0 ]; then
-            bashio::log.error "Failed to obtain Let's Encrypt certificate"
-            bashio::log.error "Ensure port 80 is forwarded and the domain resolves to this server"
-        else
-            bashio::log.info "Let's Encrypt certificate obtained successfully"
-        fi
-    else
-        bashio::log.info "Let's Encrypt certificate already exists for ${domain}"
-    fi
-
-    # Point to Let's Encrypt cert paths
-    CERT_FILE="${LE_CERT_DIR}/fullchain.pem"
-    KEY_FILE="${LE_CERT_DIR}/privkey.pem"
-
-elif bashio::var.true "${ssl}"; then
-    bashio::log.info "Using manually provided SSL certificates from /ssl/"
+if bashio::var.true "${ssl}"; then
     CERT_FILE="/ssl/${certfile}"
     KEY_FILE="/ssl/${keyfile}"
 
     if [ ! -f "${CERT_FILE}" ]; then
         bashio::log.fatal "SSL certificate not found: ${CERT_FILE}"
+        bashio::log.fatal "Ensure the Home Assistant Let's Encrypt add-on has issued a certificate and the certfile option matches."
         bashio::exit.nok
     fi
     if [ ! -f "${KEY_FILE}" ]; then
         bashio::log.fatal "SSL private key not found: ${KEY_FILE}"
+        bashio::log.fatal "Ensure the Home Assistant Let's Encrypt add-on has issued a certificate and the keyfile option matches."
         bashio::exit.nok
     fi
-else
-    CERT_FILE=""
-    KEY_FILE=""
+
+    bashio::log.info "Using SSL certificates from /ssl/"
 fi
 
 # ---------------------------------------------------------------------------
@@ -109,10 +67,10 @@ fi
 bashio::log.info "Generating ntfy server configuration..."
 
 {
-    # base-url drives the web UI asset paths and self-links.
-    # Priority: explicit domain (external access) > HA ingress URL (sidebar access).
-    # Without a correct base-url the web UI returns broken asset URLs through
-    # the ingress proxy, which manifests as HTTP 502 / blank pages.
+    # base-url drives web UI asset paths and self-links.
+    # Priority: explicit domain (external access) > HA ingress URL (sidebar).
+    # Without a correct base-url, assets are served from "/" which the HA
+    # ingress proxy cannot reach.
     if bashio::var.has_value "${domain}"; then
         if [ -n "${CERT_FILE}" ]; then
             echo "base-url: \"https://${domain}\""
@@ -120,14 +78,13 @@ bashio::log.info "Generating ntfy server configuration..."
             echo "base-url: \"http://${domain}\""
         fi
     elif bashio::var.has_value "${ingress_url}"; then
-        # Strip trailing slash from the ingress URL
         echo "base-url: \"${ingress_url%/}\""
     fi
 
     # HTTP listener for ingress (always enabled)
     echo "listen-http: \":2586\""
 
-    # HTTPS listener (if SSL is configured)
+    # HTTPS listener (only when SSL certificates are present)
     if [ -n "${CERT_FILE}" ] && [ -n "${KEY_FILE}" ]; then
         echo "listen-https: \":443\""
         echo "cert-file: \"${CERT_FILE}\""
@@ -146,7 +103,7 @@ bashio::log.info "Generating ntfy server configuration..."
     # Auth
     echo "auth-default-access: \"${auth_default_access}\""
 
-    # Upstream (for iOS push notifications)
+    # Upstream relay (for iOS push notifications via ntfy.sh)
     if bashio::var.has_value "${upstream_base_url}"; then
         echo "upstream-base-url: \"${upstream_base_url}\""
     fi
@@ -162,7 +119,7 @@ bashio::log.info "Generating ntfy server configuration..."
 
 bashio::log.info "ntfy configuration written to /etc/ntfy/server.yml"
 
-# Log summary
+# Summary
 bashio::log.info "---"
 bashio::log.info "ntfy ingress (HTTP) listening on port 2586"
 if [ -n "${CERT_FILE}" ]; then

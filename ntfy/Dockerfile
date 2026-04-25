@@ -10,18 +10,10 @@ FROM ${BUILD_FROM}
 # Labels
 LABEL \
     io.hass.name="ntfy" \
-    io.hass.description="Self-hosted push notification server with Let's Encrypt SSL" \
+    io.hass.description="Self-hosted push notification server" \
     io.hass.type="addon" \
     io.hass.version="${BUILD_VERSION}" \
     maintainer="Conall O'Brien <conall@conall.net>"
-
-# Install certbot and dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        certbot \
-        ca-certificates \
-        wget \
-    && rm -rf /var/lib/apt/lists/*
 
 # Copy ntfy binary from official image
 COPY --from=ntfy-source /usr/bin/ntfy /usr/bin/ntfy
@@ -34,12 +26,11 @@ RUN mkdir -p \
     /var/cache/ntfy \
     /var/lib/ntfy \
     /etc/ntfy \
-    /data \
-    /config
+    /data/ntfy
 
 # Set script permissions
 RUN chmod a+x /etc/cont-init.d/*.sh \
     && chmod a+x /etc/s6-overlay/s6-rc.d/*/run
 
-# Expose ports: 2586=ingress HTTP, 443=external HTTPS, 80=HTTP/ACME
-EXPOSE 2586 443 80
+# Expose ports: 2586=ingress HTTP, 443=external HTTPS (optional, requires SSL certs)
+EXPOSE 2586 443
