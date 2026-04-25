@@ -14,6 +14,7 @@ declare letsencrypt_email
 declare auth_default_access
 declare upstream_base_url
 declare log_level
+declare ingress_url
 
 # ---------------------------------------------------------------------------
 # Read configuration from Home Assistant add-on options
@@ -27,6 +28,10 @@ letsencrypt_email=$(bashio::config 'letsencrypt_email')
 auth_default_access=$(bashio::config 'auth_default_access')
 upstream_base_url=$(bashio::config 'upstream_base_url')
 log_level=$(bashio::config 'log_level')
+
+# Retrieve the ingress URL so ntfy can generate correct asset/redirect URLs
+# when accessed through the Home Assistant ingress proxy.
+ingress_url=$(bashio::addon.ingress_url)
 
 # ---------------------------------------------------------------------------
 # Create persistent data directories
@@ -104,13 +109,19 @@ fi
 bashio::log.info "Generating ntfy server configuration..."
 
 {
-    # Base URL (if domain is configured)
+    # base-url drives the web UI asset paths and self-links.
+    # Priority: explicit domain (external access) > HA ingress URL (sidebar access).
+    # Without a correct base-url the web UI returns broken asset URLs through
+    # the ingress proxy, which manifests as HTTP 502 / blank pages.
     if bashio::var.has_value "${domain}"; then
         if [ -n "${CERT_FILE}" ]; then
             echo "base-url: \"https://${domain}\""
         else
             echo "base-url: \"http://${domain}\""
         fi
+    elif bashio::var.has_value "${ingress_url}"; then
+        # Strip trailing slash from the ingress URL
+        echo "base-url: \"${ingress_url%/}\""
     fi
 
     # HTTP listener for ingress (always enabled)
@@ -159,6 +170,8 @@ if [ -n "${CERT_FILE}" ]; then
 fi
 if bashio::var.has_value "${domain}"; then
     bashio::log.info "Domain: ${domain}"
+elif bashio::var.has_value "${ingress_url}"; then
+    bashio::log.info "Ingress base-url: ${ingress_url}"
 fi
 bashio::log.info "Auth default access: ${auth_default_access}"
 bashio::log.info "Log level: ${log_level}"

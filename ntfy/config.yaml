@@ -1,6 +1,6 @@
 name: "ntfy"
 description: "Self-hosted push notification server with Let's Encrypt SSL support"
-version: "2.11.0"
+version: "2.11.1"
 slug: "ntfy"
 init: false
 arch:
