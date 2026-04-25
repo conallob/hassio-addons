@@ -1,0 +1,22 @@
+// Grafana Alloy default configuration template
+// This file is used as documentation/reference only.
+// The actual config is generated at runtime by /etc/cont-init.d/alloy.sh.
+//
+// To use a fully custom config, set the alloy_config option in the add-on UI.
+
+// Example: scrape Home Assistant Prometheus metrics
+prometheus.scrape "home_assistant" {
+  targets = [{"__address__" = "supervisor/core/api/prometheus", "__scheme__" = "http"}]
+  scrape_interval = "60s"
+  authorization {
+    type        = "Bearer"
+    credentials = env("SUPERVISOR_TOKEN")
+  }
+  forward_to = [prometheus.remote_write.default.receiver]
+}
+
+prometheus.remote_write "default" {
+  endpoint {
+    url = "http://prometheus:9090/api/v1/write"
+  }
+}

@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start Grafana Alloy
+# ==============================================================================
+
+ALLOY_CONFIG_PATH="/etc/alloy/config.alloy"
+ALLOY_LOG_LEVEL="${ALLOY_LOG_LEVEL:-info}"
+
+bashio::log.info "Starting Grafana Alloy (log level: ${ALLOY_LOG_LEVEL})..."
+
+exec alloy run \
+    --server.http.listen-addr=0.0.0.0:12345 \
+    --storage.path=/data/alloy \
+    --stability.level=generally-available \
+    "${ALLOY_CONFIG_PATH}"
