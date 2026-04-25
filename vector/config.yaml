@@ -11,34 +11,61 @@ panel_icon: "mdi:chart-timeline-variant"
 startup: services
 ports:
   8686/tcp: 8686
+  6000/tcp: null
+  6000/udp: null
+  9000/tcp: null
 ports_description:
   8686/tcp: "Vector API"
+  6000/tcp: "Syslog TCP listener (optional)"
+  6000/udp: "Syslog UDP listener (optional)"
+  9000/tcp: "Vector-to-Vector source port (optional)"
 map:
   - config:rw
   - share:rw
   - ssl:ro
+
 options:
   log_level: "info"
   api_enabled: true
-  vector_config: |
-    sources:
-      host_metrics:
-        type: host_metrics
-        filesystem:
-          devices:
-            excludes: ["binfmt_misc"]
 
-    sinks:
-      console:
-        inputs:
-          - host_metrics
-        target: stdout
-        type: console
-        encoding:
-          codec: json
+  # --- Sources ---
+  ha_logs: true
+  ha_logs_vrl: ""
+  syslog_tcp_port: 0
+  syslog_udp_port: 0
+  vector_source_port: 0
+
+  # --- Sink ---
+  sink_type: "console"
+  loki_url: ""
+  elasticsearch_url: ""
+  http_url: ""
+  sink_auth_username: ""
+  sink_auth_password: ""
+  sink_vrl: ""
+
+  # --- Advanced override ---
+  vector_config: ""
+
 schema:
-  log_level: list(trace|debug|info|notice|warning|error|fatal)
+  log_level: "list(trace|debug|info|notice|warning|error|fatal)"
   api_enabled: bool
-  vector_config: str
+
+  ha_logs: bool
+  ha_logs_vrl: "str?"
+  syslog_tcp_port: "int?"
+  syslog_udp_port: "int?"
+  vector_source_port: "int?"
+
+  sink_type: "list(console|loki|elasticsearch|http|none)"
+  loki_url: "url?"
+  elasticsearch_url: "url?"
+  http_url: "url?"
+  sink_auth_username: "str?"
+  sink_auth_password: "str?"
+  sink_vrl: "str?"
+
+  vector_config: "str?"
+
 environment:
   LOG_FORMAT: "text"
