@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start the Vector observability pipeline
+# ==============================================================================
+
+VECTOR_CONFIG_PATH="/config/vector/vector.yaml"
+
+bashio::log.info "Starting Vector..."
+exec vector --config "${VECTOR_CONFIG_PATH}" --watch-config
