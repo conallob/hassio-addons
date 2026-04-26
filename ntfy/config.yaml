@@ -1,6 +1,6 @@
 name: "ntfy"
 description: "Self-hosted push notification server with optional SSL support via the HA Let's Encrypt add-on"
-version: "2.11.2"
+version: "2.11.3"
 slug: "ntfy"
 init: false
 arch:
@@ -22,8 +22,8 @@ map:
 options:
   domain: ""
   ssl: false
-  certfile: "fullchain.pem"
-  keyfile: "privkey.pem"
+  certfile: "ntfy.pem"
+  keyfile: "ntfy.key"
   auth_default_access: "read-write"
   upstream_base_url: "https://ntfy.sh"
   log_level: "info"

@@ -49,16 +49,24 @@ if bashio::var.true "${ssl}"; then
 
     if [ ! -f "${CERT_FILE}" ]; then
         bashio::log.fatal "SSL certificate not found: ${CERT_FILE}"
-        bashio::log.fatal "Ensure the Home Assistant Let's Encrypt add-on has issued a certificate and the certfile option matches."
+        bashio::log.fatal "The HA Let's Encrypt add-on must be configured to copy the certificate to /ssl/."
+        bashio::log.fatal "In the Let's Encrypt add-on configuration, set:"
+        bashio::log.fatal "  certfile: ${certfile}"
+        bashio::log.fatal "  keyfile: ${keyfile}"
+        bashio::log.fatal "Then run the Let's Encrypt add-on and restart ntfy."
         bashio::exit.nok
     fi
     if [ ! -f "${KEY_FILE}" ]; then
         bashio::log.fatal "SSL private key not found: ${KEY_FILE}"
-        bashio::log.fatal "Ensure the Home Assistant Let's Encrypt add-on has issued a certificate and the keyfile option matches."
+        bashio::log.fatal "The HA Let's Encrypt add-on must be configured to copy the key to /ssl/."
+        bashio::log.fatal "In the Let's Encrypt add-on configuration, set:"
+        bashio::log.fatal "  certfile: ${certfile}"
+        bashio::log.fatal "  keyfile: ${keyfile}"
+        bashio::log.fatal "Then run the Let's Encrypt add-on and restart ntfy."
         bashio::exit.nok
     fi
 
-    bashio::log.info "Using SSL certificates from /ssl/"
+    bashio::log.info "Using SSL certificates from /ssl/ (${certfile} / ${keyfile})"
 fi
 
 # ---------------------------------------------------------------------------

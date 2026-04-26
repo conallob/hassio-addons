@@ -24,18 +24,32 @@ No configuration needed. Start the add-on and access ntfy through the Home Assis
 
 ### With SSL (recommended for external access)
 
-SSL certificates must be issued first by the [Home Assistant Let's Encrypt add-on](https://github.com/home-assistant/addons/tree/master/letsencrypt).
-Once the HA Let's Encrypt add-on has issued a certificate, configure ntfy:
+SSL certificates are managed by the [Home Assistant Let's Encrypt add-on](https://github.com/home-assistant/addons/tree/master/letsencrypt). The LE add-on issues the certificate and copies it to the shared `/ssl/` directory that ntfy reads from. Both add-ons must be configured with matching filenames.
+
+**Step 1** — Configure the HA Let's Encrypt add-on to issue a cert for your ntfy domain and copy it to `/ssl/` with a unique filename:
 
 ```yaml
+# HA Let's Encrypt add-on configuration
+domains:
+  - ntfy.example.com
+certfile: ntfy.pem
+keyfile: ntfy.key
+```
+
+**Step 2** — Configure ntfy to use those same filenames:
+
+```yaml
+# ntfy add-on configuration
 domain: "ntfy.example.com"
 ssl: true
-certfile: "fullchain.pem"
-keyfile: "privkey.pem"
+certfile: "ntfy.pem"
+keyfile: "ntfy.key"
 auth_default_access: "deny-all"
 ```
 
-Ensure port 443 is forwarded from your router to your Home Assistant host for external HTTPS access.
+**Step 3** — Run the HA Let's Encrypt add-on to issue/renew the certificate, then start ntfy.
+
+Ensure port 443 is forwarded from your router to your Home Assistant host for external HTTPS access. The LE add-on handles renewal automatically; restart ntfy after each renewal to pick up the new certificate.
 
 ## Options
 
