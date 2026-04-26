@@ -9,10 +9,12 @@ arch:
 url: "https://github.com/conallob/hassio-addons/tree/master/alloy"
 panel_icon: "mdi:chart-areaspline"
 startup: services
+ingress: true
+ingress_port: 12345
 ports:
-  12345/tcp: 12345
+  12345/tcp: null
 ports_description:
-  12345/tcp: "Alloy UI and HTTP API"
+  12345/tcp: "Alloy UI and HTTP API (optional, for direct external access)"
 map:
   - config:rw
   - share:rw
