@@ -9,13 +9,15 @@ arch:
 url: "https://github.com/conallob/hassio-addons/tree/master/vector"
 panel_icon: "mdi:chart-timeline-variant"
 startup: services
+ingress: true
+ingress_port: 8686
 ports:
-  8686/tcp: 8686
+  8686/tcp: null
   6000/tcp: null
   6000/udp: null
   9000/tcp: null
 ports_description:
-  8686/tcp: "Vector API"
+  8686/tcp: "Vector API (optional, for direct external access)"
   6000/tcp: "Syslog TCP listener (optional)"
   6000/udp: "Syslog UDP listener (optional)"
   9000/tcp: "Vector-to-Vector source port (optional)"
