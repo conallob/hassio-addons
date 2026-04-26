@@ -44,25 +44,39 @@ CERT_FILE=""
 KEY_FILE=""
 
 if bashio::var.true "${ssl}"; then
-    CERT_FILE="/ssl/${certfile}"
-    KEY_FILE="/ssl/${keyfile}"
+    # If the user pasted an absolute path (e.g. from the LE add-on's /data/ dir),
+    # use it directly. Otherwise treat it as a filename relative to /ssl/.
+    if [[ "${certfile}" == /* ]]; then
+        CERT_FILE="${certfile}"
+    else
+        CERT_FILE="/ssl/${certfile}"
+    fi
+    if [[ "${keyfile}" == /* ]]; then
+        KEY_FILE="${keyfile}"
+    else
+        KEY_FILE="/ssl/${keyfile}"
+    fi
 
     if [ ! -f "${CERT_FILE}" ]; then
         bashio::log.fatal "SSL certificate not found: ${CERT_FILE}"
-        bashio::log.fatal "The HA Let's Encrypt add-on must be configured to copy the certificate to /ssl/."
-        bashio::log.fatal "In the Let's Encrypt add-on configuration, set:"
-        bashio::log.fatal "  certfile: ${certfile}"
-        bashio::log.fatal "  keyfile: ${keyfile}"
-        bashio::log.fatal "Then run the Let's Encrypt add-on and restart ntfy."
+        bashio::log.fatal "ntfy can only read certificates from /ssl/ — it cannot access the"
+        bashio::log.fatal "Let's Encrypt add-on's private /data/letsencrypt/ directory."
+        bashio::log.fatal "In the HA Let's Encrypt add-on configuration, set a certfile/keyfile"
+        bashio::log.fatal "name (not a path) so it copies the cert to /ssl/. For example:"
+        bashio::log.fatal "  certfile: ntfy.pem"
+        bashio::log.fatal "  keyfile: ntfy.key"
+        bashio::log.fatal "Then set the same names in the ntfy add-on options and restart."
         bashio::exit.nok
     fi
     if [ ! -f "${KEY_FILE}" ]; then
         bashio::log.fatal "SSL private key not found: ${KEY_FILE}"
-        bashio::log.fatal "The HA Let's Encrypt add-on must be configured to copy the key to /ssl/."
-        bashio::log.fatal "In the Let's Encrypt add-on configuration, set:"
-        bashio::log.fatal "  certfile: ${certfile}"
-        bashio::log.fatal "  keyfile: ${keyfile}"
-        bashio::log.fatal "Then run the Let's Encrypt add-on and restart ntfy."
+        bashio::log.fatal "ntfy can only read certificates from /ssl/ — it cannot access the"
+        bashio::log.fatal "Let's Encrypt add-on's private /data/letsencrypt/ directory."
+        bashio::log.fatal "In the HA Let's Encrypt add-on configuration, set a certfile/keyfile"
+        bashio::log.fatal "name (not a path) so it copies the key to /ssl/. For example:"
+        bashio::log.fatal "  certfile: ntfy.pem"
+        bashio::log.fatal "  keyfile: ntfy.key"
+        bashio::log.fatal "Then set the same names in the ntfy add-on options and restart."
         bashio::exit.nok
     fi
 
