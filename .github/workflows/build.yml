@@ -35,11 +35,27 @@ jobs:
       - name: Find add-ons to build
         id: find
         run: |
-          # Any subdirectory containing a config.yaml is an add-on.
+          # Any subdirectory containing a config.yaml AND a Dockerfile is a
+          # locally-built add-on. Add-ons that declare an external `image:` in
+          # config.yaml (e.g. obsidian_headless) are built in their own repo
+          # and only publish metadata here — skip them.
           ALL_ADDONS=$(find . -maxdepth 2 -name "config.yaml" \
             | sed 's|^\./||' \
             | xargs -I{} dirname {} \
-            | sort)
+            | sort \
+            | while read -r addon; do
+                # Skip if no Dockerfile (external image, metadata-only entry)
+                if [ ! -f "${addon}/Dockerfile" ]; then
+                  echo "Skipping ${addon}: no Dockerfile (external image)" >&2
+                  continue
+                fi
+                # Skip if config.yaml declares an external image: field
+                if grep -q "^image:" "${addon}/config.yaml" 2>/dev/null; then
+                  echo "Skipping ${addon}: external image declared in config.yaml" >&2
+                  continue
+                fi
+                echo "${addon}"
+              done)
 
           if [ "${{ github.event.inputs.force_rebuild }}" = "true" ] || \
              [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
