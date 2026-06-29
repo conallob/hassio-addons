@@ -215,7 +215,7 @@ rest_command:
 ---
 ### [Obsidian Headless](https://github.com/conallob/hassio-obsidian-headless)
 
-**Version**: 0.0.5  **Image**: external (`ghcr.io/conallob/hassio-obsidian-headless`)
+**Version**: 0.0.6  **Image**: external (`ghcr.io/conallob/hassio-obsidian-headless`)
 
 Syncs your Obsidian vault via Obsidian Sync (headless daemon). Optionally exposes the vault as a remote MCP server with bearer-token or OAuth 2.1 authentication. Supports Tailscale and direct HTTPS access.
 
@@ -332,12 +332,15 @@ Obsidian vault. This is a **one-way sync**: reMarkable → Obsidian.
 The add-on always serves a registration UI at **`http://<your-ha-ip>:8421/`**.
 
 1. Open that URL in your browser
-2. Follow the prompts — you'll be redirected to `my.remarkable.com` to authorise
-3. The device token is saved to `/data/remarkable-sync/device.token` and reused
+2. Sign in with your reMarkable account if prompted
+3. Enter the 8-character code from step below and submit
+4. The device token is saved to `/data/remarkable-sync/device.token` and reused
    across restarts
 
-Alternatively, paste a token directly into `remarkable_device_token` in the
-add-on configuration (obtain one from `https://my.remarkable.com/device/desktop/new`).
+**To get your pairing code:**
+- Go to `https://my.remarkable.com/device/desktop/new`
+- Click the **Tablet** tab
+- Copy the 8-character lowercase code shown (e.g. `xxxxxxxx`) — it expires in ~5 minutes
 
 If no token is configured, the add-on will wait at the registration UI until
 one is provided — no crash or restart loop.
