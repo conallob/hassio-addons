@@ -1,5 +1,5 @@
 name: Obsidian Headless
-version: "0.0.4"
+version: "0.0.5"
 slug: obsidian_headless
 description: >-
   Syncs your Obsidian vault via Obsidian Sync (headless daemon). Optionally
@@ -7,6 +7,8 @@ description: >-
   authentication. Supports Tailscale and direct HTTPS access.
 url: https://github.com/conallob/hassio-obsidian-headless
 image: ghcr.io/conallob/hassio-obsidian-headless
+icon: true
+logo: true
 arch:
   - aarch64
   - amd64
