@@ -152,17 +152,23 @@ if [ "${sink_type}" = "gcp" ] && bashio::var.has_value "${gcp_credentials_json}"
 fi
 
 # ---------------------------------------------------------------------------
-# Build all_inputs — list of source component IDs feeding into the sink
+# Build input lists as proper YAML entries
 # ---------------------------------------------------------------------------
-# We accumulate source IDs; transforms wrap the sources inline.
-ALL_INPUTS=""
+declare -a ALL_INPUTS=()
 
 add_input() {
-    if [ -z "${ALL_INPUTS}" ]; then
-        ALL_INPUTS="$1"
-    else
-        ALL_INPUTS="${ALL_INPUTS}, $1"
-    fi
+    ALL_INPUTS+=("$1")
+}
+
+# Emit YAML list items at a given indent (number of spaces)
+emit_inputs() {
+    local indent="$1"
+    shift
+    local pad=""
+    for ((i=0; i<indent; i++)); do pad+=" "; done
+    for item in "$@"; do
+        printf '%s- %s\n' "${pad}" "${item}"
+    done
 }
 
 # ---------------------------------------------------------------------------
@@ -224,20 +230,8 @@ SYSLOG_UDP
 VECTOR_SRC
     fi
 
-    # --- Transforms ---
-    echo "transforms:"
-
-    # Per-source VRL transform for HA logs
+    # --- Collect source IDs into ALL_INPUTS ---
     if bashio::var.true "${ha_logs}" && bashio::var.has_value "${ha_logs_vrl}"; then
-        cat <<HA_VRL_BLOCK
-  ha_logs_transform:
-    type: remap
-    inputs:
-      - ha_logs
-    source: |
-$(printf '%s\n' "${ha_logs_vrl}" | sed 's/^/      /')
-
-HA_VRL_BLOCK
         add_input "ha_logs_transform"
     elif bashio::var.true "${ha_logs}"; then
         add_input "ha_logs"
@@ -247,134 +241,122 @@ HA_VRL_BLOCK
     [ "${syslog_udp_port:-0}" -gt 0 ] 2>/dev/null && add_input "syslog_udp"
     [ "${vector_source_port:-0}" -gt 0 ] 2>/dev/null && add_input "vector_in"
 
-    # Global pre-sink VRL transform (applied to all sources)
-    if bashio::var.has_value "${sink_vrl}"; then
-        cat <<SINK_VRL_BLOCK
-  sink_transform:
-    type: remap
-    inputs:
-      - ${ALL_INPUTS}
-    source: |
-$(printf '%s\n' "${sink_vrl}" | sed 's/^/      /')
+    # --- Transforms (only emitted when at least one transform is needed) ---
+    HAS_TRANSFORMS=false
+    bashio::var.true "${ha_logs}" && bashio::var.has_value "${ha_logs_vrl}" && HAS_TRANSFORMS=true
+    bashio::var.has_value "${sink_vrl}" && HAS_TRANSFORMS=true
 
-SINK_VRL_BLOCK
-        SINK_INPUT="sink_transform"
+    if "${HAS_TRANSFORMS}"; then
+        echo "transforms:"
+
+        if bashio::var.true "${ha_logs}" && bashio::var.has_value "${ha_logs_vrl}"; then
+            echo "  ha_logs_transform:"
+            echo "    type: remap"
+            echo "    inputs:"
+            echo "      - ha_logs"
+            echo "    source: |"
+            printf '%s\n' "${ha_logs_vrl}" | sed 's/^/      /'
+            echo ""
+        fi
+
+        if bashio::var.has_value "${sink_vrl}"; then
+            echo "  sink_transform:"
+            echo "    type: remap"
+            echo "    inputs:"
+            emit_inputs 6 "${ALL_INPUTS[@]}"
+            echo "    source: |"
+            printf '%s\n' "${sink_vrl}" | sed 's/^/      /'
+            echo ""
+            SINK_INPUTS=("sink_transform")
+        else
+            SINK_INPUTS=("${ALL_INPUTS[@]}")
+        fi
     else
-        SINK_INPUT="${ALL_INPUTS}"
+        SINK_INPUTS=("${ALL_INPUTS[@]}")
     fi
 
     # --- Sink ---
+    echo "sinks:"
+
     if [ "${sink_type}" = "none" ]; then
-        # Blackhole — useful for testing sources/transforms without output
-        cat <<BLACKHOLE
-sinks:
-  blackhole:
-    type: blackhole
-    inputs:
-      - ${SINK_INPUT}
+        echo "  blackhole:"
+        echo "    type: blackhole"
+        echo "    inputs:"
+        emit_inputs 6 "${SINK_INPUTS[@]}"
 
-BLACKHOLE
     elif [ "${sink_type}" = "console" ]; then
-        cat <<CONSOLE
-sinks:
-  console:
-    type: console
-    inputs:
-      - ${SINK_INPUT}
-    target: stdout
-    encoding:
-      codec: json
+        echo "  console:"
+        echo "    type: console"
+        echo "    inputs:"
+        emit_inputs 6 "${SINK_INPUTS[@]}"
+        echo "    target: stdout"
+        echo "    encoding:"
+        echo "      codec: json"
 
-CONSOLE
     elif [ "${sink_type}" = "loki" ]; then
-        cat <<LOKI_OPEN
-sinks:
-  loki:
-    type: loki
-    inputs:
-      - ${SINK_INPUT}
-    endpoint: "${loki_url}"
-    labels:
-      job: home_assistant
-      host: "{{ host }}"
-    encoding:
-      codec: json
-LOKI_OPEN
-
+        echo "  loki:"
+        echo "    type: loki"
+        echo "    inputs:"
+        emit_inputs 6 "${SINK_INPUTS[@]}"
+        echo "    endpoint: \"${loki_url}\""
+        echo "    labels:"
+        echo "      job: home_assistant"
+        echo '      host: "{{ host }}"'
+        echo "    encoding:"
+        echo "      codec: json"
         if bashio::var.has_value "${sink_auth_username}"; then
-            cat <<LOKI_AUTH
-    auth:
-      strategy: basic
-      user: "${sink_auth_username}"
-      password: "${sink_auth_password}"
-LOKI_AUTH
+            echo "    auth:"
+            echo "      strategy: basic"
+            echo "      user: \"${sink_auth_username}\""
+            echo "      password: \"${sink_auth_password}\""
         fi
-        echo ""
 
     elif [ "${sink_type}" = "elasticsearch" ]; then
-        cat <<ES_OPEN
-sinks:
-  elasticsearch:
-    type: elasticsearch
-    inputs:
-      - ${SINK_INPUT}
-    endpoints:
-      - "${elasticsearch_url}"
-ES_OPEN
-
+        echo "  elasticsearch:"
+        echo "    type: elasticsearch"
+        echo "    inputs:"
+        emit_inputs 6 "${SINK_INPUTS[@]}"
+        echo "    endpoints:"
+        echo "      - \"${elasticsearch_url}\""
         if bashio::var.has_value "${sink_auth_username}"; then
-            cat <<ES_AUTH
-    auth:
-      strategy: basic
-      user: "${sink_auth_username}"
-      password: "${sink_auth_password}"
-ES_AUTH
+            echo "    auth:"
+            echo "      strategy: basic"
+            echo "      user: \"${sink_auth_username}\""
+            echo "      password: \"${sink_auth_password}\""
         fi
-        echo ""
 
     elif [ "${sink_type}" = "http" ]; then
-        cat <<HTTP_OPEN
-sinks:
-  http_out:
-    type: http
-    inputs:
-      - ${SINK_INPUT}
-    uri: "${http_url}"
-    encoding:
-      codec: json
-    framing:
-      method: newline_delimited
-HTTP_OPEN
-
+        echo "  http_out:"
+        echo "    type: http"
+        echo "    inputs:"
+        emit_inputs 6 "${SINK_INPUTS[@]}"
+        echo "    uri: \"${http_url}\""
+        echo "    encoding:"
+        echo "      codec: json"
+        echo "    framing:"
+        echo "      method: newline_delimited"
         if bashio::var.has_value "${sink_auth_username}"; then
-            cat <<HTTP_AUTH
-    auth:
-      strategy: basic
-      user: "${sink_auth_username}"
-      password: "${sink_auth_password}"
-HTTP_AUTH
+            echo "    auth:"
+            echo "      strategy: basic"
+            echo "      user: \"${sink_auth_username}\""
+            echo "      password: \"${sink_auth_password}\""
         fi
-        echo ""
 
     elif [ "${sink_type}" = "gcp" ]; then
-        cat <<GCP_BLOCK
-sinks:
-  gcp_cloud_logging:
-    type: gcp_stackdriver_logs
-    inputs:
-      - ${SINK_INPUT}
-    project_id: "${gcp_project_id}"
-    log_id: "${gcp_log_id}"
-    credentials_path: "${GCP_CREDENTIALS_PATH}"
-    resource:
-      type: generic_node
-      labels:
-        node_id: homeassistant
-        location: global
-        namespace: home_assistant
-    severity_key: level
-
-GCP_BLOCK
+        echo "  gcp:"
+        echo "    type: gcp_stackdriver_logs"
+        echo "    inputs:"
+        emit_inputs 6 "${SINK_INPUTS[@]}"
+        echo "    project_id: \"${gcp_project_id}\""
+        echo "    log_id: \"${gcp_log_id}\""
+        echo "    credentials_path: \"${GCP_CREDENTIALS_PATH}\""
+        echo "    resource:"
+        echo "      type: generic_node"
+        echo "      labels:"
+        echo "        node_id: homeassistant"
+        echo "        location: global"
+        echo "        namespace: home_assistant"
+        echo "    severity_key: level"
     fi
 
 } > "${VECTOR_CONFIG_PATH}"
