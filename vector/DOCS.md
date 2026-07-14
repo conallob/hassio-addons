@@ -58,32 +58,37 @@ sinks:
       codec: json
 ```
 
-Example — remote syslog server on the standard port. `514/tcp` and `514/udp`
-are already mapped in the add-on's Network settings, so this needs no other
-setup beyond pointing your devices at the Home Assistant host, port 514:
+Example — remote syslog server on the standard port, using `syslog_enabled`
+(see below) instead of hand-writing the source. With `syslog_enabled: true`,
+this `vector_config` is all you need:
+
+```yaml
+sinks:
+  console:
+    type: console
+    inputs:
+      - syslog_tcp
+      - syslog_udp
+    target: stdout
+    encoding:
+      codec: json
+```
+
+If you'd rather write the syslog source yourself — a non-standard port, for
+example — `6000/tcp` and `6000/udp` are pre-mapped for that:
 
 ```yaml
 sources:
   syslog_in:
     type: syslog
     mode: tcp
-    address: "0.0.0.0:514"
-
-sinks:
-  console:
-    type: console
-    inputs:
-      - syslog_in
-    target: stdout
-    encoding:
-      codec: json
+    address: "0.0.0.0:6000"
 ```
 
-`6000/tcp`, `6000/udp`, and `9000/tcp` are also pre-mapped for a custom-port
-syslog source or a Vector-to-Vector source, respectively — reuse them, remap
-them to something else in the add-on's Network settings, or, if you need a
-port that isn't pre-mapped at all, add it to this add-on's `config.yaml` and
-rebuild.
+`9000/tcp` is likewise pre-mapped for a Vector-to-Vector source. Reuse any of
+these ports, remap them to something else in the add-on's Network settings,
+or, if you need a port that isn't pre-mapped at all, add it to this add-on's
+`config.yaml` and rebuild.
 
 If your pipeline needs a credentials file that can't be embedded inline (e.g.
 a GCP service account JSON key for the `gcp_stackdriver_logs` sink), place it
@@ -100,6 +105,22 @@ you have a specific reason to disable Vector's API.
 
 Default: `true`
 
+### Option: `syslog_enabled`
+
+Turn Vector into a standard remote syslog server with no source YAML to
+write: adds `syslog_tcp` and `syslog_udp` sources listening on the standard
+syslog port **514** (already mapped in the add-on's Network settings) into
+your `sources:` block — or adds a `sources:` block for you if `vector_config`
+doesn't have one. Point your devices' syslog destination at the Home
+Assistant host, port 514, enable this option, and reference `syslog_tcp` /
+`syslog_udp` as inputs on whatever sink you want the data to reach.
+
+This only *adds* those two sources; it doesn't wire them into a sink for
+you, since sink choice is entirely yours. See the `vector_config` example
+above.
+
+Default: `false` (disabled)
+
 ### Option: `log_level`
 
 Add-on log verbosity. Possible values: `trace`, `debug`, `info`, `notice`,
@@ -114,13 +135,14 @@ Default: `info`
 | Port | Purpose |
 |------|---------|
 | 8686 | Vector API (when `api_enabled: true`) |
-| 514/tcp, 514/udp | Available for a syslog source on the standard port |
-| 6000/tcp, 6000/udp | Available for a syslog source on a custom port |
-| 9000/tcp | Available for a Vector-to-Vector source |
+| 514/tcp, 514/udp | Standard syslog server (when `syslog_enabled: true`) |
+| 6000/tcp, 6000/udp | Available for a syslog source on a custom port, if defined in `vector_config` |
+| 9000/tcp | Available for a Vector-to-Vector source, if defined in `vector_config` |
 
 These are pre-declared so they can be mapped from the add-on's Network
-settings; whether they're actually listened on depends entirely on whether
-your `vector_config` defines a source bound to them.
+settings; whether they're actually listened on depends on `syslog_enabled`
+(for 514) or on whether your `vector_config` defines a source bound to them
+(for the others).
 
 ## Mapped Volumes
 

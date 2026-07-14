@@ -21,8 +21,8 @@ ports:
   9000/tcp: null
 ports_description:
   8686/tcp: "Vector API (used by the ingress panel; also usable for direct external access)"
-  514/tcp: "Available for a syslog TCP source on the standard port, if defined in vector_config"
-  514/udp: "Available for a syslog UDP source on the standard port, if defined in vector_config"
+  514/tcp: "Standard syslog TCP listener (enable via syslog_enabled)"
+  514/udp: "Standard syslog UDP listener (enable via syslog_enabled)"
   6000/tcp: "Available for a syslog TCP source on a custom port, if defined in vector_config"
   6000/udp: "Available for a syslog UDP source on a custom port, if defined in vector_config"
   9000/tcp: "Available for a Vector-to-Vector source, if defined in vector_config"
@@ -34,6 +34,7 @@ map:
 options:
   log_level: "info"
   api_enabled: true
+  syslog_enabled: false
   vector_config: |
     sources:
       ha_logs:
@@ -55,6 +56,7 @@ options:
 schema:
   log_level: "list(trace|debug|info|notice|warning|error|fatal)"
   api_enabled: bool
+  syslog_enabled: bool
   vector_config: "str?"
 
 environment:
