@@ -14,13 +14,17 @@ ingress: true
 ingress_port: 8686
 ports:
   8686/tcp: null
+  514/tcp: null
+  514/udp: null
   6000/tcp: null
   6000/udp: null
   9000/tcp: null
 ports_description:
   8686/tcp: "Vector API (optional, for direct external access)"
-  6000/tcp: "Syslog TCP listener (optional)"
-  6000/udp: "Syslog UDP listener (optional)"
+  514/tcp: "Standard syslog TCP listener (enable via syslog_enabled)"
+  514/udp: "Standard syslog UDP listener (enable via syslog_enabled)"
+  6000/tcp: "Syslog TCP listener on a custom port (optional)"
+  6000/udp: "Syslog UDP listener on a custom port (optional)"
   9000/tcp: "Vector-to-Vector source port (optional)"
 map:
   - config:rw
@@ -34,6 +38,7 @@ options:
   # --- Sources ---
   ha_logs: true
   ha_logs_vrl: ""
+  syslog_enabled: false
   syslog_tcp_port: 0
   syslog_udp_port: 0
   vector_source_port: 0
@@ -59,6 +64,7 @@ schema:
 
   ha_logs: bool
   ha_logs_vrl: "str?"
+  syslog_enabled: bool
   syslog_tcp_port: "int?"
   syslog_udp_port: "int?"
   vector_source_port: "int?"
