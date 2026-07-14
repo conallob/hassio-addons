@@ -6,6 +6,10 @@
 #
 # Sources (any combination):
 #   ha_logs          — tail /config/home-assistant.log
+#   syslog_enabled   — turn Vector into a standard syslog server on port 514
+#                       (TCP + UDP) with no other config needed. Only fills
+#                       in syslog_tcp_port/syslog_udp_port when they're still
+#                       unset, so an explicit custom port always wins.
 #   syslog_tcp_port  — syslog listener on TCP (set to non-zero to enable)
 #   syslog_udp_port  — syslog listener on UDP (set to non-zero to enable)
 #   vector_source_port — Vector-to-Vector source (set to non-zero to enable)
@@ -25,6 +29,7 @@ declare log_level
 declare api_enabled
 declare ha_logs
 declare ha_logs_vrl
+declare syslog_enabled
 declare syslog_tcp_port
 declare syslog_udp_port
 declare vector_source_port
@@ -52,6 +57,7 @@ log_level=$(bashio::config 'log_level')
 api_enabled=$(bashio::config 'api_enabled')
 ha_logs=$(bashio::config 'ha_logs')
 ha_logs_vrl=$(bashio::config 'ha_logs_vrl')
+syslog_enabled=$(bashio::config 'syslog_enabled')
 syslog_tcp_port=$(bashio::config 'syslog_tcp_port')
 syslog_udp_port=$(bashio::config 'syslog_udp_port')
 vector_source_port=$(bashio::config 'vector_source_port')
@@ -66,6 +72,14 @@ gcp_project_id=$(bashio::config 'gcp_project_id')
 gcp_log_id=$(bashio::config 'gcp_log_id')
 gcp_credentials_json=$(bashio::config 'gcp_credentials_json')
 vector_config=$(bashio::config 'vector_config')
+
+# syslog_enabled is a convenience toggle for the standard syslog port (514):
+# it only fills in syslog_tcp_port/syslog_udp_port when they're still 0, so
+# it can't clobber an explicitly configured custom port.
+if bashio::var.true "${syslog_enabled}"; then
+    [ "${syslog_tcp_port:-0}" -eq 0 ] 2>/dev/null && syslog_tcp_port=514
+    [ "${syslog_udp_port:-0}" -eq 0 ] 2>/dev/null && syslog_udp_port=514
+fi
 
 # ---------------------------------------------------------------------------
 # Map HA log level to Vector log level
