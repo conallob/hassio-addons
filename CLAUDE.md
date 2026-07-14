@@ -92,20 +92,19 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
 
 ### vector (`vector/`)
 
-- **Version**: 0.48.0
-- **Known issues**:
-  1. `Dockerfile` ignores `BUILD_FROM` and uses `timberio/vector:0.48.0-debian` directly — this is not an HA-compatible base image and lacks s6-overlay.
-  2. Uses a bare `/run.sh` entrypoint instead of s6-overlay services, which breaks HA add-on lifecycle management.
-  3. `build.yaml` sets `build_from` to the Vector image — should be the HA base image with Vector binary copied in multi-stage.
-  - **Status**: Requires a rewrite of the Dockerfile and service scripts to use the HA base image + s6-overlay pattern before it will work reliably on HA OS.
+- **Version**: 0.56.0, tracking upstream Vector releases directly (https://github.com/vectordotdev/vector/releases).
+- **Base image**: `ghcr.io/home-assistant/{arch}-base-debian:bookworm`, s6-overlay, Vector binary copied in from `timberio/vector:${VECTOR_VERSION}-debian` in a multi-stage build.
+- **Distribution**: `config.yaml` declares `image: "ghcr.io/conallob/vector-{arch}"` — this repo's CI (`build.yml`) builds and pushes that image on every merge to `main`, so Supervisor pulls a prebuilt image and offers normal Updates (gated on the `version` field changing) instead of only building from source on-device.
+- **Configuration**: minimal by design — only `log_level` and `api_enabled` are structured add-on options. The actual pipeline (`sources:`/`transforms:`/`sinks:`) is written directly in native Vector YAML via the `vector_config` option (edited through the add-on's raw YAML config editor), so anything Vector itself supports is available with no translation layer. Ports `514/tcp+udp`, `6000/tcp+udp`, and `9000/tcp` are pre-mapped in `config.yaml` for common source ports (syslog standard/custom, Vector-to-Vector); a pipeline can bind any of them without further add-on changes.
+- **Known issues**: none currently tracked.
 
-### alloy (`alloy/`) — Planned
+### alloy (`alloy/`)
 
 - **Purpose**: Grafana Alloy observability pipeline, configurable to collect:
   - Home Assistant Prometheus metrics (scrape `http://supervisor/core/api/prometheus` with HA token)
   - Home Assistant log forwarding (loki-compatible output)
   - Both simultaneously
-- **Status**: Not yet implemented.
+- **Status**: Implemented — Dockerfile, s6-overlay service, and init script (`alloy/rootfs/etc/cont-init.d/alloy.sh`) generating config from add-on options are in place.
 
 ---
 

@@ -20,12 +20,12 @@ ports:
   6000/udp: null
   9000/tcp: null
 ports_description:
-  8686/tcp: "Vector API (optional, for direct external access)"
-  514/tcp: "Standard syslog TCP listener (enable via syslog_enabled)"
-  514/udp: "Standard syslog UDP listener (enable via syslog_enabled)"
-  6000/tcp: "Syslog TCP listener on a custom port (optional)"
-  6000/udp: "Syslog UDP listener on a custom port (optional)"
-  9000/tcp: "Vector-to-Vector source port (optional)"
+  8686/tcp: "Vector API (used by the ingress panel; also usable for direct external access)"
+  514/tcp: "Available for a syslog TCP source on the standard port, if defined in vector_config"
+  514/udp: "Available for a syslog UDP source on the standard port, if defined in vector_config"
+  6000/tcp: "Available for a syslog TCP source on a custom port, if defined in vector_config"
+  6000/udp: "Available for a syslog UDP source on a custom port, if defined in vector_config"
+  9000/tcp: "Available for a Vector-to-Vector source, if defined in vector_config"
 map:
   - config:rw
   - share:rw
@@ -34,52 +34,27 @@ map:
 options:
   log_level: "info"
   api_enabled: true
+  vector_config: |
+    sources:
+      ha_logs:
+        type: file
+        include:
+          - /config/home-assistant.log
+        read_from: beginning
+        line_delimiter: "\n"
 
-  # --- Sources ---
-  ha_logs: true
-  ha_logs_vrl: ""
-  syslog_enabled: false
-  syslog_tcp_port: 0
-  syslog_udp_port: 0
-  vector_source_port: 0
-
-  # --- Sink ---
-  sink_type: "console"
-  loki_url: ""
-  elasticsearch_url: ""
-  http_url: ""
-  sink_auth_username: ""
-  sink_auth_password: ""
-  sink_vrl: ""
-  gcp_project_id: ""
-  gcp_log_id: "home_assistant"
-  gcp_credentials_json: ""
-
-  # --- Advanced override ---
-  vector_config: ""
+    sinks:
+      console:
+        type: console
+        inputs:
+          - ha_logs
+        target: stdout
+        encoding:
+          codec: json
 
 schema:
   log_level: "list(trace|debug|info|notice|warning|error|fatal)"
   api_enabled: bool
-
-  ha_logs: bool
-  ha_logs_vrl: "str?"
-  syslog_enabled: bool
-  syslog_tcp_port: "int?"
-  syslog_udp_port: "int?"
-  vector_source_port: "int?"
-
-  sink_type: "list(console|loki|elasticsearch|http|gcp|none)"
-  loki_url: "str?"
-  elasticsearch_url: "str?"
-  http_url: "str?"
-  sink_auth_username: "str?"
-  sink_auth_password: "str?"
-  sink_vrl: "str?"
-  gcp_project_id: "str?"
-  gcp_log_id: "str?"
-  gcp_credentials_json: "str?"
-
   vector_config: "str?"
 
 environment:

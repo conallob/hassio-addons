@@ -6,183 +6,37 @@ Vector is a high-performance observability data pipeline. Use it to collect,
 transform, and route logs and metrics from your Home Assistant instance to any
 destination.
 
-Configure Vector entirely from the Home Assistant add-on UI — no config file
-editing required. For advanced use cases, supply a raw Vector YAML config via
-the `vector_config` override.
+Configuration is native Vector YAML, edited directly via the add-on's
+**Configuration** tab (switch it to the raw YAML editor). The `vector_config`
+option holds your pipeline's `sources:`, `transforms:`, and `sinks:` exactly
+as documented on [vector.dev](https://vector.dev/docs/reference/configuration/)
+— there's no separate structured UI translating a handful of add-on options
+into Vector config, so anything Vector itself supports is available to you
+directly, with no gaps.
+
+The add-on ships with a working default `vector_config` (tails
+`/config/home-assistant.log` to the console sink) so it runs out of the box;
+edit it to build whatever pipeline you need.
 
 ---
 
-## Sources
-
-Any combination of sources can be enabled simultaneously.
-
-### Option: `ha_logs`
-
-Tail `/config/home-assistant.log` and feed every new line into the pipeline.
-
-Default: `true`
-
-### Option: `ha_logs_vrl`
-
-[Vector Remap Language (VRL)](https://vector.dev/docs/reference/vrl/) expression
-applied only to HA log events, before they reach the sink. Use this to parse,
-enrich, or filter log lines.
-
-Example — parse the structured log format into fields:
-
-```
-. = parse_regex!(.message, r'^(?P<timestamp>\S+ \S+) (?P<level>\w+) \((?P<thread>[^)]+)\) \[(?P<logger>[^\]]+)\] (?P<msg>.*)$')
-.level = downcase(string!(.level))
-```
-
-Default: `""` (no transform)
-
-### Option: `syslog_enabled`
-
-Turn Vector into a standard remote syslog server with no other config
-required: opens both a TCP and a UDP listener on the standard syslog port
-**514**, which is already mapped in the add-on's Network settings. Point your
-devices' syslog destination at your Home Assistant IP, port 514, and enable
-this option — that's the whole setup.
-
-Only takes effect where `syslog_tcp_port` / `syslog_udp_port` are still `0`;
-if you've set either to a custom port, that takes precedence for that
-protocol.
-
-Default: `false` (disabled)
-
-### Option: `syslog_tcp_port`
-
-Open a syslog TCP listener on this port instead of (or in addition to) 514,
-for a non-standard port (e.g. `6000`). Set to `0` to disable. Also map the
-port in the add-on Network settings and configure your devices to send
-syslog to your Home Assistant IP on this port.
-
-Default: `0` (disabled)
-
-### Option: `syslog_udp_port`
-
-Open a syslog UDP listener on this port instead of (or in addition to) 514,
-for a non-standard port (e.g. `6000`). Set to `0` to disable.
-
-Default: `0` (disabled)
-
-### Option: `vector_source_port`
-
-Listen for events from other Vector agents (Vector native protocol v2) on this
-port (e.g. `9000`). Set to `0` to disable. Useful for aggregating from remote
-Vector agents running on other hosts.
-
-Default: `0` (disabled)
-
----
-
-## Transforms
-
-### Option: `sink_vrl`
-
-[VRL](https://vector.dev/docs/reference/vrl/) expression applied to **all**
-events from all sources, immediately before the sink. Use this for global
-enrichment or filtering regardless of source.
-
-Example — drop debug events:
-
-```
-if .level == "debug" { abort }
-```
-
-Example — add a static label:
-
-```
-.environment = "home"
-```
-
-Default: `""` (no transform)
-
----
-
-## Sink
-
-### Option: `sink_type`
-
-Where to send processed events. One of:
-
-| Value | Description |
-|-------|-------------|
-| `console` | Print events as JSON to the add-on log **(default)** |
-| `loki` | Forward to a Loki instance (requires `loki_url`) |
-| `elasticsearch` | Forward to Elasticsearch (requires `elasticsearch_url`) |
-| `http` | POST as newline-delimited JSON to any HTTP endpoint (requires `http_url`) |
-| `gcp` | Forward to GCP Cloud Logging (requires `gcp_project_id` and `gcp_credentials_json`) |
-| `none` | Discard all events (useful for testing sources/transforms) |
-
-### Option: `loki_url`
-
-Loki push endpoint. Required when `sink_type` is `loki`.
-
-Example: `http://192.168.1.100:3100`
-
-### Option: `elasticsearch_url`
-
-Elasticsearch endpoint. Required when `sink_type` is `elasticsearch`.
-
-Example: `http://192.168.1.100:9200`
-
-### Option: `http_url`
-
-HTTP endpoint URI. Required when `sink_type` is `http`.
-
-### Option: `sink_auth_username` / `sink_auth_password`
-
-HTTP Basic Auth credentials for Loki, Elasticsearch, or HTTP sinks.
-Leave blank for unauthenticated endpoints.
-
-### Option: `gcp_project_id`
-
-GCP project ID to send logs to. Required when `sink_type` is `gcp`.
-
-### Option: `gcp_log_id`
-
-The log stream name within Cloud Logging. Appears as the log name in the
-GCP console. Default: `home_assistant`.
-
-### Option: `gcp_credentials_json`
-
-The full contents of a GCP service account JSON key file. Required when
-`sink_type` is `gcp`. The add-on writes this to a temporary file at startup
-so Vector can authenticate without requiring manual file placement on the host.
-
-To generate a key:
-1. GCP Console → IAM & Admin → Service Accounts
-2. Create a service account with the **Logs Writer** role (`roles/logging.logWriter`)
-3. Create a JSON key and paste the entire file contents here
-
----
-
-## General
-
-### Option: `log_level`
-
-Add-on log verbosity. Possible values: `trace`, `debug`, `info`, `notice`,
-`warning`, `error`, `fatal`.
-
-Default: `info`
-
-### Option: `api_enabled`
-
-Enable the Vector GraphQL API on port **8686**. Useful for querying Vector's
-internal metrics and topology at runtime.
-
-Default: `true`
+## Options
 
 ### Option: `vector_config`
 
-Supply a complete raw Vector YAML configuration. **When set, all other options
-are ignored** — the raw config is written directly to disk and Vector is started
-with it. Use this for pipelines that cannot be expressed with the structured
-options above.
+Your Vector pipeline, in native Vector YAML — `sources:`, `transforms:`, and
+`sinks:`. See:
 
-Example:
+- [Sources](https://vector.dev/docs/reference/configuration/sources/)
+- [Transforms](https://vector.dev/docs/reference/configuration/transforms/)
+  (including [VRL](https://vector.dev/docs/reference/vrl/) via the `remap` transform)
+- [Sinks](https://vector.dev/docs/reference/configuration/sinks/)
+
+Do **not** declare a top-level `api:` key here — that's managed separately via
+`api_enabled` (see below), since the add-on's ingress panel depends on it
+being set to a specific address.
+
+Example — tail Home Assistant's log and forward to Loki:
 
 ```yaml
 sources:
@@ -193,16 +47,65 @@ sources:
     read_from: beginning
 
 sinks:
+  loki:
+    type: loki
+    inputs:
+      - ha_logs
+    endpoint: "http://192.168.1.100:3100"
+    labels:
+      job: home_assistant
+    encoding:
+      codec: json
+```
+
+Example — remote syslog server on the standard port. `514/tcp` and `514/udp`
+are already mapped in the add-on's Network settings, so this needs no other
+setup beyond pointing your devices at the Home Assistant host, port 514:
+
+```yaml
+sources:
+  syslog_in:
+    type: syslog
+    mode: tcp
+    address: "0.0.0.0:514"
+
+sinks:
   console:
     type: console
     inputs:
-      - ha_logs
+      - syslog_in
     target: stdout
     encoding:
       codec: json
 ```
 
-Default: `""` (use structured options)
+`6000/tcp`, `6000/udp`, and `9000/tcp` are also pre-mapped for a custom-port
+syslog source or a Vector-to-Vector source, respectively — reuse them, remap
+them to something else in the add-on's Network settings, or, if you need a
+port that isn't pre-mapped at all, add it to this add-on's `config.yaml` and
+rebuild.
+
+If your pipeline needs a credentials file that can't be embedded inline (e.g.
+a GCP service account JSON key for the `gcp_stackdriver_logs` sink), place it
+under `/share` or `/config` (both read-write mapped into the container — use
+the Samba or File editor add-on) and point `credentials_path` at it directly.
+
+Default: a working pipeline — HA log file → console sink (see `config.yaml`).
+
+### Option: `api_enabled`
+
+Whether the add-on injects the `api:` block Vector needs for the ingress
+panel (and direct external access on port 8686) to work. Leave this on unless
+you have a specific reason to disable Vector's API.
+
+Default: `true`
+
+### Option: `log_level`
+
+Add-on log verbosity. Possible values: `trace`, `debug`, `info`, `notice`,
+`warning`, `error`, `fatal`.
+
+Default: `info`
 
 ---
 
@@ -211,10 +114,13 @@ Default: `""` (use structured options)
 | Port | Purpose |
 |------|---------|
 | 8686 | Vector API (when `api_enabled: true`) |
-| 514/tcp, 514/udp | Standard syslog server (`syslog_enabled: true`) |
-| Configurable | Syslog TCP on a custom port (`syslog_tcp_port`) |
-| Configurable | Syslog UDP on a custom port (`syslog_udp_port`) |
-| Configurable | Vector-to-Vector source (`vector_source_port`) |
+| 514/tcp, 514/udp | Available for a syslog source on the standard port |
+| 6000/tcp, 6000/udp | Available for a syslog source on a custom port |
+| 9000/tcp | Available for a Vector-to-Vector source |
+
+These are pre-declared so they can be mapped from the add-on's Network
+settings; whether they're actually listened on depends entirely on whether
+your `vector_config` defines a source bound to them.
 
 ## Mapped Volumes
 
