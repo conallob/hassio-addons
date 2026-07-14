@@ -34,8 +34,8 @@ schema:
   collect_prometheus: bool
   collect_logs: bool
   prometheus_scrape_interval: str
-  loki_url: "url?"
-  remote_write_url: "url?"
+  loki_url: "str?"
+  remote_write_url: "str?"
   remote_write_username: "str?"
   remote_write_password: "str?"
   alloy_config: "str?"
