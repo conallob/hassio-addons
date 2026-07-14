@@ -515,17 +515,33 @@ Example — parse the structured log format into fields:
 
 Default: `""` (no transform)
 
+#### Option: `syslog_enabled`
+
+Turn Vector into a standard remote syslog server with no other config
+required: opens both a TCP and a UDP listener on the standard syslog port
+**514**, which is already mapped in the add-on's Network settings. Point your
+devices' syslog destination at your Home Assistant IP, port 514, and enable
+this option — that's the whole setup.
+
+Only takes effect where `syslog_tcp_port` / `syslog_udp_port` are still `0`;
+if you've set either to a custom port, that takes precedence for that
+protocol.
+
+Default: `false` (disabled)
+
 #### Option: `syslog_tcp_port`
 
-Open a syslog TCP listener on this port (e.g. `6000`). Set to `0` to disable.
-Also map the port in the add-on Network settings and configure your devices
-to send syslog to your Home Assistant IP on this port.
+Open a syslog TCP listener on this port instead of (or in addition to) 514,
+for a non-standard port (e.g. `6000`). Set to `0` to disable. Also map the
+port in the add-on Network settings and configure your devices to send
+syslog to your Home Assistant IP on this port.
 
 Default: `0` (disabled)
 
 #### Option: `syslog_udp_port`
 
-Open a syslog UDP listener on this port (e.g. `6000`). Set to `0` to disable.
+Open a syslog UDP listener on this port instead of (or in addition to) 514,
+for a non-standard port (e.g. `6000`). Set to `0` to disable.
 
 Default: `0` (disabled)
 
@@ -673,8 +689,9 @@ Default: `""` (use structured options)
 | Port | Purpose |
 |------|---------|
 | 8686 | Vector API (when `api_enabled: true`) |
-| Configurable | Syslog TCP (`syslog_tcp_port`) |
-| Configurable | Syslog UDP (`syslog_udp_port`) |
+| 514/tcp, 514/udp | Standard syslog server (`syslog_enabled: true`) |
+| Configurable | Syslog TCP on a custom port (`syslog_tcp_port`) |
+| Configurable | Syslog UDP on a custom port (`syslog_udp_port`) |
 | Configurable | Vector-to-Vector source (`vector_source_port`) |
 
 ### Mapped Volumes
