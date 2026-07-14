@@ -64,9 +64,9 @@ schema:
   vector_source_port: "int?"
 
   sink_type: "list(console|loki|elasticsearch|http|gcp|none)"
-  loki_url: "url?"
-  elasticsearch_url: "url?"
-  http_url: "url?"
+  loki_url: "str?"
+  elasticsearch_url: "str?"
+  http_url: "str?"
   sink_auth_username: "str?"
   sink_auth_password: "str?"
   sink_vrl: "str?"
