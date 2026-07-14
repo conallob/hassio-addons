@@ -472,9 +472,11 @@ Full logs: **Settings → Add-ons → Obsidian Headless → Log**
 ---
 ### [Vector](https://github.com/conallob/hassio-addons/tree/master/vector)
 
-**Version**: 0.48.0
+**Version**: 0.56.0  **Image**: external (`ghcr.io/conallob/vector-{arch}`)
 
 High-performance observability data pipeline
+
+> The container image for this add-on is built and published by [https://github.com/conallob/hassio-addons/tree/master/vector](https://github.com/conallob/hassio-addons/tree/master/vector). Only the Home Assistant add-on metadata is hosted in this repository.
 
 ### Overview
 
