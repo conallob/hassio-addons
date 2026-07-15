@@ -522,6 +522,12 @@ flags.
 `directory` mode — if you need Vector's API (for ingress) or a syslog source,
 include that config in a file in the directory yourself.
 
+Switching to `directory` mode also actively clears `vector_config` (via the
+Supervisor API) rather than leaving whatever pipeline was there before the
+switch sitting around unused — it won't keep tracking a stale embedded
+config once it's no longer in effect. Switching back to `embedded` later
+means re-entering it.
+
 Default: `embedded`
 
 #### Option: `config_dir`
