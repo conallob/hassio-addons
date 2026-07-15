@@ -18,7 +18,9 @@
 #                the add-on itself needs to know about. api_enabled,
 #                syslog_enabled, and vector_config are ignored in this
 #                mode; include your own api:/source config in the
-#                directory if you need them.
+#                directory if you need them. vector_config is also
+#                actively cleared (via the Supervisor API) so it doesn't
+#                keep tracking a stale embedded pipeline while unused.
 #
 # In embedded mode, the add-on manages a few things on top of vector_config:
 #   log_level       — Vector's own log verbosity (VECTOR_LOG env var)
@@ -82,6 +84,17 @@ if [ "${config_mode}" = "directory" ]; then
     mkdir -p "${config_dir}"
     if [ -z "$(find "${config_dir}" -maxdepth 1 -type f \( -name '*.yaml' -o -name '*.yml' -o -name '*.toml' -o -name '*.json' \) -print -quit)" ]; then
         bashio::log.warning "config_dir (${config_dir}) has no *.yaml/*.toml/*.json files yet — Vector will fail to start until it does."
+    fi
+
+    # Don't leave a stale embedded pipeline sitting in vector_config while
+    # it's not being used — clear it via the Supervisor API. Run in a
+    # subshell since bashio::api.supervisor can call bashio::exit.nok
+    # internally on failure, and that shouldn't take the add-on down.
+    if bashio::var.has_value "${vector_config}"; then
+        bashio::log.info "config_mode is 'directory' — clearing vector_config so it stops tracking a stale embedded pipeline"
+        if ! (bashio::api.supervisor POST "/addons/self/options" '{"options":{"vector_config":""}}') > /dev/null 2>&1; then
+            bashio::log.warning "Could not clear vector_config via the Supervisor API; it will remain set but stays ignored while config_mode is 'directory'"
+        fi
     fi
 
     bashio::log.info "config_mode is 'directory' — Vector will load ${config_dir} directly (api_enabled, syslog_enabled, and vector_config are ignored)"
