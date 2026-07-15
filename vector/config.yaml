@@ -34,6 +34,8 @@ options:
   log_level: "info"
   api_enabled: true
   syslog_enabled: false
+  config_mode: "embedded"
+  config_dir: ""
   vector_config: |
     sources:
       ha_logs:
@@ -56,6 +58,8 @@ schema:
   log_level: "list(trace|debug|info|notice|warning|error|fatal)"
   api_enabled: bool
   syslog_enabled: bool
+  config_mode: "list(embedded|directory)"
+  config_dir: "str?"
   vector_config: "str?"
 
 environment:

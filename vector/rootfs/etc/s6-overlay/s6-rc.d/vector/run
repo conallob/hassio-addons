@@ -4,7 +4,17 @@
 # Start the Vector observability pipeline
 # ==============================================================================
 
-VECTOR_CONFIG_PATH="/config/vector/vector.yaml"
+declare config_mode
+declare config_dir
 
-bashio::log.info "Starting Vector..."
-exec vector --config "${VECTOR_CONFIG_PATH}" --watch-config
+config_mode=$(bashio::config 'config_mode')
+config_dir=$(bashio::config 'config_dir')
+
+if [ "${config_mode}" = "directory" ]; then
+    bashio::log.info "Starting Vector with --config-dir ${config_dir}"
+    exec vector --config-dir "${config_dir}" --watch-config
+else
+    VECTOR_CONFIG_PATH="/config/vector/vector.yaml"
+    bashio::log.info "Starting Vector with --config ${VECTOR_CONFIG_PATH}"
+    exec vector --config "${VECTOR_CONFIG_PATH}" --watch-config
+fi
