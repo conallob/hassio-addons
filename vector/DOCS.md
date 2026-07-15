@@ -18,14 +18,50 @@ The add-on ships with a working default `vector_config` (tails
 `/config/home-assistant.log` to the console sink) so it runs out of the box;
 edit it to build whatever pipeline you need.
 
+For multiple, git-revisioned pipeline configs instead of the single embedded
+`vector_config` option, see `config_mode` below.
+
 ---
 
 ## Options
 
+### Option: `config_mode`
+
+Where Vector loads its pipeline from:
+
+| Value | Behavior |
+|-------|----------|
+| `embedded` **(default)** | Build `/config/vector/vector.yaml` from `vector_config` (plus `api_enabled`/`syslog_enabled`), as described below. |
+| `directory` | Start Vector with [`--config-dir`](https://vector.dev/docs/reference/cli/) pointed at `config_dir` instead — a directory of `*.yaml`/`*.toml`/`*.json` files that this add-on never writes to or generates. |
+
+`directory` mode is for running Vector against a config directory you manage
+yourself outside the add-on UI entirely — for example a git checkout under
+`/share`, so you can track multiple pipeline revisions in git and switch
+between them with `git checkout`/`git pull`, independent of the add-on. Vector
+merges every recognized file directly inside that directory (not
+subdirectories) into one config, same as it would with multiple `--config`
+flags.
+
+`vector_config`, `api_enabled`, and `syslog_enabled` are **ignored** in
+`directory` mode — if you need Vector's API (for ingress) or a syslog source,
+include that config in a file in the directory yourself.
+
+Default: `embedded`
+
+### Option: `config_dir`
+
+Filesystem path to the external config directory, used only when
+`config_mode` is `directory`. Must be under a mapped volume — `/share/...` or
+`/config/...` — since those are the only paths the container can see; a git
+checkout under `/share` (e.g. `/share/vector-config`) is the typical setup.
+
+Default: `""` (required when `config_mode` is `directory`)
+
 ### Option: `vector_config`
 
-Your Vector pipeline, in native Vector YAML — `sources:`, `transforms:`, and
-`sinks:`. See:
+Only used when `config_mode` is `embedded` (the default). Your Vector
+pipeline, in native Vector YAML — `sources:`, `transforms:`, and `sinks:`.
+See:
 
 - [Sources](https://vector.dev/docs/reference/configuration/sources/)
 - [Transforms](https://vector.dev/docs/reference/configuration/transforms/)

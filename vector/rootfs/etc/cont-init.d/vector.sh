@@ -2,13 +2,25 @@
 # shellcheck shell=bash
 # ==============================================================================
 # Vector add-on initialization
-# Generates /config/vector/vector.yaml from add-on options.
+# Generates /config/vector/vector.yaml from add-on options — unless
+# config_mode is "directory", in which case Vector is started against an
+# external config directory instead (see the vector service's run script)
+# and this script has nothing to generate.
 #
-# Vector's pipeline (sources, transforms, sinks) is configured directly in
-# native Vector YAML via the vector_config option — see
-# https://vector.dev/docs/reference/configuration/ for syntax.
+# config_mode:
+#   embedded    (default) — build /config/vector/vector.yaml from
+#                vector_config/api_enabled/syslog_enabled, as below.
+#   directory   — point Vector at config_dir instead, a directory of
+#                *.yaml/*.toml/*.json files that this add-on never writes
+#                to. Intended for a git-managed checkout (e.g. under
+#                /share) so multiple pipeline revisions can be tracked in
+#                git and swapped by checking out a different one — nothing
+#                the add-on itself needs to know about. api_enabled,
+#                syslog_enabled, and vector_config are ignored in this
+#                mode; include your own api:/source config in the
+#                directory if you need them.
 #
-# The add-on only manages a few things on top of that:
+# In embedded mode, the add-on manages a few things on top of vector_config:
 #   log_level       — Vector's own log verbosity (VECTOR_LOG env var)
 #   api_enabled     — whether to inject the `api:` block Vector needs for the
 #                      add-on's ingress panel to work. Do not declare your own
@@ -23,6 +35,8 @@
 declare log_level
 declare api_enabled
 declare syslog_enabled
+declare config_mode
+declare config_dir
 declare vector_config
 
 VECTOR_CONFIG_DIR="/config/vector"
@@ -36,6 +50,8 @@ mkdir -p "${VECTOR_CONFIG_DIR}"
 log_level=$(bashio::config 'log_level')
 api_enabled=$(bashio::config 'api_enabled')
 syslog_enabled=$(bashio::config 'syslog_enabled')
+config_mode=$(bashio::config 'config_mode')
+config_dir=$(bashio::config 'config_dir')
 vector_config=$(bashio::config 'vector_config')
 
 # ---------------------------------------------------------------------------
@@ -53,7 +69,29 @@ esac
 printf '%s' "${VECTOR_LOG}" > /var/run/s6/container_environment/VECTOR_LOG
 
 # ---------------------------------------------------------------------------
-# A pipeline is required — there's nothing sensible to fall back to
+# config_mode: directory — Vector loads its pipeline straight from
+# config_dir, which this add-on never writes to. Nothing to generate here
+# beyond confirming the directory is usable.
+# ---------------------------------------------------------------------------
+if [ "${config_mode}" = "directory" ]; then
+    if ! bashio::var.has_value "${config_dir}"; then
+        bashio::log.fatal "config_mode is 'directory' but config_dir is not set."
+        bashio::exit.nok
+    fi
+
+    mkdir -p "${config_dir}"
+    if [ -z "$(find "${config_dir}" -maxdepth 1 -type f \( -name '*.yaml' -o -name '*.yml' -o -name '*.toml' -o -name '*.json' \) -print -quit)" ]; then
+        bashio::log.warning "config_dir (${config_dir}) has no *.yaml/*.toml/*.json files yet — Vector will fail to start until it does."
+    fi
+
+    bashio::log.info "config_mode is 'directory' — Vector will load ${config_dir} directly (api_enabled, syslog_enabled, and vector_config are ignored)"
+    bashio::log.info "Log level: ${log_level} (VECTOR_LOG=${VECTOR_LOG})"
+    bashio::exit.ok
+fi
+
+# ---------------------------------------------------------------------------
+# config_mode: embedded (default) — generate vector.yaml as before.
+# A pipeline is required — there's nothing sensible to fall back to.
 # ---------------------------------------------------------------------------
 if ! bashio::var.has_value "${vector_config}"; then
     bashio::log.fatal "vector_config is empty. Provide a Vector pipeline (sources/transforms/sinks) in the add-on's configuration."
