@@ -472,7 +472,7 @@ Full logs: **Settings → Add-ons → Obsidian Headless → Log**
 ---
 ### [Vector](https://github.com/conallob/hassio-addons/tree/master/vector)
 
-**Version**: 0.56.0
+**Version**: 0.57.0
 
 High-performance observability data pipeline
 
