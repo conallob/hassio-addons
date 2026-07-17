@@ -6,6 +6,7 @@ init: false
 arch:
   - aarch64
   - amd64
+icon: true
 url: "https://github.com/conallob/hassio-addons/tree/master/vector"
 panel_icon: "mdi:chart-timeline-variant"
 startup: services
