@@ -1,6 +1,6 @@
 name: "Vector"
 description: "High-performance observability data pipeline"
-version: "0.56.0"
+version: "0.57.0"
 slug: "vector"
 init: false
 arch:
