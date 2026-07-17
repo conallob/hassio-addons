@@ -1,5 +1,5 @@
 ARG BUILD_FROM
-ARG VECTOR_VERSION=0.56.0
+ARG VECTOR_VERSION=0.57.0
 
 # Stage 1: Pull the Vector binary from the official image
 FROM timberio/vector:${VECTOR_VERSION}-debian AS vector-source
