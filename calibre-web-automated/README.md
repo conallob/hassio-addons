@@ -9,6 +9,11 @@ watched ingest folder, automatic format conversion, cover/metadata
 enforcement and Kepub conversion for Kobo devices, wrapped around a Calibre
 library.
 
+This add-on tracks upstream [Calibre-Web Automated releases](https://github.com/crocodilestick/Calibre-Web-Automated/releases)
+directly — the add-on's `version` field is the CWA release it bundles (see
+`build.yaml`'s `CWA_VERSION` for the exact upstream git tag fetched at build
+time).
+
 ## About
 
 CWA bundles a real Calibre install, [kepubify](https://github.com/pgaskin/kepubify)

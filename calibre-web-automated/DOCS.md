@@ -8,6 +8,11 @@ gets converted, added to the library, checked for a cover, and (optionally)
 converted to Kepub for Kobo sync — no manual `calibredb` or Calibre-Web admin
 steps required.
 
+The add-on's version tracks the upstream [Calibre-Web Automated release](https://github.com/crocodilestick/Calibre-Web-Automated/releases)
+it bundles one-to-one — check `config.yaml`'s `version` (or `build.yaml`'s
+`CWA_VERSION` for the exact git tag fetched at build time) to see which CWA
+release is currently packaged.
+
 This add-on runs the upstream CWA application, the real Calibre binaries and
 kepubify unmodified; only the surrounding container (base image, init
 scripts, volume layout) is adapted for Home Assistant's Supervisor and
