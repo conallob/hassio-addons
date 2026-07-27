@@ -107,6 +107,14 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
   - Both simultaneously
 - **Status**: Implemented — Dockerfile, s6-overlay service, and init script (`alloy/rootfs/etc/cont-init.d/alloy.sh`) generating config from add-on options are in place.
 
+### calibre-web-automated (`calibre-web-automated/`)
+
+- **Version**: 4.0.6, tracking upstream Calibre-Web Automated releases one-to-one (https://github.com/crocodilestick/Calibre-Web-Automated/releases) — `config.yaml`'s `version` is always the CWA release bundled; bump it and `build.yaml`'s `CWA_VERSION` (the exact upstream git tag) together.
+- **Base image**: `ghcr.io/home-assistant/{arch}-base-debian:bookworm`, s6-overlay. Unlike ntfy/vector, this isn't a single binary copied from a third-party image — CWA's own source, Calibre, and kepubify are each fetched from their original upstream sources (GitHub tag tarball, calibre-ebook.com release, kepubify GitHub release) and built directly on the HA base, since upstream's own image is built on `ghcr.io/linuxserver/baseimage-ubuntu` rather than a single portable binary.
+- **s6 services**: reuses CWA's own `s6-rc.d` service tree (`cwa-init`, `svc-calibre-web-automated`, `cwa-ingest-service`, `metadata-change-detector`, `cwa-auto-library`, `cwa-auto-zipper`, `cwa-checksum-backfill`, `cwa-process-recovery`, `calibre-binaries-setup`) copied in from upstream almost unmodified, with the linuxserver-only `init-config`/`init-adduser` dependency links (which don't exist on the HA base) stripped out.
+- **Configuration**: minimal by design, matching CWA's own philosophy of managing everything else through its own web UI/database once running. `library_dir` and `ingest_dir` (both relative to `/share`) are the only paths a user needs to set; `network_share_mode` switches the ingest watcher and metadata change detector to polling instead of `inotify` when `/share` is itself a network mount.
+- **Known issues**: this is a best-effort initial port — it has not been build- or run-verified against a live Supervisor install (no Docker daemon was available when authoring it). Full RAR5 extraction requires the proprietary `unrar` binary, which isn't packaged for Debian; the build falls back to `unrar-free` (RAR3-era support only) when available.
+
 ---
 
 ## Workflow

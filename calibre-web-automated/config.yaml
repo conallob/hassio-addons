@@ -1,0 +1,28 @@
+name: "Calibre-Web Automated"
+description: "Automated Calibre-Web ebook library manager with ingest-folder monitoring, format conversion and metadata enforcement"
+version: "4.0.6"
+slug: "calibre-web-automated"
+init: false
+arch:
+  - aarch64
+  - amd64
+icon: false
+url: "https://github.com/conallob/hassio-addons/tree/master/calibre-web-automated"
+panel_icon: "mdi:bookshelf"
+startup: services
+ingress: true
+ingress_port: 8083
+ports:
+  8083/tcp: null
+ports_description:
+  8083/tcp: "Calibre-Web Automated UI (optional direct access; ingress is recommended)"
+map:
+  - share:rw
+options:
+  library_dir: "calibre-web-automated/library"
+  ingest_dir: "calibre-web-automated/ingest"
+  network_share_mode: false
+schema:
+  library_dir: "str"
+  ingest_dir: "str"
+  network_share_mode: "bool"
