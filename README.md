@@ -315,7 +315,7 @@ rest_command:
 ---
 ### [Obsidian Headless](https://github.com/conallob/hassio-obsidian-headless)
 
-**Version**: 0.0.17  **Image**: external (`ghcr.io/conallob/hassio-obsidian-headless`)
+**Version**: 0.0.18  **Image**: external (`ghcr.io/conallob/hassio-obsidian-headless`)
 
 Syncs your Obsidian vault via Obsidian Sync (headless daemon). Optionally exposes the vault as a remote MCP server with bearer-token or OAuth 2.1 authentication. Supports Tailscale and direct HTTPS access.
 
