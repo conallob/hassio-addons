@@ -1,5 +1,5 @@
 name: Obsidian Headless
-version: "0.0.19"
+version: "0.0.20"
 slug: obsidian_headless
 description: >-
   Syncs your Obsidian vault via Obsidian Sync (headless daemon). Optionally
