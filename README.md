@@ -315,7 +315,7 @@ rest_command:
 ---
 ### [Obsidian Headless](https://github.com/conallob/hassio-obsidian-headless)
 
-**Version**: 0.0.19  **Image**: external (`ghcr.io/conallob/hassio-obsidian-headless`)
+**Version**: 0.0.20  **Image**: external (`ghcr.io/conallob/hassio-obsidian-headless`)
 
 Syncs your Obsidian vault via Obsidian Sync (headless daemon). Optionally exposes the vault as a remote MCP server with bearer-token or OAuth 2.1 authentication. Supports Tailscale and direct HTTPS access.
 
@@ -437,10 +437,17 @@ runtime. Since Debian bookworm's `apt` only ships Python 3.11, and
 `obsidian-web-mcp` requires 3.12+, the Dockerfile copies a self-contained
 Python 3.12 runtime out of a `python:3.12-slim-bookworm` builder stage rather
 than relying on `apt`. If you see the MCP server crash-looping in the logs
-with a `ModuleNotFoundError` or a `GLIBC_x` version error, it almost always
-means that runtime copy and the final base image have drifted apart — see
-the `Dockerfile` comments around the `mcp-builder` stage for the current
-pinning rationale.
+with a `GLIBC_x` version error, it almost always means that runtime copy and
+the final base image have drifted apart — see the `Dockerfile` comments
+around the `mcp-builder` stage for the current pinning rationale.
+
+If instead you see `ModuleNotFoundError: No module named 'mcp.server.fastmcp'`
+(or similar), that's `obsidian-web-mcp`'s own `mcp` SDK dependency, not our
+runtime — `obsidian-web-mcp`'s `pyproject.toml` declares an unbounded
+`mcp[cli]>=1.9.0`, so an unpinned `pip install` will happily pull in a
+breaking major release of the upstream MCP Python SDK. We pin `mcp[cli]`
+to a known-compatible range explicitly in the `mcp-builder` Dockerfile
+stage; if this recurs after an SDK major bump, that pin is what needs updating.
 
 #### Network binding
 
