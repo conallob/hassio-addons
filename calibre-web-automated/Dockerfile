@@ -97,6 +97,7 @@ RUN apt-get update \
         inotify-tools \
         xdg-utils \
         curl \
+        netcat-openbsd \
         libnss3 \
         libgl1 \
         libegl1 \
