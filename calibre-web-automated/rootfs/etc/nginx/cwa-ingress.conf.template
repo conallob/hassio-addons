@@ -1,0 +1,46 @@
+# Dedicated reverse proxy for Home Assistant ingress traffic to
+# Calibre-Web Automated. Direct (non-ingress) access on 8083 still hits CWA's
+# own Gevent server unchanged; this only fronts the add-on's ingress_port.
+#
+# Home Assistant Supervisor's ingress proxy strips the
+# /api/hassio_ingress/<token> prefix before forwarding requests to the
+# add-on, but does not send X-Ingress-Path, X-Forwarded-Prefix or any other
+# header identifying that prefix. Without it, CWA's own root-absolute links
+# (e.g. /static/..., redirects to /) escape the ingress iframe and hit Home
+# Assistant's own frontend router instead, producing a 404. CWA's
+# ReverseProxied middleware fixes this if given the prefix via X-Script-Name,
+# so this proxy injects it (baked in at container start by
+# /etc/cont-init.d/calibre-web-automated-ingress.sh, since the ingress path
+# is fixed for the add-on's lifetime).
+worker_processes 1;
+pid /run/nginx.pid;
+error_log /dev/stderr info;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    access_log /dev/stdout;
+
+    # Book uploads/downloads can be large; don't cap them.
+    client_max_body_size 0;
+    proxy_read_timeout 300s;
+    proxy_send_timeout 300s;
+
+    server {
+        listen 8084;
+
+        location / {
+            proxy_pass http://127.0.0.1:8083;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Script-Name __CWA_INGRESS_PATH__;
+            proxy_redirect off;
+        }
+    }
+}

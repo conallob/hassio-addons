@@ -98,6 +98,7 @@ RUN apt-get update \
         xdg-utils \
         curl \
         netcat-openbsd \
+        nginx-light \
         libnss3 \
         libgl1 \
         libegl1 \
@@ -163,4 +164,4 @@ RUN mkdir -p \
 
 WORKDIR /config
 
-EXPOSE 8083
+EXPOSE 8083 8084
