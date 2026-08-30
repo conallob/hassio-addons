@@ -186,7 +186,8 @@ above are the two paths you're expected to interact with, both under
 
 | Port | Purpose |
 |------|---------|
-| 8083 | Calibre-Web Automated web UI (ingress; also mappable directly) |
+| 8083 | Calibre-Web Automated web UI (also mappable directly) |
+| 8084 | Ingress-only reverse proxy in front of 8083 (internal; not mapped) |
 
 ### Known limitations
 
