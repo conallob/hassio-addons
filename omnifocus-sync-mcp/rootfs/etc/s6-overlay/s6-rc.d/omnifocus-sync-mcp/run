@@ -1,0 +1,68 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start omnifocus-sync-mcp (stdio) behind supergateway, exposed as
+# streamable-HTTP for the Home Assistant ingress panel and direct network
+# clients.
+# ==============================================================================
+
+declare sync_username
+declare sync_password
+declare encryption_passphrase
+declare sync_url
+declare database
+declare client_name
+declare read_only
+
+sync_username=$(bashio::config 'sync_username')
+sync_password=$(bashio::config 'sync_password')
+encryption_passphrase=$(bashio::config 'encryption_passphrase')
+sync_url=$(bashio::config 'sync_url')
+database=$(bashio::config 'database')
+client_name=$(bashio::config 'client_name')
+read_only=$(bashio::config 'read_only')
+
+if ! bashio::var.has_value "${sync_username}" || ! bashio::var.has_value "${sync_password}"; then
+    bashio::log.fatal "sync_username and sync_password are required."
+    bashio::log.fatal "Set them in this add-on's Configuration tab to your"
+    bashio::log.fatal "Omni Sync Server (OmniFocus > Sync) credentials."
+    bashio::exit.nok
+fi
+
+mkdir -p /data/omnifocus-sync-mcp
+
+export OMNIFOCUS_SYNC_USERNAME="${sync_username}"
+export OMNIFOCUS_SYNC_PASSWORD="${sync_password}"
+export OMNIFOCUS_CLIENT_STATE_FILE="/data/omnifocus-sync-mcp/client.json"
+
+if bashio::var.has_value "${encryption_passphrase}"; then
+    export OMNIFOCUS_ENCRYPTION_PASSPHRASE="${encryption_passphrase}"
+fi
+
+if bashio::var.has_value "${sync_url}"; then
+    export OMNIFOCUS_SYNC_URL="${sync_url}"
+fi
+
+if bashio::var.has_value "${database}"; then
+    export OMNIFOCUS_DATABASE="${database}"
+fi
+
+if bashio::var.has_value "${client_name}"; then
+    export OMNIFOCUS_CLIENT_NAME="${client_name}"
+else
+    export OMNIFOCUS_CLIENT_NAME="omnifocus-sync-mcp@home-assistant"
+fi
+
+if bashio::var.true "${read_only}"; then
+    export OMNIFOCUS_READ_ONLY="1"
+    bashio::log.info "Read-only mode: writes to OmniFocus are disabled."
+fi
+
+bashio::log.info "Starting omnifocus-sync-mcp behind supergateway on :8642/mcp ..."
+
+exec supergateway \
+    --stdio "node /opt/omnifocus-sync-mcp/dist/index.js" \
+    --outputTransport streamableHttp \
+    --streamableHttpPath /mcp \
+    --port 8642 \
+    --logLevel info

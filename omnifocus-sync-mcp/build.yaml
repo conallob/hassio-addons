@@ -1,0 +1,9 @@
+build_from:
+  aarch64: ghcr.io/home-assistant/aarch64-base-debian:bookworm
+  amd64: ghcr.io/home-assistant/amd64-base-debian:bookworm
+squash: false
+args:
+  # rosskukulinski/omnifocus-sync-mcp has no tagged releases yet, so this
+  # pins the git ref checked out at build time. Prefer a commit SHA over
+  # "main" once you've verified a build, so rebuilds are reproducible.
+  OMNIFOCUS_SYNC_MCP_REF: "main"
