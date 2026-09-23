@@ -137,12 +137,17 @@ needing any `/config` or `/share` mapping.
 ## Build Note
 
 `rosskukulinski/omnifocus-sync-mcp` has no Dockerfile and no tagged releases
-at the time this add-on was written, so the image builds by cloning the
-source at the git ref in `build.yaml`'s `OMNIFOCUS_SYNC_MCP_REF` build
-argument (`main` by default) and compiling it with `npm run build`. Pin that
-argument to a specific commit SHA once you've verified a build against your
-account, so rebuilds stay reproducible instead of silently picking up
-upstream changes.
+(its own `package.json` is still `0.1.0`), so the image builds by cloning
+the source at the git ref pinned in `build.yaml`'s `OMNIFOCUS_SYNC_MCP_REF`
+build argument (a commit SHA, not "main" — see that file for how to update
+it) and compiling it with `npm run build`.
+
+**This add-on's own `version` in `config.yaml` is independent of upstream's
+version** — bump it whenever this add-on's own files change (including a
+new `OMNIFOCUS_SYNC_MCP_REF` pin), even if upstream's version number hasn't
+moved. Supervisor keys its locally-built image cache off this add-on's
+`version`; if you edit the add-on and rebuild without bumping it, Supervisor
+can silently reuse the old cached image instead of actually rebuilding.
 
 ## Known Issues
 
