@@ -8,6 +8,7 @@ const OAUTH2_INTROSPECTION_URL = process.env.OAUTH2_INTROSPECTION_URL || '';
 const OAUTH2_INTROSPECTION_AUTH_HEADER = process.env.OAUTH2_INTROSPECTION_AUTH_HEADER || '';
 const UPSTREAM_PORT = process.env.UPSTREAM_PORT || '8643';
 const LISTEN_PORT = Number(process.env.LISTEN_PORT || '8642');
+const LISTEN_HOST = process.env.LISTEN_HOST || '0.0.0.0';
 
 const proxy = httpProxy.createProxyServer({
   target: `http://127.0.0.1:${UPSTREAM_PORT}`,
@@ -116,8 +117,8 @@ server.on('upgrade', async (req, socket, head) => {
   proxy.ws(req, socket, head);
 });
 
-server.listen(LISTEN_PORT, '0.0.0.0', () => {
+server.listen(LISTEN_PORT, LISTEN_HOST, () => {
   console.log(
-    `[auth-proxy] listening on 0.0.0.0:${LISTEN_PORT}, auth_mode=${AUTH_MODE}, upstream=127.0.0.1:${UPSTREAM_PORT}`,
+    `[auth-proxy] listening on ${LISTEN_HOST}:${LISTEN_PORT}, auth_mode=${AUTH_MODE}, upstream=127.0.0.1:${UPSTREAM_PORT}`,
   );
 });

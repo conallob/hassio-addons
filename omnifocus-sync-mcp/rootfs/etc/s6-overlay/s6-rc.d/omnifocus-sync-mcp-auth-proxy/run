@@ -5,20 +5,27 @@
 #
 # supergateway (the other service in this add-on) has no concept of
 # authenticating incoming requests, so it's bound to 127.0.0.1:8643 only.
-# This proxy is what actually listens on 0.0.0.0:8642 (ingress + direct
-# access): it enforces auth_mode, then forwards authorized requests to
-# supergateway. See rootfs/opt/auth-proxy/auth-proxy.js.
+# This proxy is what actually listens on :8642 (ingress + direct access,
+# on listen_address — 0.0.0.0 by default): it enforces auth_mode, then
+# forwards authorized requests to supergateway. See
+# rootfs/opt/auth-proxy/auth-proxy.mjs.
 # ==============================================================================
 
 declare auth_mode
 declare bearer_token
 declare oauth2_introspection_url
 declare oauth2_introspection_auth_header
+declare listen_address
 
 auth_mode=$(bashio::config 'auth_mode')
 bearer_token=$(bashio::config 'bearer_token')
 oauth2_introspection_url=$(bashio::config 'oauth2_introspection_url')
 oauth2_introspection_auth_header=$(bashio::config 'oauth2_introspection_auth_header')
+listen_address=$(bashio::config 'listen_address')
+
+if ! bashio::var.has_value "${listen_address}"; then
+    listen_address="0.0.0.0"
+fi
 
 if [ "${auth_mode}" = "bearer" ] && ! bashio::var.has_value "${bearer_token}"; then
     bashio::log.fatal "auth_mode is 'bearer' but bearer_token is not set."
@@ -42,7 +49,8 @@ export OAUTH2_INTROSPECTION_URL="${oauth2_introspection_url}"
 export OAUTH2_INTROSPECTION_AUTH_HEADER="${oauth2_introspection_auth_header}"
 export UPSTREAM_PORT="8643"
 export LISTEN_PORT="8642"
+export LISTEN_HOST="${listen_address}"
 
-bashio::log.info "Starting auth proxy (auth_mode: ${auth_mode}) on :8642 -> 127.0.0.1:8643 ..."
+bashio::log.info "Starting auth proxy (auth_mode: ${auth_mode}) on ${listen_address}:8642 -> 127.0.0.1:8643 ..."
 
 exec node /opt/auth-proxy/auth-proxy.mjs
