@@ -119,6 +119,33 @@ your introspection endpoint doesn't require its own auth.
 
 Default: `""`
 
+### Option: `listen_address`
+
+The address the `:8642` endpoint (the auth proxy — see Options above)
+binds to inside the add-on's container. Use this if you want to run your
+own reverse proxy or ingress in front of this add-on instead of relying on
+Home Assistant's ingress panel, or if your Supervisor host is multi-homed
+(multiple network interfaces/IPs) and you want to restrict which one this
+add-on is reachable on.
+
+**Leave this at the default (`0.0.0.0`, all interfaces) unless you have a
+specific reason to change it.** Two things to know before changing it:
+
+- Setting it to `127.0.0.1` makes the endpoint reachable only from
+  *inside this add-on's own container* — not from the Supervisor host, not
+  from another add-on, and **not from the Home Assistant ingress panel**,
+  which connects to the container over its internal Docker network address,
+  never `127.0.0.1`. Only set this if nothing outside the container needs to
+  reach it, which is unusual for an add-on.
+- Restricting to one specific LAN IP only has an effect if the container
+  itself is bound to multiple addresses (e.g. host networking or a macvlan
+  setup) — under standard Docker bridge networking (the default for HA
+  add-ons), the container has a single internal IP, and `listen_address`
+  narrowing beyond `0.0.0.0` there doesn't add meaningful restriction; use
+  your network's own firewall/VLAN controls for that instead.
+
+Default: `0.0.0.0`
+
 ---
 
 ## Ports

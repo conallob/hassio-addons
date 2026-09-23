@@ -1,6 +1,6 @@
 name: "OmniFocus Sync MCP"
 description: "HTTP interface to a Model Context Protocol server for OmniFocus, synced via Omni Sync Server (no Mac or OmniFocus app required)"
-version: "0.2.0"
+version: "0.3.0"
 slug: "omnifocus-sync-mcp"
 init: false
 arch:
@@ -28,6 +28,7 @@ options:
   bearer_token: ""
   oauth2_introspection_url: ""
   oauth2_introspection_auth_header: ""
+  listen_address: "0.0.0.0"
 
 schema:
   sync_username: str
@@ -41,3 +42,4 @@ schema:
   bearer_token: "password?"
   oauth2_introspection_url: "str?"
   oauth2_introspection_auth_header: "password?"
+  listen_address: str
