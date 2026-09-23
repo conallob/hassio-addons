@@ -24,6 +24,10 @@ options:
   database: ""
   client_name: ""
   read_only: false
+  auth_mode: "bearer"
+  bearer_token: ""
+  oauth2_introspection_url: ""
+  oauth2_introspection_auth_header: ""
 
 schema:
   sync_username: str
@@ -33,3 +37,7 @@ schema:
   database: "str?"
   client_name: "str?"
   read_only: bool
+  auth_mode: "list(none|bearer|oauth2_introspection)"
+  bearer_token: "password?"
+  oauth2_introspection_url: "str?"
+  oauth2_introspection_auth_header: "password?"

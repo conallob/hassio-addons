@@ -2,8 +2,9 @@
 # shellcheck shell=bash
 # ==============================================================================
 # Start omnifocus-sync-mcp (stdio) behind supergateway, exposed as
-# streamable-HTTP for the Home Assistant ingress panel and direct network
-# clients.
+# streamable-HTTP on a loopback-only internal port. The omnifocus-sync-mcp-
+# auth-proxy service (127.0.0.1:8643 -> 0.0.0.0:8642) enforces auth and is
+# the actual public/ingress-facing endpoint — see that service's run script.
 # ==============================================================================
 
 declare sync_username
@@ -58,11 +59,11 @@ if bashio::var.true "${read_only}"; then
     bashio::log.info "Read-only mode: writes to OmniFocus are disabled."
 fi
 
-bashio::log.info "Starting omnifocus-sync-mcp behind supergateway on :8642/mcp ..."
+bashio::log.info "Starting omnifocus-sync-mcp behind supergateway on 127.0.0.1:8643/mcp (internal) ..."
 
 exec supergateway \
     --stdio "node /opt/omnifocus-sync-mcp/dist/index.js" \
     --outputTransport streamableHttp \
     --streamableHttpPath /mcp \
-    --port 8642 \
+    --port 8643 \
     --logLevel info

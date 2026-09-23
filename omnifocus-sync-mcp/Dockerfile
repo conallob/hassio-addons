@@ -47,6 +47,16 @@ COPY --from=builder /build/dist /opt/omnifocus-sync-mcp/dist
 COPY --from=builder /build/node_modules /opt/omnifocus-sync-mcp/node_modules
 COPY --from=builder /build/package.json /opt/omnifocus-sync-mcp/package.json
 
+# supergateway has no concept of incoming-request auth, so a small Node
+# reverse proxy (auth-proxy.js, added via rootfs below) sits in front of it
+# on the publicly exposed port and enforces bearer-token or OAuth2 token
+# introspection auth before forwarding to supergateway on a loopback-only
+# internal port. http-proxy handles the actual request/response (and
+# SSE/streaming) forwarding.
+RUN mkdir -p /opt/auth-proxy \
+    && npm install --prefix /opt/auth-proxy http-proxy@1.18.1 \
+    && rm -f /opt/auth-proxy/package-lock.json
+
 # Copy add-on rootfs (s6 services)
 COPY rootfs /
 
