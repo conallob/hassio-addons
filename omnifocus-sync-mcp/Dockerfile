@@ -34,12 +34,19 @@ LABEL \
 # omnifocus-sync-mcp only speaks MCP over stdio, so `supergateway` bridges it
 # to streamable HTTP for ingress / network clients. Node.js isn't in the HA
 # base image, so install the NodeSource 20.x runtime alongside it.
+#
+# `curl` must NOT be removed afterwards: bashio (used by this add-on's own
+# run scripts) shells out to curl for every Supervisor API call
+# (bashio::config, bashio::addon.*, etc.) — purging it here previously took
+# out the base image's own curl too, so bashio::config failed for every
+# option and the add-on refused to start ("sync_username and sync_password
+# are required" even when they were set).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl ca-certificates gnupg \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
     && npm install -g supergateway@latest \
-    && apt-get purge -y --auto-remove curl gnupg \
+    && apt-get purge -y --auto-remove gnupg \
     && rm -rf /var/lib/apt/lists/* /tmp/* /root/.npm
 
 # Copy the built MCP server from the builder stage
