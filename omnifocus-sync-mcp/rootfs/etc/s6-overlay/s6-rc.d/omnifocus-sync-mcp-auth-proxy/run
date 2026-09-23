@@ -51,6 +51,6 @@ export UPSTREAM_PORT="8643"
 export LISTEN_PORT="8642"
 export LISTEN_HOST="${listen_address}"
 
-bashio::log.info "Starting auth proxy (auth_mode: ${auth_mode}) on ${listen_address}:8642 -> 127.0.0.1:8643 ..."
+bashio::log.info "Starting auth proxy (auth_mode: ${auth_mode}, listen_address: ${listen_address}) -> 127.0.0.1:8643 ..."
 
 exec node /opt/auth-proxy/auth-proxy.mjs

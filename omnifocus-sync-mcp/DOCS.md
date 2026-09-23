@@ -144,6 +144,16 @@ specific reason to change it.** Two things to know before changing it:
   narrowing beyond `0.0.0.0` there doesn't add meaningful restriction; use
   your network's own firewall/VLAN controls for that instead.
 
+This is a **host/IP only** — do not append a port (`192.168.1.3:48642`).
+The internal container port is fixed at `8642` by `config.yaml` (both the
+ingress panel and the host port mapping target that exact port), so it
+can't be changed here; a `host:port` or `[ipv6]:port` value is accepted for
+convenience, but the port part is only logged as a warning and then
+discarded, not applied. To expose this add-on on a different *external*
+port, use this add-on's own **Network** settings in Home Assistant (which
+remap the host-side port to the container's fixed `8642` — no add-on
+configuration needed for that).
+
 Default: `0.0.0.0`
 
 ---
