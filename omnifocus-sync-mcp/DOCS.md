@@ -122,27 +122,34 @@ Default: `""`
 ### Option: `listen_address`
 
 The address the `:8642` endpoint (the auth proxy — see Options above)
-binds to inside the add-on's container. Use this if you want to run your
-own reverse proxy or ingress in front of this add-on instead of relying on
-Home Assistant's ingress panel, or if your Supervisor host is multi-homed
-(multiple network interfaces/IPs) and you want to restrict which one this
-add-on is reachable on.
+binds to *inside the add-on's own container*.
 
-**Leave this at the default (`0.0.0.0`, all interfaces) unless you have a
-specific reason to change it.** Two things to know before changing it:
+**Leave this at the default (`0.0.0.0`, all of the container's own
+interfaces) unless you have a specific reason to change it.** In practice
+there are only two values that actually work:
 
-- Setting it to `127.0.0.1` makes the endpoint reachable only from
-  *inside this add-on's own container* — not from the Supervisor host, not
-  from another add-on, and **not from the Home Assistant ingress panel**,
-  which connects to the container over its internal Docker network address,
-  never `127.0.0.1`. Only set this if nothing outside the container needs to
-  reach it, which is unusual for an add-on.
-- Restricting to one specific LAN IP only has an effect if the container
-  itself is bound to multiple addresses (e.g. host networking or a macvlan
-  setup) — under standard Docker bridge networking (the default for HA
-  add-ons), the container has a single internal IP, and `listen_address`
-  narrowing beyond `0.0.0.0` there doesn't add meaningful restriction; use
-  your network's own firewall/VLAN controls for that instead.
+- `0.0.0.0` (default) — binds every interface the container has, which is
+  what makes the add-on reachable at all, whether via the ingress panel or
+  Home Assistant's Network port mapping.
+- `127.0.0.1` — makes the endpoint reachable only from *inside this add-on's
+  own container* — not from the Supervisor host, not from another add-on,
+  and **not from the Home Assistant ingress panel**, which connects to the
+  container over its internal Docker network address, never `127.0.0.1`.
+  Only set this if nothing outside the container needs to reach it, which is
+  unusual for an add-on.
+
+**A LAN address owned by the Supervisor host itself (e.g. `192.168.1.3`) will
+fail to bind** with `EADDRNOTAVAIL`, even though that's a real, routable
+address on your network: this add-on runs under Home Assistant's default
+container networking, where the container has its own network namespace and
+never owns any address the host itself owns — only `0.0.0.0`/`127.0.0.1` and
+the container's own internal Docker bridge address exist inside it. Reaching
+this add-on from a specific host-owned LAN interface, or fronting it with
+your own reverse proxy running directly on the host network, would require
+Home Assistant's host networking mode (`host_network: true`), which this
+add-on does not currently declare — the add-on is already reachable on your
+LAN today through Home Assistant's own Network/port-mapping settings, with
+no `listen_address` change needed for that.
 
 This is a **host/IP only** — do not append a port (`192.168.1.3:48642`).
 The internal container port is fixed at `8642` by `config.yaml` (both the
