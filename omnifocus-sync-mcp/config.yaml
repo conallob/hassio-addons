@@ -1,0 +1,43 @@
+name: "OmniFocus Sync MCP"
+description: "HTTP interface to a Model Context Protocol server for OmniFocus, synced via Omni Sync Server (no Mac or OmniFocus app required)"
+version: "0.1.0"
+slug: "omnifocus-sync-mcp"
+init: false
+arch:
+  - aarch64
+  - amd64
+url: "https://github.com/conallob/hassio-addons/tree/master/omnifocus-sync-mcp"
+panel_icon: "mdi:checkbox-marked-outline"
+startup: services
+ingress: true
+ingress_port: 8642
+ports:
+  8642/tcp: null
+ports_description:
+  8642/tcp: "OmniFocus Sync MCP streamable-HTTP endpoint (used by ingress; also usable for direct external/LAN access, e.g. from another MCP client)"
+
+options:
+  sync_username: ""
+  sync_password: ""
+  encryption_passphrase: ""
+  sync_url: ""
+  database: ""
+  client_name: ""
+  read_only: false
+  auth_mode: "bearer"
+  bearer_token: ""
+  oauth2_introspection_url: ""
+  oauth2_introspection_auth_header: ""
+
+schema:
+  sync_username: str
+  sync_password: password
+  encryption_passphrase: "password?"
+  sync_url: "str?"
+  database: "str?"
+  client_name: "str?"
+  read_only: bool
+  auth_mode: "list(none|bearer|oauth2_introspection)"
+  bearer_token: "password?"
+  oauth2_introspection_url: "str?"
+  oauth2_introspection_auth_header: "password?"

@@ -1,0 +1,48 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Public/ingress-facing auth proxy for omnifocus-sync-mcp.
+#
+# supergateway (the other service in this add-on) has no concept of
+# authenticating incoming requests, so it's bound to 127.0.0.1:8643 only.
+# This proxy is what actually listens on 0.0.0.0:8642 (ingress + direct
+# access): it enforces auth_mode, then forwards authorized requests to
+# supergateway. See rootfs/opt/auth-proxy/auth-proxy.js.
+# ==============================================================================
+
+declare auth_mode
+declare bearer_token
+declare oauth2_introspection_url
+declare oauth2_introspection_auth_header
+
+auth_mode=$(bashio::config 'auth_mode')
+bearer_token=$(bashio::config 'bearer_token')
+oauth2_introspection_url=$(bashio::config 'oauth2_introspection_url')
+oauth2_introspection_auth_header=$(bashio::config 'oauth2_introspection_auth_header')
+
+if [ "${auth_mode}" = "bearer" ] && ! bashio::var.has_value "${bearer_token}"; then
+    bashio::log.fatal "auth_mode is 'bearer' but bearer_token is not set."
+    bashio::log.fatal "Set a bearer_token in this add-on's Configuration tab,"
+    bashio::log.fatal "or set auth_mode to 'oauth2_introspection' or 'none'."
+    bashio::exit.nok
+fi
+
+if [ "${auth_mode}" = "oauth2_introspection" ] && ! bashio::var.has_value "${oauth2_introspection_url}"; then
+    bashio::log.fatal "auth_mode is 'oauth2_introspection' but oauth2_introspection_url is not set."
+    bashio::exit.nok
+fi
+
+if [ "${auth_mode}" = "none" ]; then
+    bashio::log.warning "auth_mode is 'none' — the MCP endpoint on :8642 is unauthenticated."
+fi
+
+export AUTH_MODE="${auth_mode}"
+export BEARER_TOKEN="${bearer_token}"
+export OAUTH2_INTROSPECTION_URL="${oauth2_introspection_url}"
+export OAUTH2_INTROSPECTION_AUTH_HEADER="${oauth2_introspection_auth_header}"
+export UPSTREAM_PORT="8643"
+export LISTEN_PORT="8642"
+
+bashio::log.info "Starting auth proxy (auth_mode: ${auth_mode}) on :8642 -> 127.0.0.1:8643 ..."
+
+exec node /opt/auth-proxy/auth-proxy.mjs
