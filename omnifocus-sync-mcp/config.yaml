@@ -1,6 +1,6 @@
 name: "OmniFocus Sync MCP"
 description: "HTTP interface to a Model Context Protocol server for OmniFocus, synced via Omni Sync Server (no Mac or OmniFocus app required)"
-version: "0.3.0"
+version: "0.4.0"
 slug: "omnifocus-sync-mcp"
 init: false
 arch:
