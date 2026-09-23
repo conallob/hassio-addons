@@ -3,7 +3,10 @@ build_from:
   amd64: ghcr.io/home-assistant/amd64-base-debian:bookworm
 squash: false
 args:
-  # rosskukulinski/omnifocus-sync-mcp has no tagged releases yet, so this
-  # pins the git ref checked out at build time. Prefer a commit SHA over
-  # "main" once you've verified a build, so rebuilds are reproducible.
-  OMNIFOCUS_SYNC_MCP_REF: "main"
+  # rosskukulinski/omnifocus-sync-mcp has no tagged releases (still 0.1.0 in
+  # its own package.json as of this pin), so this tracks a commit SHA on its
+  # main branch instead of a version tag. Pinned rather than left as "main"
+  # so rebuilds are reproducible instead of silently picking up upstream
+  # changes; bump this (and config.yaml's version) together when you want to
+  # pick up newer upstream commits.
+  OMNIFOCUS_SYNC_MCP_REF: "b3649159c5740ad41df693cbaa608488bfbaeb91"
