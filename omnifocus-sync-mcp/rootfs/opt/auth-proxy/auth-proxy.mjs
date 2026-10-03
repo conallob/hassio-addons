@@ -159,6 +159,27 @@ server.on('upgrade', async (req, socket, head) => {
   proxy.ws(req, socket, head);
 });
 
+server.on('error', (err) => {
+  if (err.code === 'EADDRNOTAVAIL') {
+    console.error(
+      `[auth-proxy] Cannot bind to ${LISTEN_HOST}:${LISTEN_PORT}: this address isn't owned by ` +
+        `any network interface inside this add-on's own container.\n` +
+        `Under Home Assistant's default (bridge) add-on networking, a LAN address owned by the ` +
+        `Supervisor *host* itself (like ${LISTEN_HOST}) is never reachable from inside the ` +
+        `container — only "0.0.0.0" (all of the container's own interfaces) or the container's ` +
+        `own internal Docker bridge address can be bound here. Binding directly to a host-owned ` +
+        `LAN address would require this add-on to run with Home Assistant's host networking mode, ` +
+        `which it does not currently support.\n` +
+        `Set listen_address back to "0.0.0.0" (the default) — the add-on is already reachable on ` +
+        `your LAN through Home Assistant's own port mapping / Network settings without needing a ` +
+        `specific bind address.`,
+    );
+  } else {
+    console.error(`[auth-proxy] Failed to start listening on ${LISTEN_HOST}:${LISTEN_PORT}:`, err);
+  }
+  process.exit(1);
+});
+
 server.listen(LISTEN_PORT, LISTEN_HOST, () => {
   console.log(
     `[auth-proxy] listening on ${LISTEN_HOST}:${LISTEN_PORT}, auth_mode=${AUTH_MODE}, upstream=127.0.0.1:${UPSTREAM_PORT}`,
