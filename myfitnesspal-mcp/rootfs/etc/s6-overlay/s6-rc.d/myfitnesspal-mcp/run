@@ -1,0 +1,120 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start myfitnesspal-mcp with its native streamable-HTTP transport on :8000.
+# Mirrors upstream's entrypoint.sh: refuse to start without a usable
+# MyFitnessPal cookie source, since MFP's captcha-protected login means the
+# server never logs in with a password.
+# ==============================================================================
+
+declare firefox_profile_dir
+declare cookies_file
+declare cookies_json
+declare oauth_passcode
+declare resource_url
+declare allowed_hosts
+declare access_token_ttl
+
+readonly DATA_DIR=/data/myfitnesspal-mcp
+readonly INLINE_COOKIES_FILE="${DATA_DIR}/cookies.json"
+
+firefox_profile_dir=$(bashio::config 'firefox_profile_dir')
+cookies_file=$(bashio::config 'cookies_file')
+cookies_json=$(bashio::config 'cookies_json')
+oauth_passcode=$(bashio::config 'oauth_passcode')
+resource_url=$(bashio::config 'resource_url')
+allowed_hosts=$(bashio::config 'allowed_hosts')
+access_token_ttl=$(bashio::config 'access_token_ttl')
+
+# ------------------------------------------------------------------------------
+# Cookie source (upstream checks MFP_FIREFOX_PROFILE_DIR first, then
+# MFP_COOKIES_FILE, re-reading either whenever the file changes on disk).
+# ------------------------------------------------------------------------------
+if bashio::var.has_value "${cookies_file}" && bashio::var.has_value "${cookies_json}"; then
+    bashio::log.fatal "Set only one of cookies_file and cookies_json, not both."
+    bashio::exit.nok
+fi
+
+# Never leave a stale copy of previously pasted cookies lying around.
+rm -f "${INLINE_COOKIES_FILE}"
+
+if bashio::var.has_value "${cookies_json}"; then
+    mkdir -p "${DATA_DIR}"
+    (umask 077 && printf '%s' "${cookies_json}" > "${INLINE_COOKIES_FILE}")
+    if ! python3 -c 'import json, sys; json.load(open(sys.argv[1]))' "${INLINE_COOKIES_FILE}" 2>/dev/null; then
+        rm -f "${INLINE_COOKIES_FILE}"
+        bashio::log.fatal "cookies_json is not valid JSON. Expected"
+        bashio::log.fatal '{"cookies": {"name": "value", ...}} or {"name": "value", ...}.'
+        bashio::exit.nok
+    fi
+    cookies_file="${INLINE_COOKIES_FILE}"
+fi
+
+has_cookie_source=false
+
+if bashio::var.has_value "${firefox_profile_dir}"; then
+    if [ -f "${firefox_profile_dir}/cookies.sqlite" ] \
+        || compgen -G "${firefox_profile_dir}/*/cookies.sqlite" > /dev/null; then
+        export MFP_FIREFOX_PROFILE_DIR="${firefox_profile_dir}"
+        has_cookie_source=true
+        bashio::log.info "Using Firefox profile cookies from ${firefox_profile_dir}"
+    elif ! bashio::var.has_value "${cookies_file}"; then
+        bashio::log.fatal "firefox_profile_dir=${firefox_profile_dir} has no cookies.sqlite"
+        bashio::log.fatal "(looked in the directory itself and one level down)."
+        bashio::exit.nok
+    else
+        bashio::log.warning "No cookies.sqlite under ${firefox_profile_dir}; using the cookies file instead."
+    fi
+fi
+
+if bashio::var.has_value "${cookies_file}"; then
+    if [ ! -f "${cookies_file}" ]; then
+        bashio::log.fatal "cookies_file=${cookies_file} does not exist."
+        bashio::exit.nok
+    fi
+    export MFP_COOKIES_FILE="${cookies_file}"
+    has_cookie_source=true
+    if [ "${cookies_file}" != "${INLINE_COOKIES_FILE}" ]; then
+        bashio::log.info "Using cookies file ${cookies_file}"
+    else
+        bashio::log.info "Using cookies pasted into cookies_json"
+    fi
+fi
+
+if [ "${has_cookie_source}" != true ]; then
+    bashio::log.fatal "No MyFitnessPal cookie source configured."
+    bashio::log.fatal "MyFitnessPal's login is captcha-protected, so this add-on reads"
+    bashio::log.fatal "session cookies from a logged-in browser instead. Set one of"
+    bashio::log.fatal "firefox_profile_dir, cookies_file or cookies_json (see the"
+    bashio::log.fatal "Documentation tab)."
+    bashio::exit.nok
+fi
+
+# ------------------------------------------------------------------------------
+# OAuth (for remote connectors such as Claude). Upstream refuses to start if
+# only one of the two is set; check here too for a clearer error message.
+# ------------------------------------------------------------------------------
+if bashio::var.has_value "${oauth_passcode}" && bashio::var.has_value "${resource_url}"; then
+    export MCP_OAUTH_PASSCODE="${oauth_passcode}"
+    export MCP_RESOURCE_URL="${resource_url%/}"
+    export MCP_ACCESS_TOKEN_TTL="${access_token_ttl}"
+    bashio::log.info "OAuth enabled; issuer/resource URL is ${MCP_RESOURCE_URL}"
+elif bashio::var.has_value "${oauth_passcode}" || bashio::var.has_value "${resource_url}"; then
+    bashio::log.fatal "oauth_passcode and resource_url must be set together (or both left empty)."
+    bashio::exit.nok
+else
+    bashio::log.warning "No oauth_passcode set: the MCP endpoint is UNAUTHENTICATED."
+    bashio::log.warning "Only expose port 8000 on a trusted network."
+fi
+
+if bashio::var.has_value "${allowed_hosts}"; then
+    export MCP_ALLOWED_HOSTS="${allowed_hosts}"
+fi
+
+export MCP_TRANSPORT=streamable-http
+export MCP_HOST=0.0.0.0
+export MCP_PORT=8000
+
+bashio::log.info "Starting myfitnesspal-mcp on 0.0.0.0:8000/mcp ..."
+
+exec /opt/myfitnesspal-mcp/venv/bin/python -m myfitnesspal_mcp.server

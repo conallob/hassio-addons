@@ -1,0 +1,35 @@
+name: "MyFitnessPal MCP"
+description: "Model Context Protocol server for MyFitnessPal (food diary, foods, exercises, measurements, goals, water) over streamable HTTP"
+version: "1.3.0"
+slug: "myfitnesspal-mcp"
+init: false
+arch:
+  - aarch64
+  - amd64
+url: "https://github.com/conallob/hassio-addons/tree/master/myfitnesspal-mcp"
+startup: services
+ports:
+  8000/tcp: null
+ports_description:
+  8000/tcp: "MyFitnessPal MCP streamable-HTTP endpoint (/mcp), plus the OAuth endpoints when oauth_passcode is set"
+map:
+  - share:ro
+  - addon_config:ro
+
+options:
+  firefox_profile_dir: ""
+  cookies_file: ""
+  cookies_json: ""
+  oauth_passcode: ""
+  resource_url: ""
+  allowed_hosts: ""
+  access_token_ttl: 2592000
+
+schema:
+  firefox_profile_dir: "str?"
+  cookies_file: "str?"
+  cookies_json: "password?"
+  oauth_passcode: "password?"
+  resource_url: "url?"
+  allowed_hosts: "str?"
+  access_token_ttl: "int(60,)"

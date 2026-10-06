@@ -1,0 +1,8 @@
+build_from:
+  aarch64: ghcr.io/home-assistant/aarch64-base-debian:bookworm
+  amd64: ghcr.io/home-assistant/amd64-base-debian:bookworm
+squash: false
+args:
+  # Upstream release tag of delize/myfitness-mcp. config.yaml's `version`
+  # tracks this one-to-one (minus the leading "v") — bump both together.
+  MYFITNESSPAL_MCP_VERSION: "v1.3.0"
