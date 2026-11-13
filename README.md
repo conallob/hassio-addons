@@ -16,7 +16,7 @@ Or manually: **Settings** → **Add-ons** → **Add-on Store** → **⋮** → *
 
 ### [Grafana Alloy](https://github.com/conallob/hassio-addons/tree/master/alloy)
 
-**Version**: 1.8.3
+**Version**: 1.22.0
 
 Grafana Alloy observability collector — scrape Home Assistant Prometheus metrics and/or forward logs to Loki
 
@@ -108,7 +108,7 @@ configuration string. When set, all other collection options are ignored.
 ---
 ### [Calibre-Web Automated](https://github.com/conallob/hassio-addons/tree/master/calibre-web-automated)
 
-**Version**: 4.0.6
+**Version**: 4.0.8
 
 Automated Calibre-Web ebook library manager with ingest-folder monitoring, format conversion and metadata enforcement
 
@@ -209,7 +209,7 @@ above are the two paths you're expected to interact with, both under
 ---
 ### [MyFitnessPal MCP](https://github.com/conallob/hassio-addons/tree/master/myfitnesspal-mcp)
 
-**Version**: 1.3.0
+**Version**: 1.4.0
 
 Model Context Protocol server for MyFitnessPal (food diary, foods, exercises, measurements, goals, water) over streamable HTTP
 
@@ -374,7 +374,7 @@ Whatever you use, set `resource_url` to the resulting public URL and
 ---
 ### [ntfy](https://github.com/conallob/hassio-addons/tree/master/ntfy)
 
-**Version**: 2.11.4
+**Version**: 2.37.2
 
 Self-hosted push notification server with optional SSL support via the HA Let's Encrypt add-on
 
@@ -1073,7 +1073,7 @@ credentials) first to isolate whether the issue is ingress-proxy-specific.
 ---
 ### [Vector](https://github.com/conallob/hassio-addons/tree/master/vector)
 
-**Version**: 0.57.0
+**Version**: 0.61.0
 
 High-performance observability data pipeline
 
