@@ -1,5 +1,5 @@
 ARG BUILD_FROM
-ARG MYFITNESSPAL_MCP_VERSION=v1.3.0
+ARG MYFITNESSPAL_MCP_VERSION=v1.4.0
 
 # Stage 1: Install myfitnesspal-mcp and its dependencies into a venv. Upstream
 # publishes a container image built on python:3.13-slim, which can't be used

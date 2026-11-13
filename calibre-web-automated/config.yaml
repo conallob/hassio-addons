@@ -1,6 +1,6 @@
 name: "Calibre-Web Automated"
 description: "Automated Calibre-Web ebook library manager with ingest-folder monitoring, format conversion and metadata enforcement"
-version: "4.0.6"
+version: "4.0.8"
 slug: "calibre-web-automated"
 init: false
 arch:

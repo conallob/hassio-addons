@@ -1,0 +1,24 @@
+version: 2
+updates:
+  # Workflow actions (actions/checkout, docker/*-action, ...)
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  # Upstream images referenced by a literal FROM tag in each add-on's
+  # Dockerfile (grafana/alloy, binwiederhier/ntfy, timberio/vector,
+  # node builder). Dependabot only bumps the Dockerfile — bump the add-on's
+  # config.yaml `version` in the same PR so Supervisor offers the update.
+  # Tags built from an ARG (calibre-web-automated, myfitnesspal-mcp,
+  # omnifocus-sync-mcp) are invisible to Dependabot.
+  - package-ecosystem: docker
+    directories:
+      - /alloy
+      - /ntfy
+      - /vector
+      - /omnifocus-sync-mcp
+      - /myfitnesspal-mcp
+      - /calibre-web-automated
+    schedule:
+      interval: weekly

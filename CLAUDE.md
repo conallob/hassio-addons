@@ -84,8 +84,8 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
 
 ### ntfy (`ntfy/`)
 
-- **Version**: 2.11.0
-- **Binary source**: `binwiederhier/ntfy:v2.11.0` (multi-stage copy)
+- **Version**: 2.37.2
+- **Binary source**: `binwiederhier/ntfy:v2.37.2` (multi-stage copy)
 - **Base image**: `ghcr.io/home-assistant/aarch64-base-debian:bookworm`
 - **Ingress port**: 2586
 - **Known issue**: HTTP 502 on WebUI — likely caused by ntfy not receiving the correct ingress base path or `base-url` not being set, causing asset/redirect failures through the HA ingress proxy. The `behind-proxy: true` flag is set but ntfy also needs the `base-url` to match the full ingress URL for the web UI to load correctly. Investigate setting `base-url` dynamically from `bashio::addon.ingress_url`.
@@ -93,7 +93,7 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
 
 ### vector (`vector/`)
 
-- **Version**: 0.57.0, tracking upstream Vector releases directly (https://github.com/vectordotdev/vector/releases).
+- **Version**: 0.61.0, tracking upstream Vector releases directly (https://github.com/vectordotdev/vector/releases).
 - **Base image**: `ghcr.io/home-assistant/{arch}-base-debian:bookworm`, s6-overlay, Vector binary copied in from `timberio/vector:${VECTOR_VERSION}-debian` in a multi-stage build.
 - **Distribution**: `config.yaml` declares `image: "ghcr.io/conallob/vector-{arch}"` — this repo's CI (`build.yml`) builds and pushes that image on every merge to `main`, so Supervisor pulls a prebuilt image and offers normal Updates (gated on the `version` field changing) instead of only building from source on-device.
 - **Configuration**: minimal by design — only `log_level`, `api_enabled`, `syslog_enabled`, `config_mode`, and `config_dir` are structured add-on options. The actual pipeline (`sources:`/`transforms:`/`sinks:`) is written directly in native Vector YAML via the `vector_config` option (edited through the add-on's raw YAML config editor), so anything Vector itself supports is available with no translation layer. `syslog_enabled` is the one convenience exception: it merges `syslog_tcp`/`syslog_udp` source entries (port 514) into whatever `sources:` block is in `vector_config`, since hand-writing a syslog source is the one piece of boilerplate common enough to justify a toggle — the user still wires those source IDs into a sink themselves. Ports `514/tcp+udp`, `6000/tcp+udp`, and `9000/tcp` are pre-mapped in `config.yaml` for common source ports (syslog standard/custom, Vector-to-Vector); a pipeline can bind any of them without further add-on changes.
@@ -102,6 +102,7 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
 
 ### alloy (`alloy/`)
 
+- **Version**: 1.22.0, tracking upstream Grafana Alloy releases (`FROM grafana/alloy:v1.22.0` is a literal tag so Dependabot can bump it).
 - **Purpose**: Grafana Alloy observability pipeline, configurable to collect:
   - Home Assistant Prometheus metrics (scrape `http://supervisor/core/api/prometheus` with HA token)
   - Home Assistant log forwarding (loki-compatible output)
@@ -110,7 +111,7 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
 
 ### calibre-web-automated (`calibre-web-automated/`)
 
-- **Version**: 4.0.6, tracking upstream Calibre-Web Automated releases one-to-one (https://github.com/crocodilestick/Calibre-Web-Automated/releases) — `config.yaml`'s `version` is always the CWA release bundled; bump it and `build.yaml`'s `CWA_VERSION` (the exact upstream git tag) together.
+- **Version**: 4.0.8, tracking upstream Calibre-Web Automated releases one-to-one (https://github.com/crocodilestick/Calibre-Web-Automated/releases) — `config.yaml`'s `version` is always the CWA release bundled; bump it and `build.yaml`'s `CWA_VERSION` (the exact upstream git tag) together.
 - **Base image**: `ghcr.io/home-assistant/{arch}-base-debian:bookworm`, s6-overlay. Unlike ntfy/vector, this isn't a single binary copied from a third-party image — CWA's own source, Calibre, and kepubify are each fetched from their original upstream sources (GitHub tag tarball, calibre-ebook.com release, kepubify GitHub release) and built directly on the HA base, since upstream's own image is built on `ghcr.io/linuxserver/baseimage-ubuntu` rather than a single portable binary.
 - **s6 services**: reuses CWA's own `s6-rc.d` service tree (`cwa-init`, `svc-calibre-web-automated`, `cwa-ingest-service`, `metadata-change-detector`, `cwa-auto-library`, `cwa-auto-zipper`, `cwa-checksum-backfill`, `cwa-process-recovery`, `calibre-binaries-setup`) copied in from upstream almost unmodified, with the linuxserver-only `init-config`/`init-adduser` dependency links (which don't exist on the HA base) stripped out. `cwa-ingress-proxy` (this add-on's own, added on top) runs a small `nginx-light` reverse proxy dedicated to ingress traffic — see Ingress below.
 - **Configuration**: minimal by design, matching CWA's own philosophy of managing everything else through its own web UI/database once running. `library_dir` and `ingest_dir` (both relative to `/share`) are the only paths a user needs to set; `network_share_mode` switches the ingest watcher and metadata change detector to polling instead of `inotify` when `/share` is itself a network mount.
@@ -130,13 +131,17 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
 ### myfitnesspal-mcp (`myfitnesspal-mcp/`)
 
 - **Purpose**: packages [`delize/myfitness-mcp`](https://github.com/delize/myfitness-mcp), a Python (FastMCP) MCP server exposing MyFitnessPal's food diary, foods, exercises, measurements, goals, water and reports as tools.
-- **Version**: 1.3.0, tracking upstream release tags one-to-one — bump `config.yaml`'s `version`, `build.yaml`'s `MYFITNESSPAL_MCP_VERSION`, *and* the Dockerfile's `ARG MYFITNESSPAL_MCP_VERSION` default together (this repo's CI `build.yml` only passes `BUILD_FROM`/`BUILD_VERSION`, not `build.yaml` args, so CI builds use the Dockerfile default).
+- **Version**: 1.4.0, tracking upstream release tags one-to-one — bump `config.yaml`'s `version`, `build.yaml`'s `MYFITNESSPAL_MCP_VERSION`, *and* the Dockerfile's `ARG MYFITNESSPAL_MCP_VERSION` default together (this repo's CI `build.yml` only passes `BUILD_FROM`/`BUILD_VERSION`, not `build.yaml` args, so CI builds use the Dockerfile default).
 - **Base image**: `ghcr.io/home-assistant/{arch}-base-debian:bookworm`, s6-overlay. Upstream's own image is `python:3.13-slim`, so instead a builder stage on the same HA base `pip install`s upstream's git tag into `/opt/myfitnesspal-mcp/venv` with bookworm's Python 3.11 (upstream requires `>=3.11`), and the venv is copied into the final stage (same interpreter path in both).
 - **Transport/auth**: upstream natively speaks streamable HTTP and implements its own OAuth 2.1 passcode flow, so — unlike omnifocus-sync-mcp — no `supergateway` or auth proxy is needed; the run script just maps add-on options onto upstream's `MCP_*`/`MFP_*` env vars and listens on `0.0.0.0:8000` (`/mcp`). No ingress (no web UI, and remote MCP clients can't authenticate through HA's ingress proxy); port 8000 is unmapped by default.
 - **MyFitnessPal auth**: cookie-based only (MFP login is captcha-protected). `firefox_profile_dir` (a dir containing `cookies.sqlite`, under `/share`), `cookies_file` (JSON, under `/share` or the add-on config dir at `/config`), or `cookies_json` (inline JSON, written to `/data/myfitnesspal-mcp/cookies.json` with mode 0600 and deleted on every start when unused). Upstream hot-reloads the file sources on mtime change.
 - **Known issues**: smoke-tested outside Docker (upstream v1.3.0 on Python 3.11 with the env the run script sets; run script exercised against stubbed bashio), but the image itself hasn't been built — GHCR base image pulls were blocked in the authoring environment. OAuth tokens are in-memory upstream, so they don't survive add-on restarts.
 
 ---
+
+## Dependency Updates
+
+`.github/dependabot.yml` opens weekly PRs for GitHub Actions and for literal `FROM` image tags in add-on Dockerfiles (alloy, ntfy, vector, plus the omnifocus node builder). Dependabot cannot resolve tags built from an `ARG`, so keep the alloy/ntfy/vector upstream tags literal. Versions fetched by `ARG` (calibre-web-automated, myfitnesspal-mcp, omnifocus-sync-mcp) are bumped by hand. Always bump the add-on's `config.yaml` `version` in the same PR as a Dependabot Dockerfile bump.
 
 ## Workflow
 

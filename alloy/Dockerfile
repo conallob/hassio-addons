@@ -1,13 +1,10 @@
 ARG BUILD_FROM
-ARG ALLOY_VERSION=1.8.3
 
 # Stage 1: Pull the Alloy binary from the official image
-FROM grafana/alloy:v${ALLOY_VERSION} AS alloy-source
+FROM grafana/alloy:v1.22.0 AS alloy-source
 
 # Stage 2: Build the add-on image on the HA Debian base (includes s6-overlay)
 FROM ${BUILD_FROM}
-
-ARG ALLOY_VERSION
 
 # Labels
 LABEL \

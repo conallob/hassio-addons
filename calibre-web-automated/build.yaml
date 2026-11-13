@@ -3,6 +3,6 @@ build_from:
   amd64: ghcr.io/home-assistant/amd64-base-debian:bookworm
 squash: false
 args:
-  CWA_VERSION: "v4.0.6"
-  CALIBRE_RELEASE: "9.1.0"
-  KEPUBIFY_RELEASE: "v4.0.4"
+  CWA_VERSION: "v4.0.8"
+  CALIBRE_RELEASE: "9.18.0"
+  KEPUBIFY_RELEASE: "v5.0.0"

@@ -1,6 +1,6 @@
 name: "Grafana Alloy"
 description: "Grafana Alloy observability collector — scrape Home Assistant Prometheus metrics and/or forward logs to Loki"
-version: "1.8.3"
+version: "1.22.0"
 slug: "alloy"
 init: false
 arch:

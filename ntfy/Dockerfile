@@ -1,8 +1,7 @@
 ARG BUILD_FROM
-ARG NTFY_VERSION=2.11.0
 
 # Stage 1: Get ntfy binary from official image
-FROM binwiederhier/ntfy:v${NTFY_VERSION} AS ntfy-source
+FROM binwiederhier/ntfy:v2.37.2 AS ntfy-source
 
 # Stage 2: Build the add-on image on the HA Debian base
 FROM ${BUILD_FROM}
