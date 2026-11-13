@@ -5,4 +5,4 @@ squash: false
 args:
   # Upstream release tag of delize/myfitness-mcp. config.yaml's `version`
   # tracks this one-to-one (minus the leading "v") — bump both together.
-  MYFITNESSPAL_MCP_VERSION: "v1.3.0"
+  MYFITNESSPAL_MCP_VERSION: "v1.4.0"

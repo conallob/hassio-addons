@@ -1,7 +1,7 @@
 ARG BUILD_FROM
-ARG CWA_VERSION=v4.0.6
-ARG CALIBRE_RELEASE=9.1.0
-ARG KEPUBIFY_RELEASE=v4.0.4
+ARG CWA_VERSION=v4.0.8
+ARG CALIBRE_RELEASE=9.18.0
+ARG KEPUBIFY_RELEASE=v5.0.0
 
 # ==============================================================================
 # Stage 1: Fetch and build Calibre-Web Automated (source), its Python
