@@ -4,7 +4,7 @@ ARG OMNIFOCUS_SYNC_MCP_REF=main
 # Stage 1: Build omnifocus-sync-mcp from source (TypeScript -> dist/, prod-only
 # node_modules). Upstream ships no Dockerfile and no tagged releases, so this
 # clones the source and builds it with npm rather than copying a binary.
-FROM node:20-bookworm-slim AS builder
+FROM node:25-bookworm-slim AS builder
 
 ARG OMNIFOCUS_SYNC_MCP_REF
 
