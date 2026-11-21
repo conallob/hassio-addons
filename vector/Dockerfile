@@ -1,7 +1,7 @@
 ARG BUILD_FROM
 
 # Stage 1: Pull the Vector binary from the official image
-FROM timberio/vector:0.61.0-debian AS vector-source
+FROM timberio/vector:0.62.0-debian AS vector-source
 
 # Stage 2: Build the add-on image on the HA Debian base (includes s6-overlay)
 FROM ${BUILD_FROM}
