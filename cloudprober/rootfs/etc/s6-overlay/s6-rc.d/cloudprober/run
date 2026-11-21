@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start Cloudprober
+# ==============================================================================
+
+CLOUDPROBER_CONFIG_PATH="/data/cloudprober/cloudprober.cfg"
+
+bashio::log.info "Starting Cloudprober with ${CLOUDPROBER_CONFIG_PATH}"
+
+# Cloudprober reads its listen port from this env var; 9313 is its default and
+# the add-on's ingress_port.
+export CLOUDPROBER_PORT=9313
+
+exec /usr/bin/cloudprober \
+    --config_file "${CLOUDPROBER_CONFIG_PATH}"

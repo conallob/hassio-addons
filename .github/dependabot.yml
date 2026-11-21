@@ -7,7 +7,7 @@ updates:
       interval: weekly
 
   # Upstream images referenced by a literal FROM tag in each add-on's
-  # Dockerfile (grafana/alloy, binwiederhier/ntfy, timberio/vector,
+  # Dockerfile (grafana/alloy, cloudprober/cloudprober, binwiederhier/ntfy, timberio/vector,
   # node builder). Dependabot only bumps the Dockerfile — bump the add-on's
   # config.yaml `version` in the same PR so Supervisor offers the update.
   # Tags built from an ARG (calibre-web-automated, myfitnesspal-mcp,
@@ -15,6 +15,7 @@ updates:
   - package-ecosystem: docker
     directories:
       - /alloy
+      - /cloudprober
       - /ntfy
       - /vector
       - /omnifocus-sync-mcp

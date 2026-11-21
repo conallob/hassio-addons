@@ -7,6 +7,7 @@ This repository contains custom Home Assistant add-ons maintained by Conall O'Br
 ```
 hassio-addons/
 ├── repository.json          # Add-on store metadata
+├── cloudprober/             # Cloudprober synthetic probes
 ├── myfitnesspal-mcp/        # MyFitnessPal MCP server
 ├── ntfy/                    # ntfy push notification server
 └── vector/                  # Vector observability pipeline
@@ -118,6 +119,14 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
 - **Ingress**: CWA (Flask) generates root-absolute links (`/static/...`, redirects to `/`), and Supervisor's ingress proxy strips the `/api/hassio_ingress/<token>` prefix before forwarding to the add-on without sending any header identifying it (no `X-Ingress-Path`/`X-Forwarded-Prefix`/`X-Forwarded-Host`) — those links then escape the ingress iframe and 404 against Home Assistant's own frontend router. CWA's `ReverseProxied` middleware fixes this given the prefix via `X-Script-Name`, so `config.yaml`'s `ingress_port` (8084) points at a dedicated `nginx-light` proxy (`cwa-ingress-proxy` service, config templated by `rootfs/etc/cont-init.d/calibre-web-automated-ingress.sh` from `rootfs/etc/nginx/cwa-ingress.conf.template`, using `bashio::app.ingress_entry`) that injects `X-Script-Name` and forwards to CWA's own server on 8083 — the same port still used, unchanged, for direct (non-ingress) access via `ports:`.
 - **Known issues**: this is a best-effort initial port — it has not been build- or run-verified against a live Supervisor install (no Docker daemon was available when authoring it). Full RAR5 extraction requires the proprietary `unrar` binary, which isn't packaged for Debian; the build falls back to `unrar-free` (RAR3-era support only) when available.
 
+### cloudprober (`cloudprober/`)
+
+- **Version**: 0.14.7, tracking upstream Cloudprober releases (`FROM cloudprober/cloudprober:v0.14.7` is a literal tag so Dependabot can bump it; bump `config.yaml` `version` in the same PR). Binary is a static Go binary at `/cloudprober` in the upstream image, copied to `/usr/bin/cloudprober`.
+- **Base image**: `ghcr.io/home-assistant/{arch}-base-debian:bookworm`, s6-overlay.
+- **Configuration**: `cloudprober_config` (native textproto, used verbatim) plus `extra_config_path`, a file/glob relative to `/homeassistant` (mapped `homeassistant_config:ro`) so extra probes can be git-managed. `rootfs/etc/cont-init.d/cloudprober.sh` writes `/data/cloudprober/cloudprober.cfg` and appends an `include "<relative path>"` line: Cloudprober's `include` resolves paths relative to the including file via `filepath.Join`, so an absolute `/homeassistant/...` path can't be used and the relative path is computed with `realpath --relative-to`. Includes are textual, so the extra file must be textproto. Init fails fast if the path escapes `/homeassistant` or matches nothing. After generating, init runs `cloudprober --config_file … -configtest` (the flag is spelled `-configtest` in v0.14.7; it exits non-zero on error) and fails fast with its output. HA has no on-save hook for add-ons, so this runs on every start, not on save. No config reload — restart the add-on after a `git pull`.
+- **Ingress**: port 9313 (status page); `CLOUDPROBER_PORT=9313` set in the run script.
+- **Known issues**: best-effort initial port — not build- or run-verified (no Docker daemon available when authoring it). Unverified: whether the status page's links work under the ingress path prefix, and ICMP `PING` probes may need privileges the add-on doesn't request. The init script was exercised against stubbed `bashio` only.
+
 ### omnifocus-sync-mcp (`omnifocus-sync-mcp/`)
 
 - **Purpose**: HTTP interface to [`rosskukulinski/omnifocus-sync-mcp`](https://github.com/rosskukulinski/omnifocus-sync-mcp), a headless MCP server that reads/writes OmniFocus tasks by talking to Omni Sync Server directly over WebDAV (client-side end-to-end decryption) — no Mac or OmniFocus app needed, only Omni Sync Server credentials.
@@ -141,7 +150,7 @@ Do **not** map ports 80 or 443 if the service does not actively use them — HA 
 
 ## Dependency Updates
 
-`.github/dependabot.yml` opens weekly PRs for GitHub Actions and for literal `FROM` image tags in add-on Dockerfiles (alloy, ntfy, vector, plus the omnifocus node builder). Dependabot cannot resolve tags built from an `ARG`, so keep the alloy/ntfy/vector upstream tags literal. Versions fetched by `ARG` (calibre-web-automated, myfitnesspal-mcp, omnifocus-sync-mcp) are bumped by hand. Always bump the add-on's `config.yaml` `version` in the same PR as a Dependabot Dockerfile bump.
+`.github/dependabot.yml` opens weekly PRs for GitHub Actions and for literal `FROM` image tags in add-on Dockerfiles (alloy, cloudprober, ntfy, vector, plus the omnifocus node builder). Dependabot cannot resolve tags built from an `ARG`, so keep the alloy/cloudprober/ntfy/vector upstream tags literal. Versions fetched by `ARG` (calibre-web-automated, myfitnesspal-mcp, omnifocus-sync-mcp) are bumped by hand. Always bump the add-on's `config.yaml` `version` in the same PR as a Dependabot Dockerfile bump.
 
 ## Workflow
 
