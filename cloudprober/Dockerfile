@@ -1,7 +1,8 @@
 ARG BUILD_FROM
 
-# Stage 1: Pull the static Cloudprober binary from the official image
-FROM cloudprober/cloudprober:v0.14.7 AS cloudprober-source
+# Stage 1: Pull the static Cloudprober binary from the official upstream
+# release image (literal tag so Dependabot can bump it)
+FROM ghcr.io/cloudprober/cloudprober:v0.14.7 AS cloudprober-source
 
 # Stage 2: Build the add-on image on the HA Debian base (includes s6-overlay)
 FROM ${BUILD_FROM}
