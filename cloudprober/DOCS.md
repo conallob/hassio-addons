@@ -51,8 +51,20 @@ Things to know:
 - The add-on refuses to start if `extra_config_path` matches no files or points
   outside `/homeassistant`, naming the path in the log.
 - The `/homeassistant` mount is read-only.
+- The generated config, including the extra file, is validated with
+  `cloudprober -configtest` on every start; the add-on refuses to start and logs
+  Cloudprober's error if it fails. Home Assistant has no on-save hook for
+  add-ons, so saving options alone doesn't trigger this: restart to apply and
+  validate.
 - Cloudprober reads its config at start-up. After a `git pull`, **restart the
   add-on** to pick up changes.
+
+To validate the file in CI on the git repo itself, the same check works
+standalone (the extra file must be valid on its own):
+
+```bash
+cloudprober --config_file cloudprober/probes.cfg -configtest
+```
 
 At least one of `cloudprober_config` and `extra_config_path` must be non-empty.
 

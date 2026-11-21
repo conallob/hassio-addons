@@ -12,6 +12,11 @@
 # Cloudprober resolves `include` paths relative to the *including* file's
 # directory (and runs them through filepath.Join), so an absolute path can't
 # be used directly; the relative path is computed here instead.
+#
+# The result is validated with `cloudprober -configtest` before the service
+# starts. Home Assistant has no "on save" hook for add-ons, so this runs on
+# every (re)start — the earliest point the add-on can act on new options or a
+# freshly pulled extra config file.
 # ==============================================================================
 
 declare log_level
@@ -91,3 +96,19 @@ if [ -n "${include_line}" ]; then
 else
     bashio::log.info "No extra_config_path set — using cloudprober_config only"
 fi
+
+# ---------------------------------------------------------------------------
+# Validate the generated config (including the included extra file) with
+# Cloudprober's own dry-run. `-configtest` loads the config the same way a
+# normal start does, runs the extra checks (durations, validators, targets),
+# and exits non-zero on error — so a bad config is reported clearly here
+# instead of crash-looping the service.
+# ---------------------------------------------------------------------------
+if ! test_output=$(/usr/bin/cloudprober --config_file "${CLOUDPROBER_CONFIG_PATH}" -configtest 2>&1); then
+    bashio::log.fatal "Cloudprober config test failed:"
+    while IFS= read -r line; do
+        bashio::log.fatal "  ${line}"
+    done <<< "${test_output}"
+    bashio::exit.nok
+fi
+bashio::log.info "Cloudprober config test passed"
