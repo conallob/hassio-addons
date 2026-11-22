@@ -14,14 +14,21 @@ ingress: true
 ingress_port: 9313
 ports:
   9313/tcp: null
+  9314/tcp: null
+  3141/tcp: null
+  3142/tcp: null
 ports_description:
   9313/tcp: "Cloudprober status page and Prometheus metrics at /metrics (optional, for direct external access)"
+  9314/tcp: "Cloudprober's default gRPC server / API (only listens when grpc_enabled is true; optional, for direct external access)"
+  3141/tcp: "Built-in HTTP server (default port; only listens if a `server { type: HTTP }` block is in the config)"
+  3142/tcp: "Built-in gRPC probe-target server (default port; only listens if a `server { type: GRPC }` block is in the config)"
 map:
   - homeassistant_config:ro
   - share:ro
   - ssl:ro
 options:
   log_level: "info"
+  grpc_enabled: false
   extra_config_path: ""
   cloudprober_config: |
     probe {
@@ -43,5 +50,6 @@ options:
     }
 schema:
   log_level: "list(trace|debug|info|notice|warning|error|fatal)"
+  grpc_enabled: bool
   extra_config_path: "str?"
   cloudprober_config: "str?"

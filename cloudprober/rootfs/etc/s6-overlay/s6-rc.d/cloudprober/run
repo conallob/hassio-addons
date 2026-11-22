@@ -12,5 +12,14 @@ bashio::log.info "Starting Cloudprober with ${CLOUDPROBER_CONFIG_PATH}"
 # the add-on's ingress_port.
 export CLOUDPROBER_PORT=9313
 
+# Cloudprober's gRPC server only starts when a gRPC port is configured; there
+# is no built-in default. When grpc_enabled is set, listen on 9314 (the port
+# pre-declared in config.yaml). A `grpc_port` in the config itself takes
+# precedence over this variable.
+if bashio::config.true 'grpc_enabled'; then
+    export CLOUDPROBER_GRPC_PORT=9314
+    bashio::log.info "gRPC server enabled on port ${CLOUDPROBER_GRPC_PORT}"
+fi
+
 exec /usr/bin/cloudprober \
     --config_file "${CLOUDPROBER_CONFIG_PATH}"

@@ -98,6 +98,19 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# Warn if the config sets its own grpc_port: it overrides grpc_enabled, and
+# only 9314 is declared in config.yaml's ports, so any other port can't be
+# published from the add-on's Network settings.
+# ---------------------------------------------------------------------------
+if grep -qE '^[[:space:]]*grpc_port[[:space:]]*:[[:space:]]*[0-9]+' "${CLOUDPROBER_CONFIG_PATH}"; then
+    grpc_cfg_port=$(grep -E '^[[:space:]]*grpc_port[[:space:]]*:' "${CLOUDPROBER_CONFIG_PATH}" | head -n1 | grep -oE '[0-9]+')
+    bashio::log.info "grpc_port ${grpc_cfg_port} is set in the config; it takes precedence over grpc_enabled"
+    if [ "${grpc_cfg_port}" != "9314" ]; then
+        bashio::log.warning "Only 9314/tcp is declared by the add-on, so grpc_port ${grpc_cfg_port} can't be published to the host."
+    fi
+fi
+
+# ---------------------------------------------------------------------------
 # Validate the generated config (including the included extra file) with
 # Cloudprober's own dry-run. `-configtest` loads the config the same way a
 # normal start does, runs the extra checks (durations, validators, targets),

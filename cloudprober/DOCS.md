@@ -68,6 +68,16 @@ cloudprober --config_file cloudprober/probes.cfg -configtest
 
 At least one of `cloudprober_config` and `extra_config_path` must be non-empty.
 
+### Option: `grpc_enabled`
+
+Start Cloudprober's **default gRPC server** (its own API) on port 9314 (default:
+off). Cloudprober has no built-in port for this, so the add-on sets
+`CLOUDPROBER_GRPC_PORT=9314` when it is on. A `grpc_port` set in your own config
+takes precedence over this option; the add-on logs a notice, and a warning if it
+isn't 9314, since that port can't then be published from the add-on's Network
+settings. This is separate from the built-in `GRPC` server below, which is
+enabled by config alone.
+
 ### Option: `log_level`
 
 Verbosity of the add-on's own startup logging.
@@ -100,11 +110,42 @@ probe {
 }
 ```
 
+## Built-in servers
+
+Cloudprober can also run [built-in servers](https://cloudprober.org/docs/how-to/built-in-servers/)
+that act as probe targets, for example for a second Cloudprober instance to
+probe. They are enabled by adding `server { ... }` blocks to
+`cloudprober_config` or your extra config file:
+
+```
+server {
+  type: HTTP
+  http_server {
+    port: 3141
+  }
+}
+```
+
+The servers bind inside the add-on regardless, so other add-ons and Home
+Assistant can reach them on the internal network. To reach one from elsewhere
+on your network, set a host port for it in the add-on's **Network** settings.
+Home Assistant can only publish ports the add-on declares, so use the default
+ports below.
+
+| Server | Block | Default port |
+|--------|-------|--------------|
+| HTTP (`/healthcheck`, `/lameduck`, data handlers) | `type: HTTP` | 3141/tcp |
+| gRPC (probe target) | `type: GRPC` | 3142/tcp |
+| UDP (echo/discard) | `type: UDP` | none — `port` is required; UDP ports are **not** declared, so these are reachable only from inside Home Assistant's network |
+
 ## Ports
 
 | Port | Purpose |
 |------|---------|
 | 9313/tcp | Status page and Prometheus metrics (`/metrics`). Used by the ingress panel; unmapped to the host by default. |
+| 9314/tcp | Default gRPC server (API), only when `grpc_enabled` is true; unmapped to the host by default. |
+| 3141/tcp | Built-in HTTP server, only if configured with `server { type: HTTP }`; unmapped by default. |
+| 3142/tcp | Built-in gRPC server, only if configured with `server { type: GRPC }`; unmapped by default. |
 
 Probes that use ICMP or raw sockets may need extra privileges that this add-on
 does not request; HTTP, TCP and DNS probes work without them.
