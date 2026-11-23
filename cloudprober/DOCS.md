@@ -78,6 +78,39 @@ isn't 9314, since that port can't then be published from the add-on's Network
 settings. This is separate from the built-in `GRPC` server below, which is
 enabled by config alone.
 
+### Option: `env_vars`
+
+A list of environment variables to set for Cloudprober, as `name`/`value`
+pairs. Use it for anything Cloudprober reads from the environment, for example
+global metric labels:
+
+```yaml
+env_vars:
+  - name: CLOUDPROBER_ADDITIONAL_LABELS
+    value: "site=home,env=prod"
+```
+
+`CLOUDPROBER_ADDITIONAL_LABELS` takes comma-separated `key=value` pairs that are
+added to every metric (existing probe labels win). See
+[Additional labels](https://cloudprober.org/docs/how-to/additional-labels/).
+
+Variables are also available to your config: Cloudprober replaces `**$NAME**` in
+the config text with the variable's value, which keeps site-specific values out
+of a shared, git-managed config file.
+
+Things to know:
+
+- Names must be valid shell identifiers. Names the add-on manages
+  (`CLOUDPROBER_PORT`, `SUPERVISOR_TOKEN`, `HASSIO_TOKEN`, `PATH`,
+  `LD_PRELOAD`, `LD_LIBRARY_PATH`, anything starting `S6_`) are rejected and the
+  add-on refuses to start.
+- `CLOUDPROBER_GRPC_PORT` is set by `grpc_enabled`; if both are used,
+  `grpc_enabled` wins.
+- Values are stored in the add-on's options and are visible to anyone who can
+  view its configuration, so don't treat this as secret storage. Startup logs
+  list variable names, never values.
+- Variables apply at start-up; restart the add-on after changing them.
+
 ### Option: `log_level`
 
 Verbosity of the add-on's own startup logging.

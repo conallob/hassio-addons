@@ -30,6 +30,7 @@ options:
   log_level: "info"
   grpc_enabled: false
   extra_config_path: ""
+  env_vars: []
   cloudprober_config: |
     probe {
       name: "homeassistant"
@@ -52,4 +53,7 @@ schema:
   log_level: "list(trace|debug|info|notice|warning|error|fatal)"
   grpc_enabled: bool
   extra_config_path: "str?"
+  env_vars:
+    - name: "match(^[A-Za-z_][A-Za-z0-9_]*$)"
+      value: "str"
   cloudprober_config: "str?"
