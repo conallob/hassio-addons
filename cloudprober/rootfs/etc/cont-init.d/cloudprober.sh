@@ -98,6 +98,48 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# env_vars: user-defined environment variables for Cloudprober (e.g.
+# CLOUDPROBER_ADDITIONAL_LABELS). Each is written to s6's container
+# environment so the service (started via with-contenv) inherits it, and
+# exported here so the config test below sees the same environment —
+# Cloudprober substitutes **$VAR** in the config text from the environment.
+# Only names are logged, never values.
+# ---------------------------------------------------------------------------
+# Names the add-on (or the container) depends on; overriding them would break
+# ingress, auth to the Supervisor, or process startup.
+is_reserved_env() {
+    case "$1" in
+        CLOUDPROBER_PORT|SUPERVISOR_TOKEN|HASSIO_TOKEN|PATH|LD_PRELOAD|LD_LIBRARY_PATH|S6_*) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+declare -A seen_env=()
+env_json=$(bashio::config 'env_vars')
+while IFS= read -r entry; do
+    [ -z "${entry}" ] && continue
+    env_name=$(printf '%s' "${entry}" | base64 -d | jq -r '.name')
+    env_value=$(printf '%s' "${entry}" | base64 -d | jq -j '.value')
+
+    if is_reserved_env "${env_name}"; then
+        bashio::log.fatal "env_vars: ${env_name} is managed by the add-on and can't be overridden."
+        bashio::exit.nok
+    fi
+    if [ -n "${seen_env[${env_name}]:-}" ]; then
+        bashio::log.warning "env_vars: ${env_name} is defined more than once; the last value wins."
+    fi
+    seen_env["${env_name}"]=1
+
+    printf '%s' "${env_value}" > "/var/run/s6/container_environment/${env_name}"
+    export "${env_name}=${env_value}"
+    bashio::log.info "Environment variable set: ${env_name}"
+done < <(printf '%s' "${env_json:-[]}" | jq -r '.[]? | @base64')
+
+if [ -n "${seen_env[CLOUDPROBER_GRPC_PORT]:-}" ] && bashio::config.true 'grpc_enabled'; then
+    bashio::log.warning "env_vars sets CLOUDPROBER_GRPC_PORT but grpc_enabled is true; grpc_enabled (9314) wins."
+fi
+
+# ---------------------------------------------------------------------------
 # Warn if the config sets its own grpc_port: it overrides grpc_enabled, and
 # only 9314 is declared in config.yaml's ports, so any other port can't be
 # published from the add-on's Network settings.
